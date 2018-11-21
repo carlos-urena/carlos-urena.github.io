@@ -5,8 +5,8 @@ body
    /** font-size        : 11pt !important; */
    /** font-size        : 16px !important;  */ /** la unidad px en css es un tamaÃ±o fijo absoluto (en pulgadas) en pantalla o papel **/
    text-align       : left ;
-   color            : rgb(30%,30%,33%);
-   background-color : rgb(50%,50%,50%);
+   color            : rgb(15%,15%,15%);
+   background-color : rgb(100%,100%,100%);
    border-width     : 0px ;
    margin           : 0px 0px 0px 0px ;
    padding          : 0px  0px 0px 0px ;
@@ -48,10 +48,12 @@ ul li:before
    background-origin : padding-box;
    background-size   : auto auto;
 }
-div.cuerpoInterior a:hover
+
+a:hover
 {
    background-color  : rgb( 80%,80%,85%);
 }
+
 h1, h2, h3
 {
    /** font-family      : Oswald, serif !important ; **/
