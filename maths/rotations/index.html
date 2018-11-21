@@ -7,6 +7,81 @@
     <title>Rotation matrix in 2D and 3D</title>
   </head>
 <body>
+  
+  <!-- *********************************************************************** -->
+<!-- cabecera                                                                -->
+<!-- *********************************************************************** -->
+<div class='cabeceraExterior'>
+<div class='cabeceraInterior'>
+<span class="titulonombrecua">Carlos&nbsp;Ureña&nbsp;Almagro</span><br/>
+<a href='https://lsi.ugr.es' class='lsi-ugr'>Dpt. LSI</a> -
+<a href='http://etsiit.ugr.es'>ETSIIT</a> -
+<a href='http://www.ugr.es'>Universidad de Granada</a>
+<!--
+   <a href="https://lsi.ugr.es/"><img style="border:none;" src="/~curena/imgs/logo-lsi-trans-40.png"></img></a>
+   <a href="http://etsiit.ugr.es/"><img style="border:none;" src="/~curena/imgs/logo-etsiit-rec-trans-40.png"></img></a>
+-->
+<div class='menuContexto'>
+&#8594;&nbsp;
+<a href="https://lsi.ugr.es/curena/">Inicio</a>&nbsp;
+
+</div> <!-- menuContexto     -->
+</div> <!-- cabeceraInterior -->
+</div> <!-- cabeceraExterior -->
+<!-- *********************************************************************** -->
+<!-- cuerpo                                                                  -->
+<!-- *********************************************************************** -->
+<div class='cuerpoExterior'>
+<!-- *********************************************************************** -->
+<!-- formulario para buscar                                                  -->
+<!-- *********************************************************************** -->
+<div class='formulario' style='position:absolute;
+                               right:10px; top:10px;
+                               width:10%;
+                               background-color: rgb(95%,95%,95%);
+                               margin : 0px ;
+                               border : 0px ;
+                               padding-top : 30px;
+                               padding-left : 10px;
+                               padding-right : 10px;
+                               padding-bottom : 30px;
+                               text-align  : left;'>
+<form style='text-align:left'
+     method = 'post'
+     action = '?vs=si'
+     target = '_blank'>
+     <input type  = 'hidden'
+            name  = "vs"
+            value = "si">
+     </input>
+     <input class = "cuainput"
+            style = "font-family : 'Titillium Web', sans-serif !important ; ;"
+            type  = "submit"
+            name  = "botonVS"
+            value = "Imprimir"
+            size  = "30">
+     </input>
+</form>
+<p/>
+<form  style='text-align:left'
+   method = 'get'
+   action = 'https://www.google.com/search'
+   target = '_blank'>
+   Buscar usando Google en estas páginas:<br/>
+   <input type='hidden' name="ie"         value="UTF-8"></input>
+   <input type='hidden' name="oe"         value="UTF-8"></input>
+   <input type="hidden" name="domains"    value="lsi.ugr.es/curena"></input>
+   <input type="hidden" name="sitesearch" value="lsi.ugr.es/curena"></input>
+   <input type="text"   name="q"          value=""
+          class="textoGoogle" size="10" maxlength="255"></input>
+   <br>
+   <input class="cuainput" type="submit" name="btnG"
+          value="Buscar"      class="botonGoogle" size="10"></input>
+</form>
+</div>
+<div class='cuerpoInterior'>
+<h1>Docencia
+</h1>
 
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
@@ -422,5 +497,8 @@ $$
 $$
 <p/>
 (this page uses <a href="http://docs.mathjax.org/en/latest/start.html#mathjax-cdn">MathJax</a>)
-</body>
+
+</div>
+</div>
+  </body>
 </html>
