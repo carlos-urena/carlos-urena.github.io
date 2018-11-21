@@ -31,7 +31,7 @@ ul li:before
    padding-right : 0.5em ; /** 1 **/
 }
 
-div.cuerpoInterior a
+ a
 {
    text-decoration   : none ;
    color             : rgb(30%,30%,33%);  /** mismo que el "body" **/
@@ -101,90 +101,8 @@ input
    color            : rgb(40%,40%,42%);
 }
 
-div.cabeceraExterior
-{
-   background-color : rgb(50%,50%,50%);
-   border-color     : rgb(100%,0%,0%);
-   border-width     : 0px 0px 0px 0px  ;
-   padding          : 0px 0px 0px 0px ;
-   margin           : 0px 0px 0px 0px ;
-}
-div.cabeceraInterior
-{
-   background-color : rgb(50%,50%,50%);
-   color            : rgb(100%,100%,100%);
-   border-left      : 3em ;
-   border-right     : 0px ;
-   border-top       : 1em ;
-   border-bottom    : 1em ;
-   border-style     : solid ;
-   border-color     : rgb(50%,50%,50%);
 
-   padding          : 0px 0px 0px 0px ;
-   margin           : 0px 0px 0px 0px ;
-   width             : 80% ;
-   max-width         : 1024px ; /** aÃ±adido dic-17 **/
-}
-div.cabeceraInterior a
-{
-   color            : rgb( 85%,85%,87% );
-   text-align:      : left !important ;
-   text-decoration  : none ;
-}
-div.cabeceraInterior a:hover
-{
-   color            : rgb( 100%,100%,100% );
-   background-color : rgb(50%,50%,50%) !important ;
-}
-div.menuContexto
-{
-   border-top       : 3px ;
-   border-left      : 0px ;
-   border-right     : 0px ;
-   border-bottom    : 0px ;
-   margin-top       : 2px ;
-   padding-top      : 2px ;
-   border-style     : solid ;
-   border-color     : rgb( 85%,85%,87% ) ;
-}
-div.cuerpoExterior
-{
-   position         : relative ;   /** aÃ±adido dic 17 **/
-   background-color : rgb(100%,100%,100%);
-   border-color     : rgb(100%,0%,0%);
-   border-width     : 0px 0px 0px 0px ;
-   padding          : 0px 0px 0px 0px;
-   margin           : 0px 0px 0px 0px;
-}
-div.cuerpoInterior
-{
-   background-color  : rgb(100%,100%,100%);
-   border-left       : 3em ;
-   border-right      : 0px ;
-   border-top        : 0em ;
-   border-bottom     : 2em ;
-   border-style      : solid ;
-   border-color      : rgb(100%,100%,100%);
-   padding           : 0px 0px 0px 0px ;
-   margin            : 0px 0px 0px 0px ;
-   width             : 80% ;
-   max-width         : 1024px ; /** aÃ±adido dic-17 **/
-}
-div.pie
-{
-   border-left       : 3em ;
-   border-right      : 0px ;
-   border-top        : 1em ;
-   border-bottom     : 0px ;
-   border-style      : solid ;
-   border-color      : rgb(50%,50%,50%);
-   padding           : 0px 0px 0px 0px ;
-   margin            : 0px 0px 0px 0px ;
-   width             : 80% ;
-   font-size         : 90% ;
-   font-weight       : normal ;
-   color             : rgb(100%,100%,100%);
-}
+
 pre, tt
 {
    font-family      : "Ubuntu Mono", Courier, monospace ;
