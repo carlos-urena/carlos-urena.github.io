@@ -78,13 +78,14 @@ h1, h2, h3
 
 h1
 { 
-   font-size : 160% !important ;
+  font-size : 160% !important ;
   counter-reset: h2counter;
 }
 
 h2
 { 
     font-size : 140% !important ;
+    counter-reset: h3counter;
 }
 
 h3
@@ -96,14 +97,13 @@ h2:before
 {
   content: counter(h2counter) ".\0000a0\0000a0";
   counter-increment: h2counter;
-        counter-reset: h3counter;
 }
 
 h3:before 
 {
-        content: counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0";
-        counter-increment: h3counter;
-    }
+  content: counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0";
+  counter-increment: h3counter;
+}
 
 
 span.titulonombrecua
