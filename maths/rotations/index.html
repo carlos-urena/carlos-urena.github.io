@@ -44,8 +44,9 @@ $
   
 Derivation of rotation matrix for 2D and 3D, from scratch.
 
-<h2>Perpendicular vectors in 2D</h2>
+<h2>2D Rotations</h2>
 
+<h3>Perpendicular vectors in 2D</h3>
 
 We consider $\mathcal{B}=\{\vx,\vy\}$ as an orthonormal basis in a 2D vector
 space. The coordinates in that basis of a
@@ -88,7 +89,7 @@ $$
 $$
 
 
-<h2>Rotations in 2D</h2>
+<h3>Rotation expression</h3>
 
 In a 2D vector space we want to define the rotation transformation $R$.
 This rotation is a rotation around the origin of the vector space, with angle $\theta$ (in radians).
@@ -124,7 +125,7 @@ $$
 values $(a',b')$ are the coordinates of the rotated point $\vp'$.
 
 
-<h2>Matrix form for 2D rotations</h2>
+<h3>Matrix form for 2D rotations</h3>
 
 The rotation transformation
 can we written in homogeneous coordinates by using a 3x3 matrix $\vR_\theta$:
@@ -178,8 +179,9 @@ $$
        \end{array}\right)
 $$
 
-
-<h2>Perpendicular vectors in 3D. Cross product.</h2>
+  <h2>3D Rotations</h2>
+  
+<h3>Perpendicular vectors in 3D. Cross product.</h3>
 
 In a 3D vector space, for any given vector $\vw=(b_0,b_1,b_2)$, there are infinitelly many vectors perpendicular
 to $\vw$ and with the same length as $\vw$ (all those form a circunference in the plane perpendicular to $\vw$).
@@ -240,7 +242,7 @@ $$
 $$
 
 
-<h2>Rotations in 3D and Rodrigues formula</h2>
+<h3>Rotations in 3D and Rodrigues formula</h3>
 
 In 3D, the rotation transform uses an unit-length vector $\vu=(u_0,u_1,u_2)$ as the rotation axis, and an angle $\theta$.
 In order to rotate $\vv$, we decompose it in two components, $\vv_\parallel$ (parallel to $\vu$) and $\vv_\vdash$ (perpendicular
@@ -300,7 +302,7 @@ $$
 $$
 <p/>
 
-<h2>Matrix form for 3D Rotations</h2>
+<h3>Matrix form for 3D Rotations</h3>
 
 
 We can express Rodrigues formula in terms of cross-products, this leads to the general
