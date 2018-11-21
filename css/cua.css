@@ -1,7 +1,12 @@
+html 
+{
+    margin:    0 auto;
+    max-width: 900px;
+}
+
 body
 {
    font-family      : 'Titillium Web', sans-serif !important ;
-   line-height      : 125% !important ; /** esto es por
    /** font-size        : 11pt !important; */
    /** font-size        : 16px !important;  */ /** la unidad px en css es un tamaÃ±o fijo absoluto (en pulgadas) en pantalla o papel **/
    text-align       : left ;
