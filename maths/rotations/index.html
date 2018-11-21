@@ -1,0 +1,417 @@
+
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+$
+\newcommand{\vo}{\mathbf{o}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\vs}{\mathbf{s}}
+\newcommand{\vp}{\mathbf{p}}
+\newcommand{\vx}{\mathbf{x}}
+\newcommand{\vy}{\mathbf{y}}
+\newcommand{\vu}{\mathbf{u}}
+\newcommand{\vw}{\mathbf{w}}
+\newcommand{\vk}{\mathbf{k}}
+\newcommand{\vP}{\mathbf{P}}
+\newcommand{\vR}{\mathbf{R}}
+\newcommand{\vI}{\mathbf{I}}
+$
+
+<h2>Perpendicular vectors in 2D</h2>
+
+
+We consider $\mathcal{B}=\{\vx,\vy\}$ as an orthonormal basis in a 2D vector
+space. The coordinates in that basis of a
+vector $\vv$ are $(a,b)$, and we want to obtain another vector
+$\vv_\perp$, perpendicular to $\vv$, and with the same length. The coordinates of
+$\vv_\perp$ are $(a_\perp,b_\perp)=(-b,a)$ (in what follows we identify vectors with its coordinates in $\mathcal{B}$).
+<p/>
+This perpendicular vector is obtained by rotating $\vv$ $90^o$ towards its left side (counterclockwise, as long
+as we imagine $\vy$  to the left of $\vx$).
+We could use the reverse convention (to rotate clockwise), and use $(b,-a)$, but the first option
+is far more usual.
+<p/>
+It is easy to show that the dot product of both vectors is cero, and that they are
+also of equal length
+$$
+   \vv\cdot\vv_\perp ~=~ a(-b)\,+\,ba ~=~ 0
+   ~~~~~~~~~~~~~
+   \|\vv\|~=~\|\vv_\perp\| ~=~ \sqrt{a^2+b^2}
+$$
+The (lineal) relation between $\vv$ and $\vv_\perp$ can be expressed by
+using a 2x2 matrix $\vP$ acting on coordinate column vectors (relative to $\mathcal{B}$):
+$$
+    \vv_\perp ~=~
+    \left(\begin{array}{c}
+        a_\perp \\ b_\perp
+    \end{array}\right)
+    ~=~
+    \left(\begin{array}{c}
+        -b \\ a
+    \end{array}\right)
+    ~=~
+    \left(\begin{array}{cc}
+      0 & -1 \\
+      1 & 0
+     \end{array}\right)
+    \left(\begin{array}{c}
+        a \\ b
+    \end{array}\right)
+    ~=~ \vP\vv
+$$
+
+
+<h2>Rotations in 2D</h2>
+
+In a 2D vector space we want to define the rotation transformation $R$.
+This rotation is a rotation around the origin of the vector space, with angle $\theta$ (in radians).
+<p/>
+If we want to rotate vector $\vv$, we begin by using the previous definition of $\vv_\perp=\vP\vv$ and
+define the rotated vector $\vv'$ as
+$$
+   \vv' ~=~  (\cos\theta)\vv \,+\, (\sin\theta)\vv_\perp
+$$
+note that when $\theta=0$, we have $\vv'=\vv$.
+<p/>
+
+Let us assume that the coordinates of $\vv$ in the orthonormal basis $\{\vx,\vy\}$
+ are  $(a,b)$ (that is, $\vv\,=\,a\vx+b\vy$). This allows us
+to compute the coordinates of $\vv'$, by substituting:
+$$
+  \begin{align*}
+   \vv'  &=    (\cos\theta)\vv \,+\, (\sin\theta)\vv_\perp \\
+         &=     (\cos\theta)(a\vx\,+\,b\vy)
+                     \,+\, (\sin\theta)(-b\vx\,+\,a\vy) \\
+         &=     (a\cos\theta-b\sin\theta)\vx   \,+\,
+                        (a\sin\theta+b\cos\theta)\vy  \\
+         &=     \,a'\vx \,+\, b'\vy
+  \end{align*}
+$$
+where
+$$
+    \begin{align*}
+       a' &= a\cos\theta-b\sin\theta  \\
+       b' &= a\sin\theta+b\cos\theta
+   \end{align*}
+$$
+values $(a',b')$ are the coordinates of the rotated point $\vp'$.
+
+
+<h2>Matrix form for 2D rotations</h2>
+
+The rotation transformation
+can we written in homogeneous coordinates by using a 3x3 matrix $\vR_\theta$:
+$$
+   \vv' ~=~
+   \left(\begin{array}{c}
+      a' \\ b'
+   \end{array}\right)
+   ~=~
+   \left(\begin{array}{cc}
+      \cos\theta & -\sin\theta  \\
+      \sin\theta & \cos\theta
+   \end{array}\right)
+   \left(\begin{array}{c}
+      a \\ b
+   \end{array}\right)
+   ~=~
+   \vR_\theta\vv
+$$
+
+Matrix $\vR_\theta$ can also be obtained by writing $\vv$ as $\vI\vv$, where
+$\vI$ is the identity matrix, and $\vv_\perp$ as $\vP\vv$, then:
+$$
+  \begin{align*}
+   \vv' &=   (\cos\theta)\vv \,+\, (\sin\theta)\vv_\perp \\
+        &=    (\cos\theta)\vI\vv \,+\, (\sin\theta)\vP\vv \\
+        &=     \left[(\cos\theta)\vI \,+\, (\sin\theta)\vP\right]\,\vv
+  \end{align*}
+$$
+this implies we can write $\vR_\theta$ as a combination of $\vI$ and $\vP$:
+$$
+   \vR_\theta
+   ~~=~~
+      (\cos\theta)\vI \,+\, (\sin\theta)\vP
+   ~~=~~
+      (\cos\theta)
+       \left(\begin{array}{cc}
+          1  &  0   \\
+          0  &  1
+       \end{array}\right)
+       \,+\,
+       (\sin\theta)
+       \left(\begin{array}{cc}
+          0  &  -1  \\
+          1  &  0
+       \end{array}\right)
+   ~~=~~
+       \left(\begin{array}{cc}
+          \cos\theta & -\sin\theta  \\
+          \sin\theta & \cos\theta
+       \end{array}\right)
+$$
+
+
+<h2>Perpendicular vectors in 3D. Cross product.</h2>
+
+In a 3D vector space, for any given vector $\vw=(b_0,b_1,b_2)$, there are infinitelly many vectors perpendicular
+to $\vw$ and with the same length as $\vw$ (all those form a circunference in the plane perpendicular to $\vw$).
+<p/>
+To select one of those perpendicular vectors, we must use a third vector $\vk$ (non colinear with $\vw$), and compute
+the cross product of $\vk$ and $\vw$. Then, vector $\vk\times\vw$ is perpendicular to $\vw$ (but not neccesarly
+with the same length as $\vw$).
+
+If $(a_0,a_1,a_2)$ are the coordinates of $\vk$, then:
+$$
+   \vk\times\vw
+   ~~=~~
+   \left(\begin{array}{c}
+      a_0 \\ a_1 \\ a_2
+   \end{array}\right)
+   \times
+   \left(\begin{array}{c}
+      b_0 \\ b_1 \\ b_2
+   \end{array}\right)
+   ~~=~~
+   \left(\begin{array}{c}
+      a_1b_2-a_2b_1 \\
+      a_2b_0-a_0b_2 \\
+      a_0b_1- a_1b_0
+   \end{array}\right)
+$$
+
+This cross-product operation (pre-multiplying by $\vk$), can also be written as a linear matrix operation by using matrix $\vP_\vk$
+defined as follows:
+$$
+    \vP_\vk ~~=~~
+    \left(\begin{array}{c}
+       0    &  -a_2  & a_1 \\
+       a_2  &  0    &  -a_0  \\
+      -a_1  &  a_0 &   0
+   \end{array}\right)
+$$
+It is easy to check that pre-multiplying $\vk$ by $\vw$ is the same as to apply $\vP_\vk$ to $\vw$
+$$
+   \vP_\vk\vw
+   ~~=~~
+      \left(\begin{array}{c}
+         0    &  -a_2  & a_1 \\
+         a_2  &  0    &  -a_0  \\
+        -a_1  &  a_0 &   0
+     \end{array}\right)
+      \left(\begin{array}{c}
+         b_0 \\ b_1 \\ b_2
+      \end{array}\right)
+   ~~=~~
+      \left(\begin{array}{c}
+         a_1b_2-a_2b_1 \\
+         a_2b_0-a_0b_2 \\
+         a_0b_1- a_1b_0
+      \end{array}\right)
+   ~~=~~
+      \vk\times\vw
+$$
+
+
+<h2>Rotations in 3D and Rodrigues formula</h2>
+
+In 3D, the rotation transform uses an unit-length vector $\vu=(u_0,u_1,u_2)$ as the rotation axis, and an angle $\theta$.
+In order to rotate $\vv$, we decompose it in two components, $\vv_\parallel$ (parallel to $\vu$) and $\vv_\vdash$ (perpendicular
+to $\vu$, but in the plane spawned by $\vu$ and $\vv$)
+$$
+   \vv ~~=~~\vv_\parallel  \,+\, \vv_\vdash
+$$
+where $\vv_\parallel$ is obtained by projecting $\vv$ onto rotation axis, that is:
+$$
+    \vv_\parallel ~~=~~(\vv\cdot\vu)\,\vu
+$$
+and $\vv_\vdash$ is obtained as:
+$$
+    \vv_\vdash  ~~=~~ \vv \,-\,\vv_\parallel
+$$
+in the case $\vv$ and $\vu$ are collinear, vector $\vv_\vdash$ is the null vector and $\vv_\parallel=\vv$.
+We define an additional perpendicular vector $\vv_\perp$, which is perpendicular to both $\vv_\parallel$ and to $\vv_\vdash$,
+and has the same length as $\vv_\vdash$:
+$$
+  \vv_\perp  ~~=~~ \vu \,\times\,  \vv_\vdash
+$$
+Note that, as $\vu$ is unit-length and perpendicular to $\vv_\vdash$, then $\vv_\perp$ has the same
+length as $\vv_\vdash$.
+
+<p/>
+With these definitions in mind, we can define the rotated vector $\vv'$ by observing that its component parallel to
+the axis does not changes, while the component perpendicular to the axis is rotated as in 2D (in the plane perpendicular to the axis),
+that is, we define
+$$
+    \vv' ~~=~~ \vv_\parallel  \,+\, (\cos\theta)\vv_\vdash   \,+\, (\sin\theta)\vv_\perp
+$$
+<p/>
+We rewrite $\vv_\parallel+(\cos\theta)\vv_\vdash$ as follows:
+$$
+\begin{align*}
+   \vv_\parallel  \,+\, (\cos\theta)\vv_\vdash
+     ~~&=~~ \vv_\parallel \,+\, (\cos\theta)(\vv-\vv_\parallel)  \\
+       &=~~ (\cos\theta)\vv \,+\, (1-\cos\theta)\vv_\parallel \\
+       &=~~ (\cos\theta)\vv \,+\, (1-\cos\theta)(\vv\cdot\vu)\vu
+\end{align*}
+$$
+Vector $\vv_\perp$ can we rewritten as:
+$$
+\begin{align*}
+    \vv_\perp  ~~&=~~ \vu \,\times\,  \vv_\vdash \\
+                 &=~~ \vu \,\times\,  (\vv \,-\,\vv_\parallel) \\
+                 &=~~ \vu \,\times\,\vv  \,-\,\vu \,\times\, \vv_\parallel  \\
+                 &=~~ \vu \,\times\,\vv
+\end{align*}
+$$
+here, as $\vu$ and $\vv_\parallel$ are parallel, we have substituted their cross product by $0$.
+Now we can write the expression for $\vv'$ which is called <b>Rodrigues' Rotation formula</b>:
+$$
+\boxed{\mbox{}\\~~~~~~
+  \vv'   ~~=~~ (\cos\theta)\vv \,+\, (1-\cos\theta)(\vv\cdot\vu)\vu \,+\, (\sin\theta)\vu\times\vv
+~~~~~~}
+$$
+<p/>
+
+<h2>Matrix form for 3D Rotations</h2>
+
+
+We can express Rodrigues formula in terms of cross-products, this leads to the general
+rotation matrix. We begin by rewriting $\vv_\vdash$ as:
+$$
+  \vv_\vdash  ~~=~~ \vv_\perp\times\vu   ~~=~~ -\vu\times\vv_\perp ~~=~~ -\vu\times(\vu\times\vv)
+$$
+This allows to write $\vv_\parallel$ by using cross-products:
+$$
+    \vv_\parallel ~~=~~ \vv \,-\, \vv_\vdash
+                  ~~=~~ \vv \,+\, \vu \times(\vu\times\vv)
+$$
+<p/>
+Vector $\vv_\parallel+(\cos\theta)\vv_\vdash$ is expressed as follows:
+$$
+\begin{align*}
+   \vv_\parallel  \,+\, (\cos\theta)\vv_\vdash
+     ~~&=~~ \vv_\parallel \,+\, (\cos\theta)(\vv-\vv_\parallel)  \\
+       &=~~ (\cos\theta)\vv \,+\, (1-\cos\theta)\vv_\parallel \\
+       &=~~ (\cos\theta)\vv \,+\, (1-\cos\theta)[\vv \,+\, \vu \times (\vu\times\vv)] \\
+       &=~~ \vv \,+\,(1-\cos\theta)\vu \times (\vu\times\vv)
+\end{align*}
+$$
+<p/>
+So we end up with this expression for $\vv'$:
+$$
+\begin{align*}
+   \vv'  ~~&=~~  \vv_\parallel  \,+\, (\cos\theta)\vv_\vdash   \,+\, (\sin\theta)\vv_\perp \\
+           &=~~   \vv \,+\,(1-\cos\theta)\vu \times (\vu\times\vv) \,+\, (\sin\theta)\vu\times\vv
+\end{align*}
+$$
+<p/>
+This last expression is written just in terms of $\vv,\vu$ and $\theta$, uses just cross-products, and is equivalent to
+Rodrigues' formula. From that
+we obtain the matrix $\vR_{\theta,\vu}$ for rotation in 3D, which is expressed in terms of
+the powers of matrix $\vP_\vu$:
+$$
+\boxed{\mbox{}\\~~~~~~
+  \vR_{\theta,\vu}  ~~=~~  \vI \,+\, (\sin\theta)\vP_\vu \,+\,(1-\cos\theta)\vP^2_\vu
+~~~~~~}
+$$
+where $\vI$ is the identity matrix (that is, $\vI=\vP_u^0$), and
+$$
+    \vP_\vu  ~~=~~
+    \left(\begin{array}{c}
+      0    &  -u_2  & u_1 \\
+      u_2  &  0    &  -u_0  \\
+     -u_1  &  u_0 &   0
+   \end{array}\right)
+$$
+Thus:
+$$
+    \vP^2_\vu  ~~=~~
+    \left(\begin{array}{c}
+      0    &  -u_2  & u_1 \\
+      u_2  &  0    &  -u_0  \\
+     -u_1  &  u_0 &   0
+   \end{array}\right)
+   \left(\begin{array}{c}
+     0    &  -u_2  & u_1 \\
+     u_2  &  0    &  -u_0  \\
+    -u_1  &  u_0 &   0
+  \end{array}\right)
+  ~~=~~
+  \left(\begin{array}{c}
+    u_0^2-1  &  u_0u_1  & u_0u_2 \\
+    u_0u_1  &  u_1^2-1  & u_1u_2  \\
+    u_0u_2  &  u_1u_2   & u_2^2-1
+ \end{array}\right)
+$$
+where we have used $u_0^2+u_1^2+u_2^2=1$.
+By expanding the matrixes:
+<p/>
+$$
+\vR_{\theta,\vu}  ~~=~~
+\left(\begin{array}{c}
+     1   &  0  &  0 \\
+     0   &  1  &  0  \\
+     0   &  0  &  1
+\end{array}\right)
+\,+\,(\sin\theta)
+\left(\begin{array}{c}
+     0    &  -u_2  &   u_1 \\
+     u_2  &  0      &  -u_0  \\
+    -u_1  &  u_0    &   0
+\end{array}\right)
+\,+\,
+(1-\cos\theta)
+\left(\begin{array}{c}
+  u_0^2-1  &  u_0u_1  & u_0u_2 \\
+  u_0u_1  &  u_1^2-1  & u_1u_2  \\
+  u_0u_2  &  u_1u_2   & u_2^2-1
+\end{array}\right)
+$$
+And finally:
+$$
+\vR_{\theta,\vu}
+  ~~=~~
+\left(\begin{array}{c}
+  (1-c)u_0^2+c      &  (1-c)u_0u_1-su_2   & (1-c)u_0u_2+su1 \\
+  (1-c)u_0u_1+su_2  &  (1-c)u_1^2+c       & (1-c)u_1u_2-su_0  \\
+  (1-c)u_0u_2-su_1  &  (1-c)u_1u_2+su_0   & (1-c)u_2^2+c
+\end{array}\right)
+~~~~~~~\mbox{where:}~~~
+   \left\{\begin{array}{l}
+       s \,=\, \sin\theta \\
+       c \,=\, \cos\theta
+   \end{array}\right.
+$$
+More compactly:
+$$
+\boxed{~\\~~~~~~
+\vR_{\theta,\vu}
+  ~~=~~
+\left(\begin{array}{c}
+  a_{00}+c      &  a_{01}-su_2    & a_{02}+su1 \\
+  a_{10}+su_2  &   a_{11}+c       & a_{12}-su_0  \\
+  a_{20}-su_1  &   a_{21}+su_0    & a_{22}+c
+\end{array}\right)
+~~~~~~~~~~\mbox{where:}~~~
+   \left\{\begin{array}{l}
+       s \, = \, \sin\theta \\
+       c \, = \, \cos\theta \\
+       a_{ij} \, = \, (1-c)u_iu_j
+   \end{array}\right.
+~~~~~~\\\mbox{}}
+$$
+<p/>
+(this page uses <a href="http://docs.mathjax.org/en/latest/start.html#mathjax-cdn">MathJax</a>)
