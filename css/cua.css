@@ -1,0 +1,269 @@
+body
+{
+   font-family      : 'Titillium Web', sans-serif !important ;
+   line-height      : 125% !important ; /** esto es por
+   /** font-size        : 11pt !important; */
+   /** font-size        : 16px !important;  */ /** la unidad px en css es un tamaÃ±o fijo absoluto (en pulgadas) en pantalla o papel **/
+   text-align       : left ;
+   color            : rgb(30%,30%,33%);
+   background-color : rgb(50%,50%,50%);
+   border-width     : 0px ;
+   margin           : 0px 0px 0px 0px ;
+   padding          : 0px  0px 0px 0px ;
+}
+
+p
+{
+   text-align       : justify ;
+}
+
+ul li
+{
+  list-style-type  : none; /** quitar bullets estÃ¡ndar **/
+   text-indent : -1em ; /** mover primera linea a la izquierda para alinear
+                           inicio de texto de esa linea con las demÃ¡s **/
+}
+
+ul li:before
+{
+   content : '\25A0' ;  /** cuadradito (ver: https://www.w3schools.com/charsets/ref_utf_geometric.asp) **/
+   color   : rgb(60%,60%,60%);
+   padding-right : 0.5em ; /** 1 **/
+}
+
+div.cuerpoInterior a
+{
+   text-decoration   : none ;
+   color             : rgb(30%,30%,33%);  /** mismo que el "body" **/
+   padding-bottom    : 2px ;
+   background        : url("/curena/imgs/sub-10x4.png") repeat-x scroll 0px 92% transparent;
+   background-color  : transparent;
+   background-image  : url("/curena/imgs/sub-10x4.png");
+   background-repeat : repeat-x;
+   background-attachment
+                     : scroll;
+   background-position
+                     : 0px 92%;
+   background-clip   : border-box;
+   background-origin : padding-box;
+   background-size   : auto auto;
+}
+div.cuerpoInterior a:hover
+{
+   background-color  : rgb( 80%,80%,85%);
+}
+h1, h2, h3
+{
+   /** font-family      : Oswald, serif !important ; **/
+   /** font-family      : 'Titillium Web', sans-serif !important ; */
+   font-family      : 'Merriweather', serif !important ;
+   font-weight      : normal !important ;
+   color            : rgb(15%,25%,45%);
+   margin-top       : 0ex ;
+   border-top       : 0ex ;
+   padding-top      : 2ex ;  /** crear espacio arriba con padding, no con margin,
+                                  el margin se sale por fuera del div padre que contiene
+                                  el h1 **/
+   /** padding-bottom    : 0ex ;
+   border-bottom     : 1ex ;
+   margin-bottom     : 4px ; **/
+}
+h1
+{ font-size : 140% !important ;
+}
+h2
+{ font-size : 120% !important ;
+}
+h3
+{ font-size : 100% !important ;
+}
+span.titulonombrecua
+{
+   font-family      : 'Merriweather', serif !important ;
+   font-weight      : bold !important ;
+   font-size        : 16pt !important ;
+   color            : rgb(100%,100%,100%);
+}
+form
+{
+   font-family       : 'Titillium Web', serif !important ;
+   font-size         : 10pt ;
+   color             : rgb(40%,40%,42%);
+}
+input
+{
+   border           : 1px solid ;
+   border-color     : rgb(40%,40%,42%);
+   border-radius    : 2px;
+   background-color : rgb(100%,100%,100%);
+   font-family      : 'Titillium Web', sans-serif !important ;
+   font-size        : 10pt ;
+   color            : rgb(40%,40%,42%);
+}
+
+div.cabeceraExterior
+{
+   background-color : rgb(50%,50%,50%);
+   border-color     : rgb(100%,0%,0%);
+   border-width     : 0px 0px 0px 0px  ;
+   padding          : 0px 0px 0px 0px ;
+   margin           : 0px 0px 0px 0px ;
+}
+div.cabeceraInterior
+{
+   background-color : rgb(50%,50%,50%);
+   color            : rgb(100%,100%,100%);
+   border-left      : 3em ;
+   border-right     : 0px ;
+   border-top       : 1em ;
+   border-bottom    : 1em ;
+   border-style     : solid ;
+   border-color     : rgb(50%,50%,50%);
+
+   padding          : 0px 0px 0px 0px ;
+   margin           : 0px 0px 0px 0px ;
+   width             : 80% ;
+   max-width         : 1024px ; /** aÃ±adido dic-17 **/
+}
+div.cabeceraInterior a
+{
+   color            : rgb( 85%,85%,87% );
+   text-align:      : left !important ;
+   text-decoration  : none ;
+}
+div.cabeceraInterior a:hover
+{
+   color            : rgb( 100%,100%,100% );
+   background-color : rgb(50%,50%,50%) !important ;
+}
+div.menuContexto
+{
+   border-top       : 3px ;
+   border-left      : 0px ;
+   border-right     : 0px ;
+   border-bottom    : 0px ;
+   margin-top       : 2px ;
+   padding-top      : 2px ;
+   border-style     : solid ;
+   border-color     : rgb( 85%,85%,87% ) ;
+}
+div.cuerpoExterior
+{
+   position         : relative ;   /** aÃ±adido dic 17 **/
+   background-color : rgb(100%,100%,100%);
+   border-color     : rgb(100%,0%,0%);
+   border-width     : 0px 0px 0px 0px ;
+   padding          : 0px 0px 0px 0px;
+   margin           : 0px 0px 0px 0px;
+}
+div.cuerpoInterior
+{
+   background-color  : rgb(100%,100%,100%);
+   border-left       : 3em ;
+   border-right      : 0px ;
+   border-top        : 0em ;
+   border-bottom     : 2em ;
+   border-style      : solid ;
+   border-color      : rgb(100%,100%,100%);
+   padding           : 0px 0px 0px 0px ;
+   margin            : 0px 0px 0px 0px ;
+   width             : 80% ;
+   max-width         : 1024px ; /** aÃ±adido dic-17 **/
+}
+div.pie
+{
+   border-left       : 3em ;
+   border-right      : 0px ;
+   border-top        : 1em ;
+   border-bottom     : 0px ;
+   border-style      : solid ;
+   border-color      : rgb(50%,50%,50%);
+   padding           : 0px 0px 0px 0px ;
+   margin            : 0px 0px 0px 0px ;
+   width             : 80% ;
+   font-size         : 90% ;
+   font-weight       : normal ;
+   color             : rgb(100%,100%,100%);
+}
+pre, tt
+{
+   font-family      : "Ubuntu Mono", Courier, monospace ;
+   font-weight      : normal ;
+   color            : rgb(20%,20%,30%);
+   width            : 95% ;
+}
+pre
+{
+   background-color : rgb(96%,97%,98%);
+   border-width     : 1px ;
+   border-style     : solid ;
+   border-color     : rgb(50%,50%,60%);
+   margin-left      : auto ;
+   margin-right     : auto ;
+   padding-top      : 5px ;
+   padding          : 5px 5px 5px 5px ;
+}
+
+
+/*** numeraciÃ³n "acumulativa" de listas ***/
+/*** ver: http://www.w3.org/TR/2004/CR-CSS21-20040225/generate.html ***/
+/***      (seccion 12.4.1) **/
+
+/**
+div.acum-num-listas OL { counter-reset: item }
+div.acum-num-listas LI { display: block }
+div.acum-num-listas LI:before { content: counters(item, ".") ". " ; counter-increment: item }
+**/
+
+/** 1er nivel **/
+
+div.acum-num-listas LI
+{
+   display : block ;
+}
+
+div.acum-num-listas > OL > LI > B
+{
+   font-weight : bold ;
+   color       : rgb(0%,0%,50%);
+}
+
+div.acum-num-listas > OL
+{
+   counter-reset : capit ;
+}
+
+div.acum-num-listas > OL > LI:before
+{
+   content             : counter(capit) ". " ;
+   counter-increment   : capit               ;
+   font-weight         : bold ;
+}
+
+/*** 2o nivel **/
+
+div.acum-num-listas OL OL
+{
+   counter-reset : sec ;
+}
+
+div.acum-num-listas LI LI:before
+{
+   content              : counter(capit) "." counter(sec) ".- " ;
+   counter-increment    : sec ;
+   font-weight          : bold ;
+}
+
+/*** 3er NIVEL ***/
+
+div.acum-num-listas OL OL OL
+{
+   counter-reset : apartado ;
+}
+
+div.acum-num-listas LI LI LI:before
+{
+   content              : counter(capit) "." counter(sec) counter(apartado,lower-latin) " -- " ;
+   counter-increment    : apartado ;
+
+}
