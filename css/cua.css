@@ -7,14 +7,14 @@ html
 body
 {
    font-family      : 'Titillium Web', sans-serif !important ;
-   /** font-size        : 11pt !important; */
-   /** font-size        : 16px !important;  */ /** la unidad px en css es un tamaÃ±o fijo absoluto (en pulgadas) en pantalla o papel **/
+   /** la unidad px en css es un tamaño fijo absoluto (en pulgadas) en pantalla o papel **/
    text-align       : left ;
    color            : rgb(15%,15%,15%);
    background-color : rgb(100%,100%,100%);
    border-width     : 0px ;
    margin           : 0px 0px 0px 0px ;
    padding          : 0px  0px 0px 0px ;
+   counter-reset    : h2counter;
 }
 
 p
@@ -64,7 +64,7 @@ h1, h2, h3
    /** font-family      : Oswald, serif !important ; **/
    /** font-family      : 'Titillium Web', sans-serif !important ; */
    font-family      : 'Merriweather', serif !important ;
-   font-weight      : normal !important ;
+   font-weight      : bold !important ;
    color            : rgb(15%,25%,45%);
    margin-top       : 0ex ;
    border-top       : 0ex ;
@@ -75,15 +75,37 @@ h1, h2, h3
    border-bottom     : 1ex ;
    margin-bottom     : 4px ; **/
 }
+
 h1
-{ font-size : 140% !important ;
+{ 
+   font-size : 160% !important ;
+  counter-reset: h2counter;
 }
+
 h2
-{ font-size : 120% !important ;
+{ 
+    font-size : 140% !important ;
 }
+
 h3
-{ font-size : 100% !important ;
+{ 
+    font-size : 120% !important ;
 }
+
+h2:before 
+{
+  content: counter(h2counter) ".\0000a0\0000a0";
+  counter-increment: h2counter;
+        counter-reset: h3counter;
+}
+
+h3:before 
+{
+        content: counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0";
+        counter-increment: h3counter;
+    }
+
+
 span.titulonombrecua
 {
    font-family      : 'Merriweather', serif !important ;
