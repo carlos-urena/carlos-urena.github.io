@@ -2,7 +2,7 @@
 
 Para usar en LaTeX una fuente parecida a Cambria, se puede usar 
 el package latex Caladea (`\usepackage{caladea}`).  Este package Latex 
-viene incorporado al paquete debian texlive-fonts-extra. Igualmente se 
+viene incorporado al paquete debian `texlive-fonts-extra`. Igualmente se 
 puede probar con el package latex Carlito, que viene a ser un sustituto de la fuente Calibri. 
 
 Para ver en linux (Ubuntu) los fuentes que incorpora `texlive-font-extra`, podemos escribir:
