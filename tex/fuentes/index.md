@@ -9,7 +9,7 @@ Para ver en linux (Ubuntu) los fuentes que incorpora `texlive-font-extra`, podem
 
  `apt show texlive-fonts-extra | more`
 
-Igualmente se puede hacer con el paquete Debian texlive-fonts-recommended. 
+Igualmente se puede hacer con el paquete Debian `texlive-fonts-recommended`. 
 En esta página se puede ver una muestra de fuentes en estos paquetes:
 
 https://www.tjansson.dk/2011/01/latex-fonts-73-pdf-and-jpg-samples/ 
