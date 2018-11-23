@@ -3,11 +3,11 @@
 
 ## Maths
 
-[2D and 3D rotation matrix derivation](maths/rotations)
+[2D and 3D rotation matrix derivation](https://carlos-urena.github.io/maths/rotations)
 
 ## LaTeX
 
-[Portable Cambria replacement in LaTeX](/tex/fuentes)
+[Portable Cambria replacement in LaTeX](https://carlos-urena.github.io/tex/fuentes)
 
 ## Github public repositories
 
