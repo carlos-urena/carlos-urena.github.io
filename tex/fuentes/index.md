@@ -12,7 +12,7 @@ Para ver en linux (Ubuntu) los fuentes que incorpora `texlive-font-extra`, podem
 Igualmente se puede hacer con el paquete Debian `texlive-fonts-recommended`. 
 En esta página se puede ver una muestra de fuentes en estos paquetes:
 
-(https://www.tjansson.dk/2011/01/latex-fonts-73-pdf-and-jpg-samples/) 
+[](https://www.tjansson.dk/2011/01/latex-fonts-73-pdf-and-jpg-samples/) 
 
 Una opción interesante es combinar Caladea para el texto normal con Courier New 
 para textos de espaciado fijo (listados de código fuente, identificadores, etc...). Esta combinación puede lograrse con estas sentencias en la cabecera del fuente latex:
