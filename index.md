@@ -1,16 +1,14 @@
-test for index.md file
+# Links to various github pages here:
 
-
-Hello world! 
 
 ## Maths
 
-Rotations
+[2D and 3D rotation matrix derivation](maths/rotations)
 
 ## LaTeX
 
-Fonts
+[Portable Cambria replacement in LaTeX](tex/fuentes)
 
-## Github public Repositories
+## Github public repositories
 
-psc-sampler
+[Optimal sampling for spherical light sources](github.com/carlos-urena/psc-sampler)
