@@ -11,4 +11,4 @@
 
 ## Github public repositories
 
-[Optimal sampling for spherical light sources](github.com/carlos-urena/psc-sampler)
+[Optimal sampling for spherical light sources](https://github.com/carlos-urena/psc-sampler)
