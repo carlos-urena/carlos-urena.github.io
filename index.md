@@ -7,7 +7,7 @@
 
 ## LaTeX
 
-[Portable Cambria replacement in LaTeX](tex/fuentes)
+[Portable Cambria replacement in LaTeX](/tex/fuentes)
 
 ## Github public repositories
 
