@@ -108,6 +108,14 @@ h3:before
      counter-increment: h3counter;
 }
 
+div.header
+{
+   font-family      : 'Merriweather', serif !important ;
+   font-weight      : bold !important ;
+   font-size        : 16pt !important ;
+   color            : rgb(100%,100%,100%);
+   background-color : rgb(40%,40%,42%);
+}
 
 span.titulonombrecua
 {
