@@ -48,14 +48,7 @@ Derivation of rotation matrix for 2D and 3D, from scratch.
 
 <h3>Perpendicular vectors in 2D</h3>
 
-<!---
-We consider $\mathcal{B}=\{\vx,\vy\}$ as an orthonormal basis in a 2D vector
-space. The coordinates in that basis of a
-vector $\vv$ are $(a,b)$, and we want to obtain another vector
-$\vv_\perp$, perpendicular to $\vv$, and with the same length. The coordinates of
-$\vv_\perp$ are $(a_\perp,b_\perp)=(-b,a)$ (in what follows we identify vectors with its coordinates in $\mathcal{B}$).
-<p/>
---->
+
   
 We consider a 2D real vector space, in that space we know  $\mathcal{B}=\{\vx,\vy\}$ is an orthonormal basis, thus we know 
   $\vx\cdot\vy=0$ and $\vx\cdot\vx=\vy\cdot\vy=1$. We want to
@@ -65,7 +58,7 @@ $\vv$ and $\vv^\perp$ have the same length (that is $\vv\cdot\vv=\vv^\perp\cdot\
   possible vectors obeying properties (a) and (b), because if $\vu$ is perpendicular and of equal length, then $-\vu$ also hold these two properties.
   Thus, to properly define the operation we impose an additional condition: when aplied to $\vx$ it yields $\vy$, that is $\vy=\vx^\perp$. 
 <p/>  
-Let us call $(a,b)$ to the coordinates of $\vv$ in $\mathcal{B}$, that is $\vv=a\vx+b\vy$ then we can define $\vv^\perp$ as 
+Let us call $(a,b)$ to the coordinates of $\vv$ in $\mathcal{B}$, that is $\vv=a\vx+b\vy$. Then we can define $\vv^\perp$ as 
 $$
      \vv^\perp ~~=~~ -b\vx\,+\,a\vy
 $$
