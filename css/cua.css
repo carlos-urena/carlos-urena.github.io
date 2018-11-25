@@ -31,6 +31,7 @@ div.header
 
 span.titulo
 {
+   font-weight : bold !important ;
    font-size : 110% !important ; 
 }
 span.fecha
