@@ -91,26 +91,28 @@ $$
     ~=~ \vP\vv
 $$
 
-
+$$\newcommand{\vrot}{\vv_\mbox{\small box}}$$
+  
 <h3>Rotation expression</h3>
 
 In a 2D vector space we want to define the rotation transformation $R$.
 This rotation is a rotation around the origin of the vector space, with angle $\theta$ (in radians).
 <p/>
 If we want to rotate vector $\vv$, we begin by using the previous definition of $\vv^\perp=\vP\vv$ and
-define the rotated vector $\vv_\mbox{rot}$ as
+define the rotated vector $\vrot$ as
 $$
-   \vv_\mbox{rot} ~=~  (\cos\theta)\vv \,+\, (\sin\theta)\vv^\perp
+   \vrot ~=~  (\cos\theta)\vv \,+\, (\sin\theta)\vv^\perp
 $$
-note that when $\theta=0$, we have $\vv_\mbox{rot}=\vv$.
+note that when $\theta=0$, we have $\vrot=\vv$.
 <p/>
 
 Let us assume that the coordinates of $\vv$ in the orthonormal basis $\{\vx,\vy\}$
  are  $(a,b)$ (that is, $\vv\,=\,a\vx+b\vy$). This allows us
-to compute the coordinates of $\vv_\mbox{rot}$, by substituting:
+to compute the coordinates of $\vrot$, by substituting:
 $$
   \begin{align*}
-   \vv_\mbox{rot}  &=    (\cos\theta)\vv \,+\, (\sin\theta)\vv_\perp \\
+   \vrot  
+         &=    (\cos\theta)\vv \,+\, (\sin\theta)\vv_\perp \\
          &=     (\cos\theta)(a\vx\,+\,b\vy)
                      \,+\, (\sin\theta)(-b\vx\,+\,a\vy) \\
          &=     (a\cos\theta-b\sin\theta)\vx   \,+\,
@@ -133,7 +135,7 @@ values $(a',b')$ are the coordinates of the rotated point $\vp'$.
 The rotation transformation
 can we written in homogeneous coordinates by using a 3x3 matrix $\vR_\theta$:
 $$
-   \vv_\mbox{rot} ~=~
+   \vrot ~=~
    \left(\begin{array}{c}
       a' \\ b'
    \end{array}\right)
@@ -153,7 +155,8 @@ Matrix $\vR_\theta$ can also be obtained by writing $\vv$ as $\vI\vv$, where
 $\vI$ is the identity matrix, and $\vv^\perp$ as $\vP\vv$, then:
 $$
   \begin{align*}
-   \vv' &=   (\cos\theta)\vv \,+\, (\sin\theta)\vv_\perp \\
+   \vrot' 
+        &=   (\cos\theta)\vv \,+\, (\sin\theta)\vv_\perp \\
         &=    (\cos\theta)\vI\vv \,+\, (\sin\theta)\vP\vv \\
         &=     \left[(\cos\theta)\vI \,+\, (\sin\theta)\vP\right]\,\vv
   \end{align*}
