@@ -45,164 +45,134 @@ $
 \newcommand{\vI}{\mathbf{I}}
 \newcommand{\vrot}{\vv_\mathrm{rot}}
 \newcommand{\mP}{\mathcal{P}}
-\newcommand{\bper}{\!\perp\!}
-\newcommand{\bpar}{\!\parallel\!}
+\newcommand{\mR}{\mathcal{R}}
+\newcommand{\mI}{\mathcal{I}}
+
+\newcommand{\flecha}[1]{\vec{#1}}
+\newcommand{\vfx}{\flecha{x}}
+\newcommand{\vfy}{\flecha{y}}
+\newcommand{\vfz}{\flecha{z}}
+\newcommand{\vfu}{\flecha{u}}
+\newcommand{\vfv}{\flecha{v}}
+\newcommand{\vfw}{\flecha{w}}
+\newcommand{\vfk}{\flecha{k}}
+\newcommand{\vfvrot}{\vfv_\mathrm{rot}}
+
+
+\newcommand{\opar}{\parallel}  %% parallel
+\newcommand{\oper}{\vdash}
+\newcommand{\operV}{\perp}
+
+\newcommand{\boper}{\!\oper\!}
+\newcommand{\boperV}{\!\operV\!}
+\newcommand{\bopar}{\!\opar\!}
 $
+<!-- ####################################################################### -->
 
 <h1>Rotation matrix</h1>
 
 Derivation of rotation matrix for 2D and 3D, from scratch.
 
-<h2>2D Rotations</h2>
+<!-- ####################################################################### -->
 
-<h3>Lineal operations in vector space</h3>
 
-We consider an affine space, either a 2D or 3D one. The vector space
-in that affine space has a scalar product, which defines lengths of vectors
+<h2>The vector space</h2>
+
+<h3>Operations and coordinates.</h3>
+
+We consider a vector space, either a 2D or 3D one. This vector space
+has a scalar product, which defines lengths of vectors
 and angles between them, as usual. We assume this vector space includes an
-orthonormal basis $\{\vx,\vy\}$ in 2D, or $\{\vx,\vy,\vz\}$ in 3D.
+orthonormal basis $\{\vfx,\vfy\}$ in 2D, or $\{\vfx,\vfy,\vfz\}$ in 3D.
 <p/>
-In 2D we have the lineal
-operator $\mP$, this operator, when applied to any vector $\vv$ yields a
-vector $\mP\vv$ perpendicular to $\vv$, that is, it holds $\vv\cdot(\mP\vv)=0$, and with
-the same length, that is $(\mP\vv)\cdot(\mP\vv)=\vv\cdot\vv$. As there are two possible
-definitions, we assume that $\vy=\mP\vx$.
-<p/>
-In 3D we have the cross product operation $\times$, with the usual properties.
 
-<h3>Parallel and perpendicular components</h3>
+Thus (in 2D), when we say that $\vv=(a_0,a_1)^T$ are the coordinates of $\vfv$,
+what we mean is that $\vfv$ is $a_0\vfx\,+\,b_1\vfy$ (equally in 3D, with 3
+components coordinate tuples).
 
-Let $\vu$ and $\vv$ be any two vectors in
-the vector space embbeded in the affine space. We assume $\vu$ has unit length. We define two non-conmutative lineal
-operators ($\parallel$ and $\perp$) in that vector space. The first one allows to get the component of $\vv$ parallel to
-$\vu$, and is defined as:
+<h3>Parallel and perpendicular components of a vector</h3>
+
+Let $\vfu$ and $\vfv$ be any two vectors in
+the vector space. We assume $\vfu$ has unit length. We define two non-conmutative lineal
+operators ($\opar$ and $\oper$) in that vector space. The first one allows to get the component of $\vfv$ parallel to
+$\vfu$, and is defined as:
 $$
-   \vv\bpar\vu ~~\equiv~~ (\vv\cdot\vu)\vu
+   \vfv\bopar\vfu ~~\equiv~~ (\vfv\cdot\vfu)\vfu
 $$
-The other lineal operator allows to obtain the component of $\vv$ perpendicular to $\vu$, and
-is defined as $\vv$ minus the parallel component:
+The other lineal operator allows to obtain the component of $\vfv$ perpendicular to $\vfu$, and
+is defined as $\vfv$ minus the parallel component:
 $$
-    \vv\bper\vu ~~\equiv~~  \vv\,-\,(\vv\bpar\vu)
+    \vfv\boper\vfu ~~\equiv~~  \vfv\,-\,(\vfv\bopar\vfu)
 $$
-So any vector can be decomposed in two components, one parallel and other perpendicular to
+So any vector can be decomposed in two components, one parallel and another perpendicular to
 any vector, that is:
 $$
-  \vv  ~=~ (\vv\bpar\vu)\,+\,(\vv\bper\vu)
+  \vfv  ~~=~~ (\vfv\bopar\vfu)\,+\,(\vfv\boper\vfu)
 $$
-
-<h3>Perpendicular vector in 3D</h3>
-
-We consider a 2D real vector space, in that space we know  $\mathcal{B}=\{\vx,\vy\}$ is an orthonormal basis, thus we know
-  $\vx\cdot\vy=0$ and $\vx\cdot\vx=\vy\cdot\vy=1$. We want to
- define a lineal operation which yields a perpendicular vector from another arbitrary vector.
-For any given vector $\vv$, we want to define another vector $\vv^\perp$, such that (a) it holds $\vv\cdot\vv^\perp$ is $0$, and (b) both
-$\vv$ and $\vv^\perp$ have the same length (that is $\vv\cdot\vv=\vv^\perp\cdot\vv^\perp$). If $\vv$ is not null, then there are two
-  possible vectors obeying properties (a) and (b), because if $\vu$ is perpendicular and of equal length, then $-\vu$ also hold these two properties.
-  Thus, to properly define the operation we impose an additional condition: when aplied to $\vx$ it yields $\vy$, that is $\vy=\vx^\perp$.
 <p/>
-Let us call $(a,b)$ to the coordinates of $\vv$ in $\mathcal{B}$, that is $\vv=a\vx+b\vy$. Then we can define $\vv^\perp$ as
-$$
-     \vv^\perp ~~=~~ -b\vx\,+\,a\vy
-$$
-With this definition, it is easy to show that the dot product of both vectors is cero, and that they are
-also of equal length
-$$
-   \vv\cdot\vv^\perp ~=~ a(-b)\,+\,ba ~=~ 0
-   ~~~~~~~~~~~~~
-   \|\vv\|~=~\|\vv^\perp\| ~=~ \sqrt{a^2+b^2}
-$$
-The (lineal) relation between $\vv$ and $\vv^\perp$ can be expressed by
-using a 2x2 matrix $\vP$ acting on coordinate column vectors (relative to $\mathcal{B}$):
-$$
-    \vv^\perp ~=~
-    \left(\begin{array}{c}
-        a^\perp \\ b^\perp
-    \end{array}\right)
-    ~=~
-    \left(\begin{array}{c}
-        -b \\ a
-    \end{array}\right)
-    ~=~
-    \left(\begin{array}{cc}
-      0 & -1 \\
-      1 & 0
-     \end{array}\right)
-    \left(\begin{array}{c}
-        a \\ b
-    \end{array}\right)
-    ~=~ \vP\vv
-$$
+Of course, these two operators can be extended to their corresponding operators acting on coordinates.
+
+<!-- ####################################################################### -->
+
+<h2>Rotations in 2D</h2>
 
 
-<h3>Rotation expression</h3>
+<h3>Perpendicular vector operator and matrix in 2D</h3>
 
-In a 2D vector space we want to define the rotation transformation $R$.
-This rotation is a rotation around the origin of the vector space, with angle $\theta$ (in radians).
-<p/>
-If we want to rotate vector $\vv$, we begin by using the previous definition of $\vv^\perp=\vP\vv$ and
-define the rotated vector $\vrot$ as
+In 2D we can define the operator $\mP$, this operator, when applied to any
+vector $\vfv$ yields a vector $\mP\vfv$ perpendicular to $\vfv$, that is, it
+holds $\vfv\cdot(\mP\vfv)=0$, and with the same length, that is
+$(\mP\vfv)\cdot(\mP\vfv)=\vfv\cdot\vfv$. There are two possible vectors with
+these two properties (if a vector $\vfw$ holds both, also does $-\vfw$). To
+determine operator $\mP$, we assume it holds $\vfy\,=\,\mP\vfx$. <p/>
+
+It is easy to check that  if $\vv=(a_0,b_0)^T$ are the coordinates of $\vfv$,
+then those of $\mP\vfv$ are  $(-a_1,a_0)$.
+Thus operator $\mP$ has an associated 2x2 matrix $\vP$, such that if
+$\vv=(a_0,a_1)^T$ are the coordinates of $\vfv$, then the coordinates of
+$\mP\vfv$ are $\vP\vv$, where:
 $$
-   \vrot ~=~  (\cos\theta)\vv \,+\, (\sin\theta)\vv^\perp
+      \vP ~\equiv~ \left(\begin{array}{cc}
+         0 & -1 \\
+         1 & 0
+        \end{array}\right)
 $$
-note that when $\theta=0$, we have $\vrot=\vv$.
 <p/>
 
-Let us assume that the coordinates of $\vv$ in the orthonormal basis $\{\vx,\vy\}$
- are  $(a,b)$ (that is, $\vv\,=\,a\vx+b\vy$). This allows us
-to compute the coordinates of $\vrot$, by substituting:
+
+
+<h3>The rotation operator and matrix in 2D</h3>
+
+In a 2D vector space we want to define the rotation operator $\mR_\theta$.
+This rotation is a rotation around the origin (the null vector) of the vector space, with angle $\theta$ (in radians).
+<p/>
+If we want to rotate vector $\vfv$, we begin by using the previous definition of $\mP$.
+We define the rotated vector $\mR_\theta\vfv$ as a weighted sum of $\vfv$ and the vector perpendicular to
+$\vfv$, such that the rotated vector has the same length as the original, as follows:
+$$
+\begin{equation}
+   \mR_\theta\vfv ~=~  (\cos\theta)\,\vfv \,+\, (\sin\theta)\,\mP\vfv
+\end{equation}
+$$
+note that when $\theta=0$, we have $\mR_0\vfv=\vfv$. By using $\vfv=\mI\vfv$ (where
+$\mI$ is the identity operator), we get a definition for the rotation operator:
 $$
   \begin{align*}
-   \vrot
-         &=    (\cos\theta)\vv \,+\, (\sin\theta)\vv_\perp \\
-         &=     (\cos\theta)(a\vx\,+\,b\vy)
-                     \,+\, (\sin\theta)(-b\vx\,+\,a\vy) \\
-         &=     (a\cos\theta-b\sin\theta)\vx   \,+\,
-                        (a\sin\theta+b\cos\theta)\vy  \\
-         &=     \,a'\vx \,+\, b'\vy
+   \mR_\theta\vfv ~~&=~~    (\cos\theta)\vfv \,+\, (\sin\theta)\mP\vfv \\
+        ~~&=~~    (\cos\theta)\mI\vfv \,+\, (\sin\theta)\mP\vfv \\
+       ~~&=~~     \left[(\cos\theta)\mI \,+\, (\sin\theta)\mP\right]\,\vfv
   \end{align*}
 $$
-where
+thus:
 $$
-    \begin{align*}
-       a' &= a\cos\theta-b\sin\theta  \\
-       b' &= a\sin\theta+b\cos\theta
-   \end{align*}
+    \mR_\theta  ~~=~~ (\cos\theta)\mI \,+\, (\sin\theta)\mP
 $$
-values $(a',b')$ are the coordinates of the rotated point $\vp'$.
+<p/>
 
 
-<h3>Matrix form for 2D rotations</h3>
 
-The rotation transformation
-can we written in homogeneous coordinates by using a 3x3 matrix $\vR_\theta$:
-$$
-   \vrot ~=~
-   \left(\begin{array}{c}
-      a' \\ b'
-   \end{array}\right)
-   ~=~
-   \left(\begin{array}{cc}
-      \cos\theta & -\sin\theta  \\
-      \sin\theta & \cos\theta
-   \end{array}\right)
-   \left(\begin{array}{c}
-      a \\ b
-   \end{array}\right)
-   ~=~
-   \vR_\theta\vv
-$$
-
-Matrix $\vR_\theta$ can also be obtained by writing $\vv$ as $\vI\vv$, where
-$\vI$ is the identity matrix, and $\vv^\perp$ as $\vP\vv$, then:
-$$
-  \begin{align*}
-   \vrot'
-        &=   (\cos\theta)\vv \,+\, (\sin\theta)\vv_\perp \\
-        &=    (\cos\theta)\vI\vv \,+\, (\sin\theta)\vP\vv \\
-        &=     \left[(\cos\theta)\vI \,+\, (\sin\theta)\vP\right]\,\vv
-  \end{align*}
-$$
-this implies we can write $\vR_\theta$ as a combination of $\vI$ and $\vP$:
+This implies we can write the rotation matrix $\vR_\theta$ as a combination of the identity matrix
+$\vI$ and matrix $\vP$:
 $$
    \vR_\theta
    ~~=~~
@@ -219,26 +189,42 @@ $$
           0  &  -1  \\
           1  &  0
        \end{array}\right)
-   ~~=~~
+$$
+And we get the matrix form for 2D rotations:
+$$
+\boxed{\mbox{$~$}\\~~~~~~
+\vR_\theta
+~~=~~
        \left(\begin{array}{cc}
           \cos\theta & -\sin\theta  \\
           \sin\theta & \cos\theta
        \end{array}\right)
+~~~~~~}
 $$
-  thus we arrive to the matrix form for 2D rotations.
+thus we arrive to the matrix form for 2D rotations.
 
-  <h2>3D Rotations</h2>
+<!-- ####################################################################### -->
 
-<h3>Perpendicular vectors in 3D. Cross product.</h3>
+<h2>Rotations in 3D</h2>
 
-In a 3D vector space, for any given vector $\vw=(b_0,b_1,b_2)$, there are infinitelly many vectors perpendicular
-to $\vw$ and with the same length as $\vw$ (all those form a circunference in the plane perpendicular to $\vw$).
+<h3>Cross product operator</h3>
+
+In a 3D vector space, for any given vector $\vfw$, there are infinitelly many vectors perpendicular
+to $\vfw$ and with the same length as $\vfw$ (all those form a circunference in the plane perpendicular to $\vfw$).
 <p/>
-To select one of those perpendicular vectors, we must use a third vector $\vk$ (non colinear with $\vw$), and compute
-the cross product of $\vk$ and $\vw$. Then, vector $\vk\times\vw$ is perpendicular to $\vw$ (but not neccesarly
-with the same length as $\vw$).
+To select one of those perpendicular vectors, we must use a third vector $\vfk$ (non colinear with $\vfw$), and compute
+the cross product of $\vfk$ and $\vfw$. Then, vector $\vfk\times\vfw$ is perpendicular to $\vfw$ (but not neccesarly
+with the same length as $\vfw$).
+<p/>
+We define the lineal operator $\mP_\vfk$ (the cross product operator) by his action on $\vfv$ as:
+$$
+    \mP_\vfk\,\vfv ~~\equiv~~ \vfk\times\vfv
+$$
 
-If $(a_0,a_1,a_2)$ are the coordinates of $\vk$, then:
+<h3>Cross product matrix</h3>
+
+If $\vk=(a_0,a_1,a_2)^T$ are the coordinates of $\vfk$, and $\vw=(b_0,b_1,b_2)$ are the coordinates
+of $\vfw$, then the coordinates of $\vfk\times\vfw$ can be defined as:
 $$
    \vk\times\vw
    ~~=~~
@@ -257,7 +243,7 @@ $$
    \end{array}\right)
 $$
 
-This cross-product operation (pre-multiplying by $\vk$), can also be written as a linear matrix operation by using matrix $\vP_\vk$
+Thus cross-product operation (pre-multiplying by $\vk$), can also be written as a linear matrix operation by using matrix $\vP_\vk$
 defined as follows:
 $$
     \vP_\vk ~~=~~
@@ -289,110 +275,103 @@ $$
       \vk\times\vw
 $$
 
+<h3>An additional perpendicular binary operation</h3>
+
+In 3D we introduce here an additional perpendicular non-conmutative binary lineal operation $\operV$. If we assume
+that $\vfu$ is a unit-length vector in 3D, then for any arbitrary vector $\vfv$
+we can define vector $\vfv\boperV\vfu$ as:
+$$
+\begin{equation}
+   \vfv\boperV\vfu  ~~\equiv~~ \vfu\times(\vfv\boper\vfu)
+\end{equation}
+$$
+Vector $\vfv\boperV\vfu$ is perpendicular to both $\vfu$ and $\vfv$, and has the same
+length as $\vfv\boper\vfu$. It can be rewritten as a cross product:
+$$
+    \vfv\boperV\vfu  ~~\equiv~~ \vfu\times(\vfv\boper\vfu)
+     ~~=~~ \vfu\times(\vfv\,-\,\vfv\bopar\vfu) ~~=~~ \vfu\times\vfv  ~~=~~ \mP_\vfu\,\vfv
+$$
+this holds because $\vfu$ is colinear with $\vfv\bopar\vfu$, thus their cross-product is the null vector.
+
 
 <h3>Rotations in 3D and Rodrigues formula</h3>
 
-In 3D, the rotation transform uses an unit-length vector $\vu=(u_0,u_1,u_2)$ as the rotation axis, and an angle $\theta$.
-In order to rotate $\vv$, we decompose it in two components, $\vv_\parallel$ (parallel to $\vu$) and $\vv_\vdash$ (perpendicular
-to $\vu$, but in the plane spawned by $\vu$ and $\vv$)
+In 3D the vector lineal rotation operator $\mR_{\theta,\vfu}$ uses an arbitrary rotation axis which
+is determined by the unit length vector $\vfu$. The rotation operation
+does not modifies the $\vfv$ component parallel to $\vfu$, and transform its perpendicular
+component in a similar way as 2D rotation (but now in the plane perpendicular to $\vfu$).
+Thus, we define:
 $$
-   \vv ~~=~~\vv_\parallel  \,+\, \vv_\vdash
+\begin{equation}
+      \mR_{\theta,\vfu}\vfv ~~\equiv~~
+            (\vfv\bopar\vfu)  \,+\,   (\cos\theta)(\vfv\boper\vfu)  \,+\,  (\sin\theta)(\vfv\boperV\vfu)
+\end{equation}
 $$
-where $\vv_\parallel$ is obtained by projecting $\vv$ onto rotation axis, that is:
-$$
-    \vv_\parallel ~~=~~(\vv\cdot\vu)\,\vu
-$$
-and $\vv_\vdash$ is obtained as:
-$$
-    \vv_\vdash  ~~=~~ \vv \,-\,\vv_\parallel
-$$
-in the case $\vv$ and $\vu$ are collinear, vector $\vv_\vdash$ is the null vector and $\vv_\parallel=\vv$.
-We define an additional perpendicular vector $\vv_\perp$, which is perpendicular to both $\vv_\parallel$ and to $\vv_\vdash$,
-and has the same length as $\vv_\vdash$:
-$$
-  \vv_\perp  ~~=~~ \vu \,\times\,  \vv_\vdash
-$$
-Note that, as $\vu$ is unit-length and perpendicular to $\vv_\vdash$, then $\vv_\perp$ has the same
-length as $\vv_\vdash$.
-
-<p/>
-With these definitions in mind, we can define the rotated vector $\vv'$ by observing that its component parallel to
-the axis does not changes, while the component perpendicular to the axis is rotated as in 2D (in the plane perpendicular to the axis),
-that is, we define
-$$
-    \vv' ~~=~~ \vv_\parallel  \,+\, (\cos\theta)\vv_\vdash   \,+\, (\sin\theta)\vv_\perp
-$$
-<p/>
-We rewrite $\vv_\parallel+(\cos\theta)\vv_\vdash$ as follows:
+By expanding the definitions of operators $\oper$ and $\operV$) we get:
 $$
 \begin{align*}
-   \vv_\parallel  \,+\, (\cos\theta)\vv_\vdash
-     ~~&=~~ \vv_\parallel \,+\, (\cos\theta)(\vv-\vv_\parallel)  \\
-       &=~~ (\cos\theta)\vv \,+\, (1-\cos\theta)\vv_\parallel \\
-       &=~~ (\cos\theta)\vv \,+\, (1-\cos\theta)(\vv\cdot\vu)\vu
+    \mR_{\theta,\vfu}\vfv
+        ~~&=~~ \vfv\bopar\vfu  \,+\,   (\cos\theta)\vfv\boper\vfu  \,+\,  (\sin\theta)\vfv\boperV\vfu \\
+          &=~~ \vfv\bopar\vfu  \,+\,   (\cos\theta)\left[\vfv-(\vfv\bopar\vfu)\right]  \,+\,  (\sin\theta)\vfu\times\vfv \\
+          &=~~ (\cos\theta)\vfv   \,+\,   (1-\cos\theta)\vfv\bopar\vfu  \,+\,  (\sin\theta)\vfu\times\vfv
 \end{align*}
 $$
-Vector $\vv_\perp$ can we rewritten as:
-$$
-\begin{align*}
-    \vv_\perp  ~~&=~~ \vu \,\times\,  \vv_\vdash \\
-                 &=~~ \vu \,\times\,  (\vv \,-\,\vv_\parallel) \\
-                 &=~~ \vu \,\times\,\vv  \,-\,\vu \,\times\, \vv_\parallel  \\
-                 &=~~ \vu \,\times\,\vv
-\end{align*}
-$$
-here, as $\vu$ and $\vv_\parallel$ are parallel, we have substituted their cross product by $0$.
-Now we can write the expression for $\vv'$ which is called <b>Rodrigues' Rotation formula</b>:
+Finally, by expanding $\vfv\bopar\vfu$ we get <b>Rodrigues' rotation formula</b>:
 $$
 \boxed{\mbox{}\\~~~~~~
-  \vv'   ~~=~~ (\cos\theta)\vv \,+\, (1-\cos\theta)(\vv\cdot\vu)\vu \,+\, (\sin\theta)\vu\times\vv
+   \mR_{\theta,\vfu}\vfv
+      ~~=~~ (\cos\theta)\vfv   \,+\,   (1-\cos\theta)(\vfu\cdot\vfv)\vfu  \,+\,  (\sin\theta)\vfu\times\vfv
 ~~~~~~}
 $$
+
+<h3>Rotation using cross-products. Operator form.</h3>
+
+We can express Rodrigues formula in terms of cross-products. We begin by using $\operV$ definition
+to rewrite $\vfv\boper\vfu$ as follows:
+$$
+  \vfv\boper\vfu  ~~=~~ (\vfv\boperV\vfu)\times\vfu
+                   ~~=~~ -\vfu\times(\vfv\boperV\vfu)
+                   ~~=~~ -\vfu\times(\vfu\times\vfv)
+$$
+This allows to write $\vfv\bopar\vfu$ by using cross-products:
+$$
+    \vfv\bopar\vfu ~~=~~ \vfv \,-\, \vfv\boper\vfu
+                  ~~=~~ \vfv \,+\, \vfu \times(\vfu\times\vfv)
+$$
 <p/>
-
-<h3>Matrix form for 3D Rotations</h3>
-
-
-We can express Rodrigues formula in terms of cross-products, this leads to the general
-rotation matrix. We begin by rewriting $\vv_\vdash$ as:
-$$
-  \vv_\vdash  ~~=~~ \vv_\perp\times\vu   ~~=~~ -\vu\times\vv_\perp ~~=~~ -\vu\times(\vu\times\vv)
-$$
-This allows to write $\vv_\parallel$ by using cross-products:
-$$
-    \vv_\parallel ~~=~~ \vv \,-\, \vv_\vdash
-                  ~~=~~ \vv \,+\, \vu \times(\vu\times\vv)
-$$
-<p/>
-Vector $\vv_\parallel+(\cos\theta)\vv_\vdash$ is expressed as follows:
+Now we expand these two equalities. Vector $\vfv\bopar\vfu+(\cos\theta)\vfv\boper\vfu$ is expressed as follows:
 $$
 \begin{align*}
-   \vv_\parallel  \,+\, (\cos\theta)\vv_\vdash
-     ~~&=~~ \vv_\parallel \,+\, (\cos\theta)(\vv-\vv_\parallel)  \\
-       &=~~ (\cos\theta)\vv \,+\, (1-\cos\theta)\vv_\parallel \\
-       &=~~ (\cos\theta)\vv \,+\, (1-\cos\theta)[\vv \,+\, \vu \times (\vu\times\vv)] \\
-       &=~~ \vv \,+\,(1-\cos\theta)\vu \times (\vu\times\vv)
+   \vfv\bopar\vfu+(\cos\theta)\vfv\boper\vfu
+     ~~&=~~ \vfv\bopar\vfu \,+\, (\cos\theta)(\vfv-\vfv\bopar\vfu)  \\
+       &=~~ (\cos\theta)\vfv \,+\, (1-\cos\theta)\vfv\bopar\vfu \\
+       &=~~ (\cos\theta)\vfv \,+\, (1-\cos\theta)[\vfv \,+\, \vfu \times (\vfu\times\vfv)] \\
+       &=~~ \vfv \,+\,(1-\cos\theta)\vfu \times (\vfu\times\vfv)
 \end{align*}
 $$
-<p/>
-So we end up with this expression for $\vv'$:
+Now Rodrigues formula can be written by using just cross-products:
 $$
-\begin{align*}
-   \vv'  ~~&=~~  \vv_\parallel  \,+\, (\cos\theta)\vv_\vdash   \,+\, (\sin\theta)\vv_\perp \\
-           &=~~   \vv \,+\,(1-\cos\theta)\vu \times (\vu\times\vv) \,+\, (\sin\theta)\vu\times\vv
-\end{align*}
+\begin{equation}
+   \mR_{\theta,\vfu}\vfv
+      ~~=~~ \vfv \,+\,(1-\cos\theta)\vfu \times (\vfu\times\vfv)  \,+\,  (\sin\theta)\vfu\times\vfv
+\end{equation}
 $$
-<p/>
-This last expression is written just in terms of $\vv,\vu$ and $\theta$, uses just cross-products, and is equivalent to
-Rodrigues' formula. From that
-we obtain the matrix $\vR_{\theta,\vu}$ for rotation in 3D, which is expressed in terms of
-the powers of matrix $\vP_\vu$:
+Finally, by using the definition of operator $\mP_\vfu$, we get an operator-only definition of the rotation
+$$
+   \mR_{\theta,\vfu} ~~=~~ \mI  \,+\,
+                           (\sin\theta)\mP_\vfu  \,+\,
+                           (1-\cos\theta)\mP^2_\vfu
+$$
+
+<h3>Matrix form</h3>
+
+The operator expression for the rotation operator can be directly translated to a matrix expression:
 $$
 \boxed{\mbox{}\\~~~~~~
   \vR_{\theta,\vu}  ~~=~~  \vI \,+\, (\sin\theta)\vP_\vu \,+\,(1-\cos\theta)\vP^2_\vu
 ~~~~~~}
 $$
-where $\vI$ is the identity matrix (that is, $\vI=\vP_u^0$), and
+where
 $$
     \vP_\vu  ~~=~~
     \left(\begin{array}{c}
@@ -400,8 +379,13 @@ $$
       u_2  &  0    &  -u_0  \\
      -u_1  &  u_0 &   0
    \end{array}\right)
-$$
-Thus:
+   ~~~~~~~~~\mbox{when}~~~
+   \vu\,=\,\left(\begin{array}{c}
+              u_0 \\ u_1 \\ u_2
+           \end{array}\right)
+$$.
+<p/>
+If we expand $\vP^2_\vu$ we get:
 $$
     \vP^2_\vu  ~~=~~
     \left(\begin{array}{c}
@@ -422,7 +406,7 @@ $$
  \end{array}\right)
 $$
 where we have used $u_0^2+u_1^2+u_2^2=1$.
-By expanding the matrixes:
+By expanding the matrices we get:
 <p/>
 $$
 \vR_{\theta,\vu}  ~~=~~
@@ -478,7 +462,7 @@ $$
    \end{array}\right.
 ~~~~~~\\\mbox{}}
 $$
-<p/>
+
 (this page uses <a href="http://docs.mathjax.org/en/latest/start.html#mathjax-cdn">MathJax</a>)
 
 
