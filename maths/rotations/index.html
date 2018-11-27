@@ -36,6 +36,7 @@ $
 \newcommand{\vp}{\mathbf{p}}
 \newcommand{\vx}{\mathbf{x}}
 \newcommand{\vy}{\mathbf{y}}
+\newcommand{\vz}{\mathbf{z}}
 \newcommand{\vu}{\mathbf{u}}
 \newcommand{\vw}{\mathbf{w}}
 \newcommand{\vk}{\mathbf{k}}
@@ -43,6 +44,9 @@ $
 \newcommand{\vR}{\mathbf{R}}
 \newcommand{\vI}{\mathbf{I}}
 \newcommand{\vrot}{\vv_\mathrm{rot}}
+\newcommand{\mP}{\mathcal{P}}
+\newcommand{\bper}{\!\perp\!}
+\newcommand{\bpar}{\!\parallel\!}
 $
 
 <h1>Rotation matrix</h1>
@@ -57,28 +61,33 @@ We consider an affine space, either a 2D or 3D one. The vector space
 in that affine space has a scalar product, which defines lengths of vectors
 and angles between them, as usual. We assume this vector space includes an
 orthonormal basis $\{\vx,\vy\}$ in 2D, or $\{\vx,\vy,\vz\}$ in 3D.
-
-Additionaly, in 2D we have the lineal
-operator $\mathcal{P}$, this operator, when applied to any vector $\vv$ yields a
-vector $P\vv$ perpendicular to $\vv$, that is, it holds $\vv\cdotP\vv=0$, and with
-the same length, that is $(P\vv)\cdot(P\vv)=\vv\cdot\vv$. As there are two possible
-definitions, we assume that $\vy=P\vx$.
-
+<p/>
+In 2D we have the lineal
+operator $\mP$, this operator, when applied to any vector $\vv$ yields a
+vector $\mP\vv$ perpendicular to $\vv$, that is, it holds $\vv\cdot(\mP\vv)=0$, and with
+the same length, that is $(\mP\vv)\cdot(\mP\vv)=\vv\cdot\vv$. As there are two possible
+definitions, we assume that $\vy=\mP\vx$.
+<p/>
 In 3D we have the cross product operation $\times$, with the usual properties.
 
 <h3>Parallel and perpendicular components</h3>
 
 Let $\vu$ and $\vv$ be any two vectors in
-the vector space embbeded in the affine space. We assume $\vu$ has unit-length. We define two non-conmutative lineal
-operators in that vector space. First one allows to get the component of $\vv$ parallel to
+the vector space embbeded in the affine space. We assume $\vu$ has unit length. We define two non-conmutative lineal
+operators ($\parallel$ and $\perp$) in that vector space. The first one allows to get the component of $\vv$ parallel to
 $\vu$, and is defined as:
 $$
-   \vv\paralle\vu ~~\equiv~~ (\vv\cdot\vu)\vu
+   \vv\bpar\vu ~~\equiv~~ (\vv\cdot\vu)\vu
 $$
-The other lineal operator is allows to obtain the component of $\vv$ perpendicular to $\vu$, and
-is defined as the original vector minus the parallel component:
+The other lineal operator allows to obtain the component of $\vv$ perpendicular to $\vu$, and
+is defined as $\vv$ minus the parallel component:
 $$
-    \vv\perp\vu ~~\equiv~~  \vv\,-\,\vv\parallel\vu
+    \vv\bper\vu ~~\equiv~~  \vv\,-\,(\vv\bpar\vu)
+$$
+So any vector can be decomposed in two components, one parallel and other perpendicular to
+any vector, that is:
+$$
+  \vv  ~=~ (\vv\bpar\vu)\,+\,(\vv\bper\vu)
 $$
 
 <h3>Perpendicular vector in 3D</h3>
