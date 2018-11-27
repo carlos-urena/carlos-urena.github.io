@@ -23,7 +23,7 @@
     </script>
   </head>
 <body>
- 
+
 <div class="header">
   <span class="titulo">Carlos Ureña github pages</span><br/>
   <span class="fecha">page updated: Nov 25, 2018</span>
@@ -46,24 +46,52 @@ $
 $
 
 <h1>Rotation matrix</h1>
-  
+
 Derivation of rotation matrix for 2D and 3D, from scratch.
 
 <h2>2D Rotations</h2>
 
-<h3>Perpendicular vectors in 2D</h3>
+<h3>Lineal operations in vector space</h3>
 
+We consider an affine space, either a 2D or 3D one. The vector space
+in that affine space has a scalar product, which defines lengths of vectors
+and angles between them, as usual. We assume this vector space includes an
+orthonormal basis $\{\vx,\vy\}$ in 2D, or $\{\vx,\vy,\vz\}$ in 3D.
 
-  
-We consider a 2D real vector space, in that space we know  $\mathcal{B}=\{\vx,\vy\}$ is an orthonormal basis, thus we know 
+Additionaly, in 2D we have the lineal
+operator $\mathcal{P}$, this operator, when applied to any vector $\vv$ yields a
+vector $P\vv$ perpendicular to $\vv$, that is, it holds $\vv\cdotP\vv=0$, and with
+the same length, that is $(P\vv)\cdot(P\vv)=\vv\cdot\vv$. As there are two possible
+definitions, we assume that $\vy=P\vx$.
+
+In 3D we have the cross product operation $\times$, with the usual properties.
+
+<h3>Parallel and perpendicular components</h3>
+
+Let $\vu$ and $\vv$ be any two vectors in
+the vector space embbeded in the affine space. We assume $\vu$ has unit-length. We define two non-conmutative lineal
+operators in that vector space. First one allows to get the component of $\vv$ parallel to
+$\vu$, and is defined as:
+$$
+   \vv\paralle\vu ~~\equiv~~ (\vv\cdot\vu)\vu
+$$
+The other lineal operator is allows to obtain the component of $\vv$ perpendicular to $\vu$, and
+is defined as the original vector minus the parallel component:
+$$
+    \vv\perp\vu ~~\equiv~~  \vv\,-\,\vv\parallel\vu
+$$
+
+<h3>Perpendicular vector in 3D</h3>
+
+We consider a 2D real vector space, in that space we know  $\mathcal{B}=\{\vx,\vy\}$ is an orthonormal basis, thus we know
   $\vx\cdot\vy=0$ and $\vx\cdot\vx=\vy\cdot\vy=1$. We want to
- define a lineal operation which yields a perpendicular vector from another arbitrary vector. 
-For any given vector $\vv$, we want to define another vector $\vv^\perp$, such that (a) it holds $\vv\cdot\vv^\perp$ is $0$, and (b) both 
-$\vv$ and $\vv^\perp$ have the same length (that is $\vv\cdot\vv=\vv^\perp\cdot\vv^\perp$). If $\vv$ is not null, then there are two 
+ define a lineal operation which yields a perpendicular vector from another arbitrary vector.
+For any given vector $\vv$, we want to define another vector $\vv^\perp$, such that (a) it holds $\vv\cdot\vv^\perp$ is $0$, and (b) both
+$\vv$ and $\vv^\perp$ have the same length (that is $\vv\cdot\vv=\vv^\perp\cdot\vv^\perp$). If $\vv$ is not null, then there are two
   possible vectors obeying properties (a) and (b), because if $\vu$ is perpendicular and of equal length, then $-\vu$ also hold these two properties.
-  Thus, to properly define the operation we impose an additional condition: when aplied to $\vx$ it yields $\vy$, that is $\vy=\vx^\perp$. 
-<p/>  
-Let us call $(a,b)$ to the coordinates of $\vv$ in $\mathcal{B}$, that is $\vv=a\vx+b\vy$. Then we can define $\vv^\perp$ as 
+  Thus, to properly define the operation we impose an additional condition: when aplied to $\vx$ it yields $\vy$, that is $\vy=\vx^\perp$.
+<p/>
+Let us call $(a,b)$ to the coordinates of $\vv$ in $\mathcal{B}$, that is $\vv=a\vx+b\vy$. Then we can define $\vv^\perp$ as
 $$
      \vv^\perp ~~=~~ -b\vx\,+\,a\vy
 $$
@@ -96,7 +124,7 @@ $$
     ~=~ \vP\vv
 $$
 
-  
+
 <h3>Rotation expression</h3>
 
 In a 2D vector space we want to define the rotation transformation $R$.
@@ -115,7 +143,7 @@ Let us assume that the coordinates of $\vv$ in the orthonormal basis $\{\vx,\vy\
 to compute the coordinates of $\vrot$, by substituting:
 $$
   \begin{align*}
-   \vrot  
+   \vrot
          &=    (\cos\theta)\vv \,+\, (\sin\theta)\vv_\perp \\
          &=     (\cos\theta)(a\vx\,+\,b\vy)
                      \,+\, (\sin\theta)(-b\vx\,+\,a\vy) \\
@@ -159,7 +187,7 @@ Matrix $\vR_\theta$ can also be obtained by writing $\vv$ as $\vI\vv$, where
 $\vI$ is the identity matrix, and $\vv^\perp$ as $\vP\vv$, then:
 $$
   \begin{align*}
-   \vrot' 
+   \vrot'
         &=   (\cos\theta)\vv \,+\, (\sin\theta)\vv_\perp \\
         &=    (\cos\theta)\vI\vv \,+\, (\sin\theta)\vP\vv \\
         &=     \left[(\cos\theta)\vI \,+\, (\sin\theta)\vP\right]\,\vv
@@ -191,7 +219,7 @@ $$
   thus we arrive to the matrix form for 2D rotations.
 
   <h2>3D Rotations</h2>
-  
+
 <h3>Perpendicular vectors in 3D. Cross product.</h3>
 
 In a 3D vector space, for any given vector $\vw=(b_0,b_1,b_2)$, there are infinitelly many vectors perpendicular
@@ -444,6 +472,6 @@ $$
 <p/>
 (this page uses <a href="http://docs.mathjax.org/en/latest/start.html#mathjax-cdn">MathJax</a>)
 
- 
+
 </body>
 </html>
