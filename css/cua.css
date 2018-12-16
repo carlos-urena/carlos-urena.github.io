@@ -3,7 +3,7 @@
 html
 {
     margin:    0 auto;
-    max-width: 800px;
+    max-width: 800px; /** silly comment **/
 }
 
 body
@@ -32,11 +32,11 @@ div.header
 span.titulo
 {
    font-weight : bold !important ;
-   font-size : 110% !important ; 
+   font-size : 110% !important ;
 }
 span.fecha
 {
-   font-size : 100% !important ; 
+   font-size : 100% !important ;
 }
 
 
