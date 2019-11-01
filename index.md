@@ -14,7 +14,7 @@
 
 * [Portable Cambria replacement in LaTeX](https://carlos-urena.github.io/tex/fuentes) (in Spanish)
 
-### C++ Programming
+### C++ programming gists
 
 Several github gists with C++ code I want to keep or remember
 
