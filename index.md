@@ -14,9 +14,13 @@
 
 * [Portable Cambria replacement in LaTeX](https://carlos-urena.github.io/tex/fuentes) (in Spanish)
 
-### C++11 programming gists
+### C++11 programming tools
 
-Several github gists with C++11 code I want to keep or remember
+#### Repos 
+
+* [A tool for getting strings from enum types values](https://github.com/carlos-urena/enums-tool)
+
+#### Gists
 
 * [Lines logging tool based on a variadic macro and variadic templates](https://gist.github.com/carlos-urena/6290b4fa0a5c50efd7bd2c4f0b5c54d8)
 * [Testing array and vector initialization](https://gist.github.com/carlos-urena/f5bebecce73aebe24f1a27f4c4275e28)
