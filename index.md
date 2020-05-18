@@ -14,6 +14,10 @@
 
 * [Portable Cambria replacement in LaTeX](https://carlos-urena.github.io/tex/fuentes) (in Spanish)
 
+### Javascript sources
+
+* [Countries COVID death/cases graphs visualization](https://carlos-urena.github.io/covid-countries-visu). Source is available in this repository: [carlos-urena.github.com/covid-countries-visu](https://carlos-urena.github.com/covid-countries-visu)
+
 ### C++11 programming tools
 
 #### Repos 
