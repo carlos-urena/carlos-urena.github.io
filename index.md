@@ -16,6 +16,7 @@
 
 ### Javascript sources
 
+* [Dynamic CSS style controls](https://carlos-urena.github.io/dyn-style). Source is available in this repository: [github.com/carlos-urena/dyn-style](https://github.com/carlos-urena/dyn-style)
 * [Countries COVID death/cases graphs visualization](https://carlos-urena.github.io/covid-countries-visu). Source is available in this repository: [github.com/carlos-urena/covid-countries-visu](https://github.com/carlos-urena/covid-countries-visu)
 
 ### C++11 programming tools
