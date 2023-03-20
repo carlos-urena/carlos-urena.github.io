@@ -6,7 +6,7 @@ Using mathjax in github pages is easy, you just have to use the steps described 
 
 An example equation pepe:
 $$
-    \int_{x\in\Omega} \frac{x²+3}{\log x}\,dx
+    \int_{x\in\Omega} \frac{x^2+3}{\log x}\,dx
 $$
 
 
