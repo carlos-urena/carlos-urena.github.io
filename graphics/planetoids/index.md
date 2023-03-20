@@ -38,9 +38,10 @@ $$
    \int_{x\in\Omega} \frac{x^2+3}{\log x}\,dx
 $$
 
-and also this ??
+and also this (with newcommand....)
 
 \begin{equation}
+  newcommand{\pepeu}{z^4}
     \int_{x\in\Omega} \frac{x^2+3}{\log x}\,dx
 \end{equation}
 
