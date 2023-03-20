@@ -4,12 +4,17 @@ Using mathjax in github pages is easy, you just have to use the steps described 
 
 [https://github.blog/2022-05-19-math-support-in-markdown/](https://github.blog/2022-05-19-math-support-in-markdown/)
 
-An example equation pepe:
+An example equation
+
 ```math
     \int_{x\in\Omega} \frac{x^2+3}{\log x}\,dx
 ``` 
 
-that s it $x^2$
+another option:
+
+$$\frac{x^2+1}{(x-5)}$$
+
+and inline as shown here $x^2$ in this line
 
 
 
