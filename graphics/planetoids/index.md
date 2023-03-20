@@ -13,11 +13,19 @@ An example equation
     \int_{x\in\Omega} \frac{x^2+3}{\log x}\,dx
 ``` 
 
-another option:
+another option plus plus:
 
 $$\frac{x^2+1}{(x-5)}$$
 
 and inline as shown here $x^2$ in this line
+
+
+```C++ 
+void main( int arcg, char * argv[] )
+{
+    cout << "pepe" << endl ;
+}
+```
 
 
 
