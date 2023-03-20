@@ -21,6 +21,13 @@ An example equation
     \int_{x\in\Omega} \frac{x^2+3}{\log x}\,dx
 ``` 
 
+this is another block
+
+\(
+\newcommand{\pepeu}{z^4}
+   \int_{x\in\Omega} \frac{x^2+3}{\log x}\,dx
+\)
+
 another option plus plus (this is the only one working):
 
 $$\int_{x\in\Omega} \frac{x^2+3}{\log x}\,dx$$
@@ -37,8 +44,14 @@ and also this ??
     \int_{x\in\Omega} \frac{x^2+3}{\log x}\,dx
 \end{equation}
 
+and this is the last:
+
+$$
+   z ~=~ z~=~  \pepeu
+$$
+
 and inline as shown here $x^2$ in this line
-also and inline as shown here $$x^2$$ in this line
+also and inline as shown here $$x^2$$ in this line or perhaps $$2^k\,N(x/2^k)$$
 
 ```C++ 
 void main( int arcg, char * argv[] )
@@ -46,7 +59,7 @@ void main( int arcg, char * argv[] )
     cout << "pepe" << endl ;
 }
 ```
-
+this is better
 
 ```cpp
 void main( int arcg, char * argv[] )
