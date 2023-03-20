@@ -25,10 +25,23 @@ another option plus plus (this is the only one working):
 
 $$\int_{x\in\Omega} \frac{x^2+3}{\log x}\,dx$$
 
+and this ??
+$$
+   \int_{x\in\Omega} \frac{x^2+3}{\log x}\,dx
+$$
+
 and inline as shown here $x^2$ in this line
 also and inline as shown here $$x^2$$ in this line
 
 ```C++ 
+void main( int arcg, char * argv[] )
+{
+    cout << "pepe" << endl ;
+}
+```
+
+
+```cpp
 void main( int arcg, char * argv[] )
 {
     cout << "pepe" << endl ;
