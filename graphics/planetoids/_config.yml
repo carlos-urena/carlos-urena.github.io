@@ -1,5 +1,8 @@
 theme: jekyll-theme-slate
 title: LaTex
-description: adding nice fonts to LaTeX in a portable way
+description: creating indexed mesh for planetoids
 kramdown:
   math_engine: mathjax
+  syntax_highlighter: rouge
+
+
