@@ -7,15 +7,19 @@ Using mathjax in github pages is easy, you just have to use the steps described 
 
 [https://github.blog/2022-05-19-math-support-in-markdown/](https://github.blog/2022-05-19-math-support-in-markdown/)
 
+which does not work, perhaps we must read this:
+
+[https://alanduan.me/random/mathjax/](https://alanduan.me/random/mathjax/)
+
 An example equation
 
 ```math
     \int_{x\in\Omega} \frac{x^2+3}{\log x}\,dx
 ``` 
 
-another option plus plus:
+another option plus plus (this is the only one working):
 
-$$\frac{x^2+1}{(x-5)}$$
+$$\int_{x\in\Omega} \frac{x^2+3}{\log x}\,dx$$
 
 and inline as shown here $x^2$ in this line
 
