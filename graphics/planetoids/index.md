@@ -1,4 +1,4 @@
-# Fuentes LaTeX portables 
+# Procedural generation of planetoids:
 
 Using mathjax in github pages is easy, you just have to use the steps described here:
 
