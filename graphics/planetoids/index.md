@@ -1,5 +1,8 @@
 # Procedural generation of planetoids:
 
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+
 Using mathjax in github pages is easy, you just have to use the steps described here:
 
 [https://github.blog/2022-05-19-math-support-in-markdown/](https://github.blog/2022-05-19-math-support-in-markdown/)
