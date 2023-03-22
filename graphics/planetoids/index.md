@@ -8,7 +8,7 @@ $$
    \newcommand{\cv}{\mathbf{v}}
 $$
 
-Written March 22, 2023.
+Written March 22, 2023. **Unfinished, work in progress**.
 
 # Procedural generation of planetoids.
 
