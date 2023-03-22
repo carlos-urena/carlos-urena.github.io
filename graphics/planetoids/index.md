@@ -2,6 +2,8 @@
 usemathjax: true
 ---
 
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
 # Procedural generation of planetoids:
 
 In this page I explain how to use a procedural generation algorithm to create an indexed mesh which resembles a planet or _planetoid_. I start from a (high resolution) unit radius sphere and then I radially displace the vertexes using Perlin Noise. An example mesh (for a particular set of parameter values) is seen here:
