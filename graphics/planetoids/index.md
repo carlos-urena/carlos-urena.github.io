@@ -20,11 +20,17 @@ On this page, I explain how to use a procedural generation algorithm to create a
 
 This generation algorithm has been tested in C++ but can be adapted to other programming languages, running from scratch or on any game engine.
 
-## (1) Sphere generation.
+## (1) High-resolution sphere.
 
 The generation algorithm must use a high-resolution sphere, as we want to add high-resolution variations to enhance realism. Generating a high-resolution sphere can be easily done by using the usual parametrization of the sphere, based on longitude and latitude angles (that is, by rotating a semi-circumference going from the south to the north pole). However, this method produces triangles with a high variation in area and proportions, as it yields very small triangles near the poles and quite big ones near the equator. 
 
-To solve this, we use a regular polyhedron (more concretely a platonic solid), whose vertexes are in the unit radius sphere, and which includes just equilateral triangles, all of them congruent (same area and edges length). Of all the platonic solids meeting this requirement, I choose the Icosahedron, because this is the platonic solid with the largest number of triangles (20), and the smaller the original polyhedron triangles, the smaller triangle area variation we get in the final high-resolution mesh.
+### (1.1) Icosahedron.
+
+To solve this, we use a regular polyhedron (more concretely a platonic solid [[1]](#1)), whose vertexes are in the unit radius sphere, and which includes just equilateral triangles, all of them congruent (same area and edges length). Of all the platonic solids meeting this requirement, I choose the _Regular Icosahedron_ [[2]](#2), because this is the platonic solid with the largest number of triangles (20), and the smaller the original polyhedron triangles, the smaller triangle area variation we get in the final high-resolution mesh.
+
+
+
+### (1.2) Triangles subdivisions.
 
 Once the Icosahedron has been generated, I split each original triangle into 4 triangles, which replace the original one. Thus I obtain an 80 triangles mesh. This process can be repeated $$n$$ times, each time subdividing every triangle in the mesh, so in the end we get an indexed mesh with exactly $$20\cdot 4^n$$ triangles. 
 
@@ -42,3 +48,11 @@ $$
 $$ 
 
 Here, we assume we are using a cartesian coordinate frame whose origin is in the planet-center
+
+## References.
+
+<a id="1">[2]</a> 
+_Platonic Solid_ in _Wikipedia: The Free Encyclopedia_, available from [https://en.wikipedia.org/wiki/Platonic_solid](https://en.wikipedia.org/wiki/Platonic_solid), retrieved March 22, 2023.
+
+<a id="2">[2]</a> 
+_Regular Icosahedron_ in _Wikipedia: The Free Encyclopedia_, available from [https://en.wikipedia.org/wiki/Regular_icosahedron](https://en.wikipedia.org/wiki/Regular_icosahedron), retrieved March 22, 2023.
