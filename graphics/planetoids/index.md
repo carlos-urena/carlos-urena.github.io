@@ -75,13 +75,13 @@ for( unsigned i = 0 ; i < 5 ; i++ )
       n0 = 7+i, n1 = 7+(i+1)%5, 
       s0 = 2+i, s1 = 2+(i+1)%5 ;
 
-   triangulos.push_back({ s0, n0, s1 });
-   triangulos.push_back({ n0, n1, s1 });
+   triangles.push_back({ s0, n0, s1 });
+   triangles.push_back({ n0, n1, s1 });
 }
 
 // triangles adjacent to north pole (vertex 1)
 for( unsigned i = 0 ; i < 5 ; i++ )
-   triangules.push_back({ 1, 7+((i+1)%5), 7+i });
+   triangles.push_back({ 1, 7+((i+1)%5), 7+i });
 ```
 
 ### 1.2. Triangles subdivisions.
