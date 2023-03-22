@@ -4,6 +4,10 @@ usemathjax: true
 
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
+$$
+   \newcommand{\cv}{\mathbf{v}}
+$$
+
 # Procedural generation of planetoids:
 
 In this page I explain how to use a procedural generation algorithm to create an indexed mesh which resembles a planet or _planetoid_. I start from a (high resolution) unit radius sphere and then I radially displace the vertexes using Perlin Noise. An example mesh (for a particular set of parameter values) is seen here:
@@ -30,9 +34,10 @@ This process leads to a mesh with the shape of an Icosahedron, made of small tri
 
 ## (2) Vertex displacement
 
-After computing the sphere, we need to modify the vertexes positions to give it a characteristical _bumpy_ look. The natural option for this is to apply a radial displacement to each vertex, that is, to use a scalar factor $$f_i$$ to modify the distance from the origin to the $$i$$-th vertex. This yields a mesh resembling a planet whose height is different at each point, where _height_ here means _distance to the planet center_. If we name $$v_i$$ to the original position of the vertex and $$v_i'$ the displaced position, we will compute the latter as:
+After computing the sphere, we need to modify the vertexes positions to give it a characteristical _bumpy_ look. The natural option for this is to apply a radial displacement to each vertex, that is, to use a scalar factor $$f_i$$ to modify the distance from the origin to the $$i$$-th vertex. This yields a mesh resembling a planet whose height is different at each point, where _height_ here means _distance to the planet center_. If we name $$\cv_i$$ to the original position of the vertex and $$\cv_i'$$ the displaced position, we will compute the latter from the former as:
+
 $$
-     v_i' := f_i\, v_i
+     \cv_i' ~=~ f_i\, \cv_i
 $$ 
 
 Here, we assume we are using a cartesian coordinate frame whose origin is in the planet-center
