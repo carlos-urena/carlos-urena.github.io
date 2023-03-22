@@ -14,14 +14,15 @@ Written March 22, 2023.
 
 In this page I explain how to use a procedural generation algorithm to create an indexed mesh which resembles a planet or _planetoid_. I start from a (high resolution) unit radius sphere and then I radially displace the vertexes using Perlin Noise. An example mesh (for a particular set of parameter values) is seen here:
 
-![Final planetoid image](imgs/img11.png "Final planetoid image" | width=100px)
+<img src="imgs/img11.png" width="100px"/>
+
 
 These generation algorithms has been tested in C++, but can be adapted to other programming languages, running from scratch or on games engines.
 
 
 ## (1) Sphere generation
 
-The generation algorithm must use a high resolution sphere, as we want to add high rersolution variations to enhance realism. Generating a high resolution sphere can be easily done by using the usual parametrization of the sphere, based on longitude and latitude angles (that is, by rotating a semicircunference going from south to north pole). However, this method produces triangles with a high variation in area and proportions, as it yields very small triangles near the poles and quite big ones near the equator. 
+The generation algorithm must use a high resolution sphere, as we want to add high resolution variations to enhance realism. Generating a high resolution sphere can be easily done by using the usual parametrization of the sphere, based on longitude and latitude angles (that is, by rotating a semicircunference going from south to north pole). However, this method produces triangles with a high variation in area and proportions, as it yields very small triangles near the poles and quite big ones near the equator. 
 
 To solve this, we use a regular polyedron (more concretelly a platonic solid), whose vertexes are in the unit radius sphere, and which includes just equalateral triangles, all of them congruent (same area and edges length). From all the platonic solids meeting this requeriment, I choose the Icosahedron, because this is the platonic solid with the largest number of triangles (20). 
 
