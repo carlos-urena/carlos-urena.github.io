@@ -6,6 +6,7 @@ usemathjax: true
 
 $$
    \newcommand{\cv}{\mathbf{v}}
+   \newcommand{\cp}{\mathbf{p}}
 $$
 
 Written March 22, 2023. **Unfinished, work in progress**.
@@ -173,14 +174,14 @@ The height or radius for each vertex is computed by using a _Perlin Noise_ funct
 If we name $$\cv_i$$ to the original position of the vertex and $$\cv_i'$$ the displaced position, we will compute the latter from the former as:
 
 $$
-     \cv_i' ~=~ d_i\, \cv_i
+   \cv_i' ~=~ d_i\, \cv_i
 $$ 
 
 where $$d_i$$ is a scalar value (the new distance from the vertex to the origin). Here, we assume we are using a cartesian coordinate frame whose origin is in the planet center.
 
 ### 2.1. Normalization of Heights
 
-The noise function $$N$$ (explained below) produces a scalar value $$N(\vp)$$ in $$[0,1]$$ for any point $$\vp$$ with coordinates in the range $$[-1\ldots+1]$$ (as the original sphere points have coordinates in that range). We use $$N$$ to compute a height value $h_i=N(\vv_i)$ for each vertex position $\vv_i$. After that, another scalar value $$d_i$$ is computed from $$h_i$$, so $$d_i$$ values are inside a known range, not necessarily equal to $$[0,1]$$, which can be fitted to specific planetoid characteristics.
+The noise function $$N$$ (explained below) produces a scalar value $$N(\cp)$$ in $$[0,1]$$ for any point $$\vp$$ with coordinates in the range $$[-1\ldots+1]$$ (as the original sphere points have coordinates in that range). We use $$N$$ to compute a height value $h_i=N(\cv_i)$ for each vertex position $\cv_i$. After that, another scalar value $$d_i$$ is computed from $$h_i$$, so $$d_i$$ values are inside a known range, not necessarily equal to $$[0,1]$$, which can be fitted to specific planetoid characteristics.
 
 This step is achieved by computing the minimal ($$m_0$$) and maximal ($$m_1$$) values of all $$h_i$$ values, and then computing a normalized value $$g_i$$ obviously as:
 
@@ -194,7 +195,7 @@ $$
     d_i ~=~ a\,+\,s\cdot g_i
 $$
 
-obviously this implies all the values $$d_i$$ lie in the interval $$[b,b+s]$$, including for sure two vertexes at the extreme values $$b$$ and $$b+s$$. These parameters can be fine tuned to specific applications or looks.
+obviously this implies all the values $$d_i$$ lie in the interval $$[b,b+s]$$, including for sure two vertexes at the extreme values $$b$$ and $$b+s$$. These parameters can be fine-tuned to specific applications or looks.
 
 
 
