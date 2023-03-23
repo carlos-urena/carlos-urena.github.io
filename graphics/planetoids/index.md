@@ -166,13 +166,44 @@ Again, we see here a sequence of sub-divided icosahedrons, now with all the vert
 
 ## 2. Vertex displacement.
 
-After computing the sphere, we need to modify the vertexes' positions to give it a characteristical _bumpy_ look. The natural option for this is to apply a radial displacement to each vertex, that is, to use a scalar factor $$f_i$$ to modify the distance from the origin to the $$i$$-th vertex. This yields a mesh resembling a planet whose height is different at each point, where _height_ here means the _distance__ to the_ planet's center_. If we name $$\cv_i$$ to the original position of the vertex and $$\cv_i'$$ the displaced position, we will compute the latter from the former as:
+After computing the sphere, we need to modify the vertexes' positions to give it a characteristical _bumpy_ look. The natural option for this is to apply a radial displacement to each vertex, that is, to use a scalar factor to modify the distance from the origin to the $$i$$-th vertex. This yields a mesh resembling a planet whose height is different at each point, where _height_ here means the _distance__ to the_ planet's center_. 
+
+The height or radius for each vertex is computed by using a _Perlin Noise_ function $$N$$. After that, the heights are normalized to a known range whose extreme values can be fixed by the programmer to tune the shape to its specific goals.  In this section, we cover the normalization step and the Perlin Noise function.
+
+If we name $$\cv_i$$ to the original position of the vertex and $$\cv_i'$$ the displaced position, we will compute the latter from the former as:
 
 $$
-     \cv_i' ~=~ f_i\, \cv_i
+     \cv_i' ~=~ d_i\, \cv_i
 $$ 
 
-Here, we assume we are using a cartesian coordinate frame whose origin is in the planet-center
+where $$d_i$$ is a scalar value (the new distance from the vertex to the origin). Here, we assume we are using a cartesian coordinate frame whose origin is in the planet center.
+
+### 2.1. Normalization of Heights
+
+The noise function $$N$$ (explained below) produces a scalar value $$N(\vp)$ in $$[0,1]$$ for any point $$\vp$$ with coordinates in the range $$[-1\ldots+1]$$ (as the original sphere points have coordinates in that range). We use $$N$$ to compute a height value $h_i=N(\vv_i)$ for each vertex position $\vv_i$. After that, another scalar value $$d_i$$ is computed from $$h_i$$, so $$d_i$$ values are inside a known range, not necessarily equal to $$[0,1]$$, which can be fitted to specific planetoid characteristics.
+
+This step is achieved by computing the minimal ($$m_0$$) and maximal ($$m_1$$) values of all $$h_i$$ values, and then computing a normalized value $$g_i$$ obviously as:
+
+$$
+     g_i ~=~ \frac{h_i - m_0}{m_1 - m_0}
+$$
+
+this way we ensure $$g_i$$ values cover the whole interval $$[0,1]$$. After this we can obtain each value $$d_i$$ by using two real parameters $$b$$ and $$s>0$$
+
+$$
+    d_i ~=~ a\,+\,s\cdot g_i
+$$
+
+obviously this implies all the values $$d_i$$ lie in the interval $$[b,b+s]$$, including for sure two vertexes at the extreme values $$b$$ and $$b+s$$. These parameters can be fine tuned to specific applications or looks.
+
+
+
+
+
+
+
+
+### 2.2. Perlin noise function
 
 ## References.
 
