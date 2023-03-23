@@ -97,13 +97,10 @@ Once the Icosahedron has been generated, I split each original triangle into 4 t
 
 To subdivide a triangle into four, three new vertexes are added to the mesh vertex table, each one is placed in the middle of each edge of the original triangle. The three original vertexes, along with the three new ones, are used as vertexes for the new 4 triangles, which are also equilateral. These new triangles are added to the triangles table, while the original triangle is removed from that table.
 
-Here is a view of a sequence of sub-divided icosahedrons with increasing resolution:
+Here is a view of a sequence of sub-divided icosahedrons with increasing resolution (that is, after 1,2,3 and 4 subdivision steps):
 
 <center>
-<img src="imgs/img2.png" width="24%"/>
-<img src="imgs/img3.png" width="24%"/>
-<img src="imgs/img4.png" width="24%"/>
-<img src="imgs/img5.png" width="24%"/>
+<img src="imgs/img2.png" width="24%"/>&nbsp;<img src="imgs/img3.png" width="24%"/>&nbsp;<img src="imgs/img4.png" width="24%"/>&nbsp;<img src="imgs/img5.png" width="24%"/>
 </center>
 
 This process leads to a mesh with the shape of an Icosahedron, made of small triangles, all of them with equal area. Each triangle is on one of the original Icosahdreon faces planes. As we want to obtain a sphere, we must modify the position of the new vertexes during the subdivision step: when a new vertex is computed (in the middle point of an edge), it is normalized before adding it to the vertexes table, that is, we displace the new vertex radially so it meets the unit-radius sphere surface. This normalization implies that the new four triangles are not the same area, but the area differences are very small as compared to the area difference you obtain with the latitude-longitude sphere generation algorithm. This can be verified visually, as you can assess by observing the final high-resolution sphere mesh.
@@ -111,10 +108,7 @@ This process leads to a mesh with the shape of an Icosahedron, made of small tri
 Again, we see here a sequence of sub-divided icosahedrons, now with all the vertexes on the sphere:
 
 <center>
-<img src="imgs/img6.png" width="24%"/>
-<img src="imgs/img7.png" width="24%"/>
-<img src="imgs/img8.png" width="24%"/>
-<img src="imgs/img9.png" width="24%"/>
+<img src="imgs/img6.png" width="24%"/>&nbsp;<img src="imgs/img7.png" width="24%"/>&nbsp;<img src="imgs/img8.png" width="24%"/>&nbsp;<img src="imgs/img9.png" width="24%"/>
 </center>
 
 
