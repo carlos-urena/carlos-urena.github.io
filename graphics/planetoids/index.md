@@ -15,7 +15,7 @@ Written March 22, 2023. **Unfinished, work in progress**.
 On this page, I explain how to use a procedural generation algorithm to create an indexed mesh that resembles a planet or _planetoid_. I start from a (high resolution) unit radius sphere and then I radially displace the vertexes using Perlin Noise. An example mesh (for a particular set of parameter values) is seen here:
 
 <center>
-<img src="imgs/img11.png" width="45%"/>
+<img src="imgs/img11.png" width="60%"/>
 </center>
 
 This generation algorithm has been tested in C++ but can be adapted to other programming languages, running from scratch or on any game engine.
@@ -84,13 +84,39 @@ for( unsigned i = 0 ; i < 5 ; i++ )
    triangles.push_back({ 1, 7+((i+1)%5), 7+i });
 ```
 
+Here is a view of the icosahedron:
+
+<center>
+<img src="imgs/img1.png" width="60%"/>
+</center>
+
+
 ### 1.2. Triangles subdivisions.
 
 Once the Icosahedron has been generated, I split each original triangle into 4 triangles, which replace the original one. Thus I obtain an 80 triangles mesh. This process can be repeated $$n$$ times, each time subdividing every triangle in the mesh, so in the end we get an indexed mesh with exactly $$20\cdot 4^n$$ triangles. 
 
 To subdivide a triangle into four, three new vertexes are added to the mesh vertex table, each one is placed in the middle of each edge of the original triangle. The three original vertexes, along with the three new ones, are used as vertexes for the new 4 triangles, which are also equilateral. These new triangles are added to the triangles table, while the original triangle is removed from that table.
 
+Here is a view of a sequence of sub-divided icosahedrons with increasing resolution:
+
+<center>
+<img src="imgs/img2.png" width="24%"/>
+<img src="imgs/img3.png" width="24%"/>
+<img src="imgs/img4.png" width="24%"/>
+<img src="imgs/img5.png" width="24%"/>
+</center>
+
 This process leads to a mesh with the shape of an Icosahedron, made of small triangles, all of them with equal area. Each triangle is on one of the original Icosahdreon faces planes. As we want to obtain a sphere, we must modify the position of the new vertexes during the subdivision step: when a new vertex is computed (in the middle point of an edge), it is normalized before adding it to the vertexes table, that is, we displace the new vertex radially so it meets the unit-radius sphere surface. This normalization implies that the new four triangles are not the same area, but the area differences are very small as compared to the area difference you obtain with the latitude-longitude sphere generation algorithm. This can be verified visually, as you can assess by observing the final high-resolution sphere mesh.
+
+Again, we see here a sequence of sub-divided icosahedrons, now with all the vertexes on the sphere:
+
+<center>
+<img src="imgs/img6.png" width="24%"/>
+<img src="imgs/img7.png" width="24%"/>
+<img src="imgs/img8.png" width="24%"/>
+<img src="imgs/img9.png" width="24%"/>
+</center>
+
 
 
 ## 2. Vertex displacement.
