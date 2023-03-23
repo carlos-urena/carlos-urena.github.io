@@ -158,7 +158,10 @@ This process leads to a mesh with the shape of an Icosahedron, made of small tri
 Again, we see here a sequence of sub-divided icosahedrons, now with all the vertexes on the sphere:
 
 <center>
-<img src="imgs/img6.png" width="24%"/>&nbsp;<img src="imgs/img7.png" width="24%"/>&nbsp;<img src="imgs/img8.png" width="24%"/>&nbsp;<img src="imgs/img9.png" width="24%"/>
+<img src="imgs/img7.png" width="24%"/>
+<img src="imgs/img8.png" width="24%"/>
+<img src="imgs/img9.png" width="24%"/>
+<img src="imgs/img10.png" width="50%"/>
 </center>
 
 
