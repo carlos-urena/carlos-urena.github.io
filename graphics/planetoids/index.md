@@ -95,11 +95,11 @@ Here is a view of the icosahedron:
 
 Once the Icosahedron has been generated, I split each original triangle into 4 triangles, which replace the original one. Thus I obtain an 80 triangles mesh. This process can be repeated $$n$$ times, each time subdividing every triangle in the mesh, so in the end we get an indexed mesh with exactly $$20\cdot 4^n$$ triangles. 
 
-To subdivide a triangle into four, three new vertexes are added to the mesh vertex table, each one is placed in the middle of each edge of the original triangle. The three original vertexes, along with the three new ones, are used as vertexes for the new 4 triangles, which are also equilateral. These new triangles are added to the triangles table, while the original triangle is removed from that table.
+To subdivide any given triangle into four, three new vertexes are added to the mesh vertex table, each one is placed in the middle of each edge of the original triangle. The three original vertexes, along with the three new ones, are used as vertexes for the new 4 triangles, which are also equilateral. These new triangles are added to the triangles table, while the original triangle is removed from that table.
 
-Triangle subdivision implementation is based on the use of a dictionary or map (a `std::map` instance). Consider an edge adjacent to vertexes $$i$$ and $$j$$ (we assume, with no loss of generality, that $$i<j$$>): when the corresponding middle vertex $$k$$ is added to the mesh, the value $$k$$ is added to the map, with a key which is a pair (a `std::pair`) containing $$i$$ and $$j$$. This allows us to efficiently ensure that the new vertex $$k$$ is added only once, because the edge from $$i$$ may be adjacent to two triangles. 
+As every input triangle is processed during the subdivisión process, any edge $$e$$ in the mesh can be visited one or two times during this process (as any edge can be adjacent to one or two triangles). Any edge must be split in two when it is first visited during the subdivision process. On the second visit (when it happens), the already created middle vertex must be retrieved. To achieve this efficiently a dictionary or map (a `std::map` instance) can be used. The map includes, for each visited edge (as a key), its corresponding middle vertex index (a third unsigned value). An edge is represented as a pair (a `std::pair` instance)  with two different unsigned values, the first being smaller than the second, to avoid redundancy. When any edge is visited, the map is queried to guess if it already contains that edge as a key or not. Then the corresponding middle vertex index is either retrieved or inserted in the map.
 
-Below you can see the C++ code for the new vertices insertions in the subdivision step. It uses the map `em`, and uses an input table named as `input_triangles`, while adds vertexes to the table named `vertices`:
+Below you can see the C++ code for the new vertices insertions in the subdivision step. It uses the map `em`, and uses an input table named `input_triangles` while adding vertexes to the table named `vertices`:
 
 ```cpp 
 
@@ -122,7 +122,7 @@ for( auto t : input_triangles )
    }
 ```
 
-After new vertexes are added to `vertices` table, we can create the new triangles in a new table (`output_triangles`), as follows:
+After new vertexes are added to the vertices table, we can insert new triangles in a the new triangles table (`output_triangles`), as follows:
 
 ```cpp 
 output_triangles.resize( 4*(input_triangles->size()) );
@@ -161,7 +161,7 @@ Again, we see here a sequence of sub-divided icosahedrons, now with all the vert
 <img src="imgs/img7.png" width="24%"/>
 <img src="imgs/img8.png" width="24%"/>
 <img src="imgs/img9.png" width="24%"/>
-<img src="imgs/img10.png" width="50%"/>
+<img src="imgs/img10.png" width="70%"/>
 </center>
 
 ## 2. Vertex displacement.
