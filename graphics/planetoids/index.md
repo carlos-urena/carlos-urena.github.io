@@ -97,6 +97,56 @@ Once the Icosahedron has been generated, I split each original triangle into 4 t
 
 To subdivide a triangle into four, three new vertexes are added to the mesh vertex table, each one is placed in the middle of each edge of the original triangle. The three original vertexes, along with the three new ones, are used as vertexes for the new 4 triangles, which are also equilateral. These new triangles are added to the triangles table, while the original triangle is removed from that table.
 
+Triangle subdivision implementation is based on the use of a dictionary or map (a `std::map` instance). Consider an edge adjacent to vertexes $$i$$ and $$j$$ (we assume, with no loss of generality, that $$i<j$$>): when the corresponding middle vertex $$k$$ is added to the mesh, the value $$k$$ is added to the map, with a key which is a pair (a `std::pair`) containing $$i$$ and $$j$$. This allows us to efficiently ensure that the new vertex $$k$$ is added only once, because the edge from $$i$$ may be adjacent to two triangles. 
+
+Below you can see the C++ code for the new vertices insertions in the subdivision step. It uses the map `em`, and uses an input table named as `input_triangles`, while adds vertexes to the table named `vertices`:
+
+```cpp 
+
+typedef std::pair< unsigned, unsigned > edge ; // datatype for edges (a pair of unsigned values)
+std::map< edge, unsigned > em ; // edges map, for each edge, includes its new index.
+
+for( auto t : input_triangles )
+   for( unsigned i = 0 ; i < 3 ; i++ )
+   {
+      const edge     e   = { min( t[i], t[(i+1)%3]), max( t[i], t[(i+1)%3]) } ;
+      const auto     f   = em.find(e);
+      const unsigned ivm = (f == em.end()) ? vertices.size() : em[e] ;
+
+      if ( ivm == vertices.size() ) // if the new vertex has not been created, create it:
+      {  
+         auto vm = 0.5f*(vertices[e.first]+vertices[e.second]) ;
+         vertices.push_back( vm );
+         em[e] = ivm ;
+      }
+   }
+```
+
+After new vertexes are added to `vertices` table, we can create the new triangles in a new table (`output_triangles`), as follows:
+
+```cpp 
+output_triangles.resize( 4*(input_triangles->size()) );
+unsigned long indt = 0 ;
+
+for( auto t : input_triangles )
+{
+   // retrieve (in 'n') the indexes for the 3 new vertexes adjacent to triangle 't':
+   const unsigned n[3] = 
+   {  em[{ min(t[0],t[1]), max(t[0],t[1]) }], 
+      em[{ min(t[1],t[2]), max(t[1],t[2]) }], 
+      em[{ min(t[2],t[0]), max(t[2],t[0]) }] 
+   };
+
+   // create the four new triangles, using t's original vertexes and the new vertexes indexes
+   output_triangles[indt++] = { t[0], n[0], n[2] };
+   output_triangles[indt++] = { t[1], n[1], n[0] };
+   output_triangles[indt++] = { t[2], n[2], n[1] };
+   output_triangles[indt++] = { n[0], n[1], n[2] };
+}
+```
+
+For an iterative version of this code, the input and output roles of these tables can be swapped after each step except the last one (this is usually called a _ping pong_ iterative algorithm).
+
 Here is a view of a sequence of sub-divided icosahedrons with increasing resolution (that is, after 1,2,3 and 4 subdivision steps):
 
 <center>
