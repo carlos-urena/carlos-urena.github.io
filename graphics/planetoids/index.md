@@ -164,8 +164,6 @@ Again, we see here a sequence of sub-divided icosahedrons, now with all the vert
 <img src="imgs/img10.png" width="50%"/>
 </center>
 
-
-
 ## 2. Vertex displacement.
 
 After computing the sphere, we need to modify the vertexes' positions to give it a characteristical _bumpy_ look. The natural option for this is to apply a radial displacement to each vertex, that is, to use a scalar factor $$f_i$$ to modify the distance from the origin to the $$i$$-th vertex. This yields a mesh resembling a planet whose height is different at each point, where _height_ here means the _distance__ to the_ planet's center_. If we name $$\cv_i$$ to the original position of the vertex and $$\cv_i'$$ the displaced position, we will compute the latter from the former as:
