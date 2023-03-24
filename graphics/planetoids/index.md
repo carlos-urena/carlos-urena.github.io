@@ -264,7 +264,11 @@ if ( p.add_vertex_colors )
 
 ### 2.2. Perlin noise function
 
-to be done.
+The Perlin Noise function $$N$$ accepts a $$x,y,z$$ coordinates tuple (with $$0\leq x,y,z \leq 1$$) and yields a scalar value (in $$[0,1]$$). The function is defined as a sum of $$n>0$$ different piecewise linear functions $$M_i$$, where $$n$$ is called the _number of levels_, as follows:
+
+$$
+     
+$$
 
 ## References.
 
