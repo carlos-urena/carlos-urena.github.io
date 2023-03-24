@@ -197,7 +197,7 @@ $$,
 
 obviously this implies all the values $$d_i$$ lie in the interval $$[a,a+b]$$, including for sure at least two vertexes at the extreme values $$a$$ and $$a+b$$. These parameters can be fine-tuned to specific applications or looks.
 
-This normalization code can be modified to optionally truncate the heigh values to a minimum value, for values below that minimun. I have used this to somehow resemble _seas_ in the planetoid (the blue zones in the first image above). If $$f_{min}$$ is the threshold value (with $$0<f_{min}<1$$), then $$d_i$$ is computed as:
+This normalization code can be modified to optionally truncate the heigh values to a minimum value, for values below that minimum. I have used this to somehow resemble _seas_ in the planetoid (the blue zones in the first image above). If $$f_{min}$$ is the threshold value (with $$0<f_{min}<1$$), then $$d_i$$ is computed as:
 
 $$
     d_i ~=~ a\,+\,b\cdot \mbox{max}\left( \,0\,;\, \frac{f_i-f_{min}}{1-f_{min}} \right)
