@@ -228,18 +228,18 @@ The following code computes $$f_i$$ and $$d_i$$ values, and displaces the vertex
 
 ```cpp 
 for( unsigned iv = 0 ; iv < vertices.size() ; iv++  )
-   {
-      const float f = (hv[iv]-hmin)/(hmax-hmin) ;
-      const float d = p.truncate_to_min_f 
-                        ? ((f < p.min_f) ? 0.0f : (f-p.min_f)/(1.0-p.min_f) )
-                        : f ;
-      vertices[iv] = (p.d_base + p.d_scale*d) * vertices[iv] ;
+{
+   const float f = (hv[iv]-hmin)/(hmax-hmin) ;
+   const float d = p.truncate_to_min_f 
+                     ? ((f < p.min_f) ? 0.0f : (f-p.min_f)/(1.0-p.min_f) )
+                     : f ;
+   vertices[iv] = (p.d_base + p.d_scale*d) * vertices[iv] ;
 
-      if ( p.add_vertex_colors )
-      {  // optionally: set vertex color (see below)
-         // .....
-      }
+   if ( p.add_vertex_colors )
+   {  // optionally: set vertex color (see below)
+      // .....
    }
+}
 ``` 
 
 The first image in this text shows a coloured planetoid. This is achieved by computing a RGB color attribute for each vertex by using the normalized $$d_i$$ value of that vertex (that is, the color depends only on the height of the vertex). To do this, we use a _color ramp_ (a vector with $$n$$ colors), which defines a piecewise linear function from $$d_i$$ to RGB colors. 
@@ -264,11 +264,13 @@ if ( p.add_vertex_colors )
 
 ### 2.2. Perlin noise function
 
-The Perlin Noise function $$N$$ accepts a $$x,y,z$$ coordinates tuple (with $$0\leq x,y,z \leq 1$$) and yields a scalar value (in $$[0,1]$$). The function is defined as a sum of $$n>0$$ different piecewise linear functions $$M_i$$, where $$n$$ is called the _number of levels_, as follows:
+The Perlin Noise function $$N$$ accepts a  coordinates tuple $$\vp=(x,y,z)$$ (with $$0\leq x,y,z \leq 1$$) and yields a scalar value (in $$[0,1]$$). The function is defined as a sum of $$n>0$$ different piecewise linear functions $$M_i$$, where $$n$$ is called the _number of levels_, as follows:
 
 $$
-     
+     N(\vp)  ~=~   \frac{\sum _{i=0}^{n-1} w_i\,M_i(2^i\vp)}{\sum_{i=0}^{n-1} w_i}
 $$
+
+Each $M_i$ function here returns a real value $$[0,1]$$, and is called an _octave_ function. These functions are piecewise tri-linear functions which interpolate between random values associated to each point with integer coordinates.
 
 ## References.
 
