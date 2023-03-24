@@ -264,11 +264,15 @@ if ( p.add_vertex_colors )
 
 ### 2.2. Perlin noise function
 
-The Perlin Noise function $$N$$ accepts a  coordinates tuple $$\cp=(x,y,z)$$ (with $$0\leq x,y,z \leq 1$$) and yields a scalar value (in $$[0,1]$$). The function is defined as a sum of $$n>0$$ different piecewise linear functions $$M_i$$, where $$n$$ is called the _number of levels_, as follows:
+The Perlin Noise function $$N$$ accepts a  coordinates tuple $$\cp=(x,y,z)$$ (with $$0\leq x,y,z \leq 1$$) and yields a scalar value (in $$[0,1]$$). The function is defined as a weighted sum of $$n>0$$ different piecewise linear functions $$M_i$$, where $$n$$ is called the _number of levels_, as follows:
 
 $$
      N(\cp)  ~=~   \frac{\sum _{i=0}^{n-1} w_i\,M_i(2^i\cp)}{\sum_{i=0}^{n-1} w_i}
 $$
+
+
+Here each value $$w_i$$ is defined as $$2^i$$, (¿or perhaps $$k^i$$, for some value $$k>1$$?).
+
 
 Each $$M_i$$ function here returns a real value $$[0,1]$$, and is called an _octave_ function. These functions are piecewise tri-linear functions which interpolate between random values associated to each point with integer coordinates.
 
