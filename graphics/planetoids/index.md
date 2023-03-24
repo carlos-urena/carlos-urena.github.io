@@ -197,15 +197,15 @@ $$
 
 obviously, this implies all the values $$d_i$$ lie in the interval $$[a,a+b]$$, including for sure at least two vertexes at the extreme values $$a$$ and $$a+b$$. These parameters can be fine-tuned to specific applications or looks.
 
-This normalization code can be modified to optionally truncate the heigh values to a minimum value, I have used this to somehow resemble _seas_ in the planetoid (the blue zones in the first image above). If $$f_{min}$$ is the threshold value (with $$0<f_{min}<1$$), then $$d_i$$ is computed as:
+This normalization code can be modified to optionally truncate the heigh values to a minimum value, for values below that minimun. I have used this to somehow resemble _seas_ in the planetoid (the blue zones in the first image above). If $$f_{min}$$ is the threshold value (with $$0<f_{min}<1$$), then $$d_i$$ is computed as:
 
 $$
     d_i ~=~ a\,+\,b\cdot \mbox{max}\left( 0.0f, \frac{f_i-f_{min}}{1-f_{min}} \right)
 $$
 
-(note that no matter which version we use for $d_i$, it allways lies in $[0,1]$).
+Note that no matter which version we use for $$d_i$$, it allways lies in $[0,1]$. By setting $$f_{min}$$ to $$0$$, this formula becomes equivalent to the previous one, so no truncation is done.
 
-This code computes the array of $$h_i$$ values (`hv`), along with its minimal value $m_0$ (`hmin`) and the maximal one (`hmax`). It evaluates function $$N$$ by using `eval` method of the Perlin noise object `pn` (which is described below). Note that the vertex position coordinates are in the range $$[-1..+1]$$, while the noise function $$N$$ only receives coordinates in $$[0,1]$$, so the vertex coordinates are transformed to that range before evaluating $$N$$
+This code computes the array of $$h_i$$ values (`hv`), along with its minimal value $$m_0$$ (`hmin`) and the maximal one $$m_1$$ (`hmax`). It evaluates function $$N$$ by using `eval` method of the Perlin noise object `pn` (which is described below). Note that the vertex position coordinates are in the range $$[-1..+1]$$, while the noise function $$N$$ only receives coordinates in $$[0,1]$$, so the vertex coordinates are transformed to that range before evaluating $$N$$
 
 ```cpp 
 PerlinNoise3D  pn(p.num_levels) ;
