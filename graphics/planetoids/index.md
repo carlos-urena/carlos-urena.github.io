@@ -244,21 +244,21 @@ for( unsigned iv = 0 ; iv < vertices.size() ; iv++  )
 
 The first image in this text shows a coloured planetoid. This is achieved by computing a RGB color attribute for each vertex by using the normalized $$d_i$$ value of that vertex (that is, the color depends only on the height of the vertex). To do this, we use a _color ramp_ (a vector with $$n$$ colors), which defines a piecewise linear function from $$d_i$$ to RGB colors. 
 
-The code below computes the color for a vertex when `p.add_vertex_color` is true by using the `d` variable as defined in the code above. We assume `colors` is a vector with RGB 3-float tuples, with the same size as the vertex table. 
+The code below computes the color for vertex `iv` when `p.add_vertex_color` is true by using the `d` variable as defined in the code above, and the color ramp stored in `p.color_ramp`. We assume `colors` is a vector with RGB 3-float tuples, with the same size as the vertex table:
 
 ```cpp 
 if ( p.add_vertex_colors )
 {
-   const unsigned nc    = p.color_ramp.size() ; 
-   const float    fnc   = d*float(nc-1) ;
-   const float    ic_f  = truncf( fnc );
-   const float    frac  = fnc - ic_f ;
-   const unsigned ic    = unsigned( ic_f );
+   const unsigned ic_max = p.color_ramp.size()-1 ; // last color index
+   const float    fnc    = d*float( ic_max ) ;
+   const float    ic_f   = truncf( fnc );
+   const unsigned ic     = unsigned( ic_f );
+   const float    frac   = fnc - ic_f ;
 
-   if ( ic < nc-1 )
-      col_ver[iv]  = p.color_ramp[ic]*(1.0f-frac) + p.color_ramp[ic+1]*frac ;
+   if ( ic < ic_max )
+      colors[iv]  = p.color_ramp[ic]*(1.0f-frac) + p.color_ramp[ic+1]*frac ;
    else 
-      col_ver[iv]  = p.color_ramp[nc-1] ;
+      colors[iv]  = p.color_ramp[ic_max] ;
 }
 ``` 
 
