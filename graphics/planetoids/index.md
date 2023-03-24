@@ -183,19 +183,50 @@ where $$d_i$$ is a scalar value (the new distance from the vertex to the origin)
 
 The noise function $$N$$ (explained below) produces a scalar value $$N(\cp)$$ in $$[0,1]$$ for any point $$\cp$$ with coordinates in the range $$[-1\ldots+1]$$ (as the original sphere points have coordinates in that range). We use $$N$$ to compute a height value $$h_i=N(\cv_i)$$ for each vertex position $$\cv_i$$. After that, another scalar value $$d_i$$ is computed from $$h_i$$, so $$d_i$$ values are inside a known range, not necessarily equal to $$[0,1]$$, which can be fitted to specific planetoid characteristics.
 
-This step is achieved by computing the minimal ($$m_0$$) and maximal ($$m_1$$) values of all $$h_i$$ values, and then computing a normalized value $$g_i$$ obviously as:
+This step is achieved by computing the minimal ($$m_0$$) and maximal ($$m_1$$) values of all $$h_i$$ values, and then computing a normalized value $$f_i$$ obviously as:
 
 $$
-     g_i ~=~ \frac{h_i - m_0}{m_1 - m_0}
+   f_i ~=~ \frac{h_i - m_0}{m_1 - m_0}
 $$
 
-this way we ensure $$g_i$$ values cover the whole interval $$[0,1]$$. After this we can obtain each value $$d_i$$ by using two real parameters $$b$$ and $$s>0$$
+this way we ensure $$g_i$$ values cover the whole interval $$[0,1]$$. After this we can obtain each value $$d_i$$ by using two real parameters $$a$$ and $$b>0$$
 
 $$
-    d_i ~=~ a\,+\,s\cdot g_i
+    d_i ~=~ a\,+\,b\cdot f_i
 $$
 
-obviously this implies all the values $$d_i$$ lie in the interval $$[b,b+s]$$, including for sure two vertexes at the extreme values $$b$$ and $$b+s$$. These parameters can be fine-tuned to specific applications or looks.
+obviously this implies all the values $$d_i$$ lie in the interval $$[a,a+b]$$, including for sure at least two vertexes at the extreme values $$a$$ and $$a+b$$. These parameters can be fine-tuned to specific applications or looks.
+
+This normalization code can be modified to optionally truncate the heigh values to a minimun value, I have used this to somehow resemble _seas_ in the planetoid (the blue zones in the first image above). If $$f_{min}$$ is the threshold value (with $$0<f_{min}<1$$), then $$d_i$$ is computed as:
+
+$$
+    d_i ~=~ a\,+\,b\cdot \mbox{max}\left( 0.0f, \frac{f_i-f_{min}}{1-f_{min}} \right)
+$$
+
+(note that no matter which version we use for $d_i$, it allways lies in $[0,1]$).
+
+This code computes the array of $$h_i$$ values (`hv`), along with its minimal value $m_0$ (`hmin`) and the maximal one (`hmax`). It evaluates function $$N$$ by using `eval` method of the perlin noise object `pn` (which is described below). Note that the vertex position coordinates are in the range $$[-1..+1]$$
+
+```cpp 
+PerlinNoise3D  pn(p.num_levels) ;
+vector<float>  hv( vertices.size() );
+
+float hmin = 1.0 ;
+float hmax = 0.0 ;
+
+for( unsigned iv = 0 ; iv < vertices.size() ; iv++  )
+{
+   const float h = pn.eval( (1.0f+vertices[iv](0))/2.0f, 
+                            (1.0f+vertices[iv](1))/2.0f, 
+                            (1.0f+vertices[iv](2))/2.0f );
+
+   assert( 0.0f <= h && h < 1.0f );
+   hv[iv] = h ;
+
+   hmin = min( h, hmin );
+   hmax = max( h, hmax );   
+}
+``` 
 
 
 ### 2.2. Perlin noise function
