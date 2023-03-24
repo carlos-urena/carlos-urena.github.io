@@ -278,6 +278,8 @@ Each $$M_i$$ function here returns a real value $$[0,1]$$, and is called an _oct
 
 Function $$M_i$$ expects its argument coordinates in the range $$[0,2^i]$$.
 
+**work in progress**
+
 ## References.
 
 <a id="1">[1]</a> 
