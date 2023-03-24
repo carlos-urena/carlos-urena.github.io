@@ -193,9 +193,9 @@ this way we ensure $$g_i$$ values cover the whole interval $$[0,1]$$. After this
 
 $$
     d_i ~=~ a\,+\,b\cdot f_i
-$$
+$$,
 
-obviously, this implies all the values $$d_i$$ lie in the interval $$[a,a+b]$$, including for sure at least two vertexes at the extreme values $$a$$ and $$a+b$$. These parameters can be fine-tuned to specific applications or looks.
+obviously this implies all the values $$d_i$$ lie in the interval $$[a,a+b]$$, including for sure at least two vertexes at the extreme values $$a$$ and $$a+b$$. These parameters can be fine-tuned to specific applications or looks.
 
 This normalization code can be modified to optionally truncate the heigh values to a minimum value, for values below that minimun. I have used this to somehow resemble _seas_ in the planetoid (the blue zones in the first image above). If $$f_{min}$$ is the threshold value (with $$0<f_{min}<1$$), then $$d_i$$ is computed as:
 
@@ -203,29 +203,31 @@ $$
     d_i ~=~ a\,+\,b\cdot \mbox{max}\left( 0.0f, \frac{f_i-f_{min}}{1-f_{min}} \right)
 $$
 
-Note that no matter which version we use for $$d_i$$, it allways lies in $[0,1]$. By setting $$f_{min}$$ to $$0$$, this formula becomes equivalent to the previous one, so no truncation is done.
+Note that no matter which version we use for $$d_i$$, it always lies in $$[0,1]$$. By setting $$f_{min}$$ to $$0$$, this formula becomes equivalent to the previous one, so no truncation is done.
 
-This code computes the array of $$h_i$$ values (`hv`), along with its minimal value $$m_0$$ (`hmin`) and the maximal one $$m_1$$ (`hmax`). It evaluates function $$N$$ by using `eval` method of the Perlin noise object `pn` (which is described below). Note that the vertex position coordinates are in the range $$[-1..+1]$$, while the noise function $$N$$ only receives coordinates in $$[0,1]$$, so the vertex coordinates are transformed to that range before evaluating $$N$$
+The code below computes the array of $$h_i$$ values (`hv`), along with its minimal value $$m_0$$ (`hmin`) and the maximal one $$m_1$$ (`hmax`). It evaluates function $$N$$ by using `eval` method of the Perlin noise object `pn` (which is described below). Note that the vertex position coordinates are in the range $$[-1,+1]$$, while the noise function $$N$$ only receives coordinates in $$[0,1]$$, so the vertex coordinates are transformed to that range before evaluating $$N$$.
 
 ```cpp 
-PerlinNoise3D  pn(p.num_levels) ;
+PerlinNoise3D  pn( p.num_levels ) ;
 vector<float>  hv( vertices.size() );
-
-float hmin = 1.0 ;
-float hmax = 0.0 ;
+float          hmin = 1.0, 
+               hmax = 0.0 ;
 
 for( unsigned iv = 0 ; iv < vertices.size() ; iv++  )
 {
    const float h = pn.eval( (1.0f+vertices[iv](0))/2.0f, 
                             (1.0f+vertices[iv](1))/2.0f, 
                             (1.0f+vertices[iv](2))/2.0f );
-
-   assert( 0.0f <= h && h < 1.0f );
    hv[iv] = h ;
-
    hmin = min( h, hmin );
    hmax = max( h, hmax );   
 }
+``` 
+
+The following code computes $$f_i$$ values and displaces the vertexes radially, by using parameters $$a$$ and $$b$$
+
+```cpp 
+
 ``` 
 
 
