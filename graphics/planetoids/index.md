@@ -270,7 +270,9 @@ $$
      N(\cp)  ~=~   \frac{\sum _{i=0}^{n-1} w_i\,M_i(2^i\cp)}{\sum_{i=0}^{n-1} w_i}
 $$
 
-Each $M_i$ function here returns a real value $$[0,1]$$, and is called an _octave_ function. These functions are piecewise tri-linear functions which interpolate between random values associated to each point with integer coordinates.
+Each $$M_i$$ function here returns a real value $$[0,1]$$, and is called an _octave_ function. These functions are piecewise tri-linear functions which interpolate between random values associated to each point with integer coordinates.
+
+Function $$M_i$$ expects its argument coordinates in the range $$[0,2^i]$$.
 
 ## References.
 
