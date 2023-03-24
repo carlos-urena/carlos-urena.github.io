@@ -267,14 +267,54 @@ if ( p.add_vertex_colors )
 The Perlin Noise function $$N$$ accepts a  coordinates tuple $$\cp=(x,y,z)$$ (with $$0\leq x,y,z \leq 1$$) and yields a scalar value (in $$[0,1]$$). The function is defined as a weighted sum of $$n>0$$ different noise function $$M_i$$, where $$n$$ is called the _number of levels_, as follows:
 
 $$
-     N(\cp)  ~=~   \frac{\sum _{i=0}^{n-1} w_i\,M_i(2^i\cp)}{\sum_{i=0}^{n-1} w_i}
+     N(\cp)  ~=~   \frac{1}{\sum_{i=0}^{n-1} w_i},\sum _{i=0}^{n-1} w_i\,M_i(2^i\cp)
      ~~~~~~~\mbox{where}~~~w_i = \frac{1}{2^i}
 $$
 
-This kind of noise function is called a _fractal_ or _multioctave_ solid noise function. Each function $$M_i$$ is usually called an _octave_. It was first described in Ken Perlin 1985 seminal paper [[2]](#2). The name _solid_ is used for 3D function (its argument is a 3D point instead of a 1d or 2d point). Our application demands 3D noise instead of 2D, because the spherical planetoid surface cannot be uniformly covered with a 2D noise function. 
+This kind of noise function is called a _fractal_ or _multioctave_ solid noise function. Each function $$M_i$$ is usually called an _octave_. It was first described in Ken Perlin's 1985 seminal paper [[3]](#3). The name _solid_ is used for 3D function (its argument is a 3D point instead of a 1d or 2d point). Our application demands 3D noise instead of 2D because the spherical planetoid surface cannot be uniformly covered with a 2D noise function. 
 
-Each octave function $$M_i$$ is a piecewise tri-linear function (with real values $$[0,1]$$) that interpolates between random values associated with each 3D point with integer coordinates (which are usually called _lattice points_).
-Function $$M_i$$ expects coordinates in the range $$[0,2^i]$$. 
+The term _fractal_ is used here because each successive octave is a scaled version of the previous one, so in theory, if we use an infinite number of octaves, the function would be self-similar under scalings, and this is exactly the property fractal shapes hold in general. 
+
+The scaling for each successive octave means that $$M_{i+1}$$ has double the frequency and half the amplitude than $$M_i$$. By adding a finite number of these octaves, we get a noise signal with a range of frequencies that resembles natural formations.
+
+We use a slightly modified version of the above formula because we do not add the first two octaves, this is because these octaves 
+
+
+
+Evaluation of $$N$$ function can be done by using the `eval` method of `PerlinNoise3D` class. The method repeatedly calls the `octave` method, which evaluates $$M_i$$. The number of octaves $$n$$ (`num_levels`) is a parameter given to the class constructor. Both sums are evaluated by decreasing loops:
+
+```cpp 
+float PerlinNoise3D::eval( const float px, const float py, const float pz ) 
+{
+   using namespace std ;
+   const float m = float( powers2[ num_levels-1 ]) ; // m = 2^(num_levels-1)
+
+   float spx = px * m,
+         spy = py * m,
+         spz = pz * m;
+
+   float sum_v = 0.0f, 
+         sum_w = 0.0f, 
+         w     = 1.0f ;
+
+   for( int i = int(num_levels)-1 ; i >= 2 ; --i )
+   {
+      const unsigned level = unsigned(i) ;   
+      sum_v += w * octave( level, spx, spy, spz ); 
+      sum_w += w ;
+      spx /= 2.0f ;
+      spy /= 2.0f ;
+      spz /= 2.0f ;
+      w   *= k ;
+   }
+   return  sum_v / sum_w ;
+}
+``` 
+
+Each function $$M_i$$ is a piecewise tri-linear function (with real values $$[0,1]$$) that interpolates between random values associated with each 3D point with integer coordinates (which are usually called _lattice points_). 
+
+
+The function $$M_i$$ expects coordinates in the range $$[0,2^i]$$. We associate a different random value $$r_{i,j,k}$ to each lattice point with integer coordinates $$(i,j,k)$$. 
 
 
 
@@ -289,5 +329,4 @@ _Platonic Solid_ in _Wikipedia: The Free Encyclopedia_, available from [https://
 _Regular Icosahedron_ in _Wikipedia: The Free Encyclopedia_, available from [https://en.wikipedia.org/wiki/Regular_icosahedron](https://en.wikipedia.org/wiki/Regular_icosahedron), retrieved March 22, 2023.
 
 <a id="3">[3]</a>
-Perlin, Ken. _An image synthesizer_ SIGGRAPH: International Conference on Computer Graphics and Interactive Techniques (1985).
-PDF: [http://www.cs.cmu.edu/afs/cs.cmu.edu/academic/class/15869-f11/www/readings/perlin85_imagesynthesizer.pdf](http://www.cs.cmu.edu/afs/cs.cmu.edu/academic/class/15869-f11/www/readings/perlin85_imagesynthesizer.pdf)
+Ken Perlin: _An image synthesizer_ in SIGGRAPH 85: International Conference on Computer Graphics and Interactive Techniques (1985). PDF: [http://www.cs.cmu.edu/afs/cs.cmu.edu/academic/class/15869-f11/www/readings/perlin85_imagesynthesizer.pdf](http://www.cs.cmu.edu/afs/cs.cmu.edu/academic/class/15869-f11/www/readings/perlin85_imagesynthesizer.pdf)
