@@ -224,12 +224,43 @@ for( unsigned iv = 0 ; iv < vertices.size() ; iv++  )
 }
 ``` 
 
-The following code computes $$f_i$$ values and displaces the vertexes radially, by using parameters $$a$$ and $$b$$
+The following code computes $$f_i$$ and $$d_i$$ values, and displaces the vertexes radially, by using parameters $$a$$ (`p.d_base`) and $$b$$ (`p.d_scale`):
 
 ```cpp 
-hola wip jhjh dfdfd sss hhh fff hhh
+for( unsigned iv = 0 ; iv < vertices.size() ; iv++  )
+   {
+      const float f = (hv[iv]-hmin)/(hmax-hmin) ;
+      const float d = p.truncate_to_min_f 
+                        ? ((f < p.min_f) ? 0.0f : (f-p.min_f)/(1.0-p.min_f) )
+                        : f ;
+      vertices[iv] = (p.d_base + p.d_scale*d) * vertices[iv] ;
+
+      if ( p.add_vertex_colors )
+      {  // optionally: set vertex color (see below)
+         // .....
+      }
+   }
 ``` 
 
+The first image in this text shows a coloured planetoid. This is achieved by computing a RGB color attribute for each vertex by using the normalized $$d_i$$ value of that vertex (that is, the color depends only on the height of the vertex). To do this, we use a _color ramp_ (a vector with $$n$$ colors), which defines a piecewise linear function from $$d_i$$ to RGB colors. 
+
+The code below computes the color for a vertex when `p.add_vertex_color` is true by using the `d` variable as defined in the code above. We assume `colors` is a vector with RGB 3-float tuples, with the same size as the vertex table. 
+
+```cpp 
+if ( p.add_vertex_colors )
+{
+   const unsigned nc    = p.color_ramp.size() ; 
+   const float    fnc   = d*float(nc-1) ;
+   const float    ic_f  = truncf( fnc );
+   const float    frac  = fnc - ic_f ;
+   const unsigned ic    = unsigned( ic_f );
+
+   if ( ic < nc-1 )
+      col_ver[iv]  = p.color_ramp[ic]*(1.0f-frac) + p.color_ramp[ic+1]*frac ;
+   else 
+      col_ver[iv]  = p.color_ramp[nc-1] ;
+}
+``` 
 
 ### 2.2. Perlin noise function
 
