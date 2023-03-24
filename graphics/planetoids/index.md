@@ -227,7 +227,7 @@ for( unsigned iv = 0 ; iv < vertices.size() ; iv++  )
 The following code computes $$f_i$$ values and displaces the vertexes radially, by using parameters $$a$$ and $$b$$
 
 ```cpp 
-
+hola
 ``` 
 
 
