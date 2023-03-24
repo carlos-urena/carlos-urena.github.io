@@ -193,9 +193,9 @@ this way we ensure $$g_i$$ values cover the whole interval $$[0,1]$$. After this
 
 $$
     d_i ~=~ a\,+\,b\cdot f_i
-$$,
+$$
 
-obviously this implies all the values $$d_i$$ lie in the interval $$[a,a+b]$$, including for sure at least two vertexes at the extreme values $$a$$ and $$a+b$$. These parameters can be fine-tuned to specific applications or looks.
+This implies all the values $$d_i$$ lie in the interval $$[a,a+b]$$, including for sure at least two vertexes at the extreme values $$a$$ and $$a+b$$. These parameters can be fine-tuned to specific applications or looks.
 
 This normalization code can be modified to optionally truncate the heigh values to a minimum value, for values below that minimum. I have used this to somehow resemble _seas_ in the planetoid (the blue zones in the first image above). If $$f_{min}$$ is the threshold value (with $$0<f_{min}<1$$), then $$d_i$$ is computed as:
 
@@ -262,21 +262,21 @@ if ( p.add_vertex_colors )
 }
 ``` 
 
-### 2.2. Perlin noise function
+### 2.2. Fractal 3D Perlin noise function.
 
-The Perlin Noise function $$N$$ accepts a  coordinates tuple $$\cp=(x,y,z)$$ (with $$0\leq x,y,z \leq 1$$) and yields a scalar value (in $$[0,1]$$). The function is defined as a weighted sum of $$n>0$$ different piecewise linear functions $$M_i$$, where $$n$$ is called the _number of levels_, as follows:
+The Perlin Noise function $$N$$ accepts a  coordinates tuple $$\cp=(x,y,z)$$ (with $$0\leq x,y,z \leq 1$$) and yields a scalar value (in $$[0,1]$$). The function is defined as a weighted sum of $$n>0$$ different noise function $$M_i$$, where $$n$$ is called the _number of levels_, as follows:
 
 $$
      N(\cp)  ~=~   \frac{\sum _{i=0}^{n-1} w_i\,M_i(2^i\cp)}{\sum_{i=0}^{n-1} w_i}
+     ~~~~~~~\mbox{where}~~~w_i = \frac{1}{2^i}
 $$
 
+This kind of noise function is called a _fractal_ or _multioctave_ solid noise function. Each function $$M_i$$ is usually called an _octave_. It was first described in Ken Perlin 1985 seminal paper [[2]](#2). The name _solid_ is used for 3D function (its argument is a 3D point instead of a 1d or 2d point). Our application demands 3D noise instead of 2D, because the spherical planetoid surface cannot be uniformly covered with a 2D noise function. 
 
-Here each value $$w_i$$ is defined as $$2^i$$, (¿or perhaps $$k^i$$, for some value $$k>1$$?).
+Each octave function $$M_i$$ is a piecewise tri-linear function (with real values $$[0,1]$$) that interpolates between random values associated with each 3D point with integer coordinates (which are usually called _lattice points_).
+Function $$M_i$$ expects coordinates in the range $$[0,2^i]$$. 
 
 
-Each $$M_i$$ function here returns a real value $$[0,1]$$, and is called an _octave_ function. These functions are piecewise tri-linear functions which interpolate between random values associated to each point with integer coordinates.
-
-Function $$M_i$$ expects its argument coordinates in the range $$[0,2^i]$$.
 
 **work in progress**
 
@@ -287,3 +287,7 @@ _Platonic Solid_ in _Wikipedia: The Free Encyclopedia_, available from [https://
 
 <a id="2">[2]</a> 
 _Regular Icosahedron_ in _Wikipedia: The Free Encyclopedia_, available from [https://en.wikipedia.org/wiki/Regular_icosahedron](https://en.wikipedia.org/wiki/Regular_icosahedron), retrieved March 22, 2023.
+
+<a id="3">[3]</a>
+Perlin, Ken. _An image synthesizer_ SIGGRAPH: International Conference on Computer Graphics and Interactive Techniques (1985).
+PDF: [http://www.cs.cmu.edu/afs/cs.cmu.edu/academic/class/15869-f11/www/readings/perlin85_imagesynthesizer.pdf](http://www.cs.cmu.edu/afs/cs.cmu.edu/academic/class/15869-f11/www/readings/perlin85_imagesynthesizer.pdf)
