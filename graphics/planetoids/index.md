@@ -277,16 +277,23 @@ The term _fractal_ is used here because each successive octave is a scaled versi
 
 The scaling for each successive octave means that $$M_{i+1}$$ has double the frequency and half the amplitude than $$M_i$$. By adding a finite number of these octaves, we get a noise signal with a range of frequencies that resembles natural formations.
 
-We use a slightly modified version of the above formula because we do not add the first octaves. This leads to a more natural planetoid shape, as those octaves give it an elongated shape, far away from the spherical shape one expects for a palnetoid.
+We use a slightly modified version of the above formula because we do not add the firsts octaves, but we allow to start the summation from the $$m$$-th octave instead of $$0$$-th octave (with $$0<m<n-1$$). This leads to a more natural planetoid shape, as those first octaves give it an elongated shape, far away from the spherical shape one expects for a planetoid. I usually set $$m$$ to $$2$$. 
 
-Evaluation of $$N$$ function can be done by using the `eval` method of `PerlinNoise3D` class. The method repeatedly calls the `octave` method, which evaluates $$M_i$$. The number of octaves $$n$$ (`num_levels`) is a parameter given to the class constructor. We use here an additional parameter $$m$$, which is the start level (variable `min_level`). The code is here:
+We also scale successive weights by using a positive real value $$b$$ (we call it _octaves amplitude scale factor_) not necessarily equal to $$2$$, as this gives more control over the final planetoid roughness. I usually set $$b$$ to $$1.8$$. So the actual formulation for $$N$$ we use is:
+
+$$
+     N(\cp)  ~=~   \frac{1}{s}\,\sum _{i=m}^{n-1} w_i\,M_i(2^i\cp)
+     ~~~~~~~\mbox{where}~~~w_i = \frac{1}{b^i} ~~~~ s = \sum_{i=m}^{n-1} w_i
+$$
+
+Evaluation of $$N$$ function can be done by using the `eval` method of `PerlinNoise3D` class. The method repeatedly calls the `octave` method, which evaluates $$M_i$$. The number of octaves $$n$$ (`num_levels`) is a parameter given to the class constructor, as it is the octaves amplitude factor (`octaves_asf`) and the min level $$m$$ (`min_level`). The code is here:
 
 ```cpp 
 float PerlinNoise3D::eval( const float px, const float py, const float pz ) 
 {
    float sum_v = 0.0f, 
-         sum_w = 0.0, 
-         w     = 1.0,
+         sum_w = 0.0f, 
+         w     = 1.0f,
          spx   = px, 
          spy   = py, 
          spz   = pz;
@@ -294,16 +301,15 @@ float PerlinNoise3D::eval( const float px, const float py, const float pz )
    for( unsigned i = 0 ; i < num_levels ; i++ )
    {
          if (  min_level <= i )
-         {
+         {  
             sum_v += w * octave( i, spx, spy, spz ); 
             sum_w += w ;
          }
          spx *= 2.0f ;
          spy *= 2.0f ;
          spz *= 2.0f ;
-         w   *= 0.5f ;
+         w   /= octaves_asf ;
    }
-
    return sum_v / sum_w ;
 }
 ``` 
