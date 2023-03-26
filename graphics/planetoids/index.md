@@ -267,7 +267,7 @@ if ( p.add_vertex_colors )
 The Perlin Noise function $$N$$ accepts a  coordinates tuple $$\cp=(x,y,z)$$ (with $$0\leq x,y,z \leq 1$$) and yields a scalar value (in $$[0,1]$$). The function is defined as a weighted sum of $$n>0$$ different noise function $$M_i$$, where $$n$$ is called the _number of levels_, as follows:
 
 $$
-     N(\cp)  ~=~   \frac{1}{\sum_{i=0}^{n-1} w_i},\sum _{i=0}^{n-1} w_i\,M_i(2^i\cp)
+     N(\cp)  ~=~   \frac{1}{\sum_{i=0}^{n-1} w_i}\,\sum _{i=0}^{n-1} w_i\,M_i(2^i\cp)
      ~~~~~~~\mbox{where}~~~w_i = \frac{1}{2^i}
 $$
 
@@ -280,34 +280,30 @@ The scaling for each successive octave means that $$M_{i+1}$$ has double the fre
 We use a slightly modified version of the above formula because we do not add the first two octaves, this is because these octaves 
 
 
-
-Evaluation of $$N$$ function can be done by using the `eval` method of `PerlinNoise3D` class. The method repeatedly calls the `octave` method, which evaluates $$M_i$$. The number of octaves $$n$$ (`num_levels`) is a parameter given to the class constructor. Both sums are evaluated by decreasing loops:
+Evaluation of $$N$$ function can be done by using the `eval` method of `PerlinNoise3D` class. The method repeatedly calls the `octave` method, which evaluates $$M_i$$. The number of octaves $$n$$ (`num_levels`) is a parameter given to the class constructor. We use here an additional parameter $$m$$, which is the start level (variable `min_level`). This allows skipping octaves $$0$$ to $$m-1$$, which yields a more natural planetoid shape. The code is here:
 
 ```cpp 
 float PerlinNoise3D::eval( const float px, const float py, const float pz ) 
 {
-   using namespace std ;
-   const float m = float( powers2[ num_levels-1 ]) ; // m = 2^(num_levels-1)
-
-   float spx = px * m,
-         spy = py * m,
-         spz = pz * m;
-
    float sum_v = 0.0f, 
-         sum_w = 0.0f, 
-         w     = 1.0f ;
+         sum_w = 0.0, 
+         w     = 1.0,
+         spx   = px, 
+         spy   = py, 
+         spz   = pz;
 
-   for( int i = int(num_levels)-1 ; i >= 2 ; --i )
+   for( unsigned i = 0 ; i < num_levels ; i++ )
    {
-      const unsigned level = unsigned(i) ;   
-      sum_v += w * octave( level, spx, spy, spz ); 
-      sum_w += w ;
-      spx /= 2.0f ;
-      spy /= 2.0f ;
-      spz /= 2.0f ;
-      w   *= k ;
+         if (  min_level <= i )
+         {
+            sum_v += w * getNoiseAtLevel( i, spx, spy, spz ); 
+            sum_w += w ;
+         }
+         spx *= 2.0f ;
+         spy *= 2.0f ;
+         spz *= 2.0f ;
+         w   *= 0.5f ;
    }
-   return  sum_v / sum_w ;
 }
 ``` 
 
