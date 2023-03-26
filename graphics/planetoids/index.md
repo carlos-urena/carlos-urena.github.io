@@ -277,7 +277,7 @@ The term _fractal_ is used here because each successive octave is a scaled versi
 
 The scaling for each successive octave means that $$M_{i+1}$$ has double the frequency and half the amplitude than $$M_i$$. By adding a finite number of these octaves, we get a noise signal with a range of frequencies that resembles natural formations.
 
-We use a slightly modified version of the above formula because we do not add the firsts octaves, but we allow to start the summation from the $$m$$-th octave instead of $$0$$-th octave (with $$0<m<n-1$$). This leads to a more natural planetoid shape, as those first octaves give it an elongated shape, far away from the spherical shape one expects for a planetoid. I usually set $$m$$ to $$2$$. 
+We use a slightly modified version of the above formula because we do not add the firsts octaves, but we allow to start the summation from the $$m$$-th octave instead of $$0$$-th octave (with $$0<m<n-1$$). This leads to a more natural planetoid look, as those first octaves give it an elongated shape, far away from the spherical one we expect for a planetoid. I usually set $$m$$ to $$2$$. 
 
 We also scale successive weights by using a positive real value $$b$$ (we call it _octaves amplitude scale factor_) not necessarily equal to $$2$$, as this gives more control over the final planetoid roughness. I usually set $$b$$ to $$1.8$$. So the actual formulation for $$N$$ we use is:
 
@@ -313,6 +313,20 @@ float PerlinNoise3D::eval( const float px, const float py, const float pz )
    return sum_v / sum_w ;
 }
 ``` 
+
+In this set of images, we observe a sequence of 7 planetoids. Each one includes a single octave $$w_i M_i(2^i\cp)$$, for $$i$$ from $$0$$ to $$6$$:
+
+<center>
+<img src="imgs2/oct0.png" width="24%"/>
+<img src="imgs2/oct1.png" width="24%"/>
+<img src="imgs2/oct2.png" width="24%"/>
+<img src="imgs2/oct3.png" width="24%"/>
+<img src="imgs2/oct4.png" width="24%"/>
+<img src="imgs2/oct5.png" width="24%"/>
+<img src="imgs2/oct6.png" width="24%"/>
+</center>
+
+### 2.2. The basic noise functions $$M_i$$.
 
 Each function $$M_i$$ is a piecewise tri-linear function (with real values $$[0,1]$$) that interpolates between random values associated with each 3D point with integer coordinates (which are usually called _lattice points_). 
 
