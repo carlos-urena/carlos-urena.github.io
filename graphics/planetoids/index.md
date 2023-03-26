@@ -271,15 +271,15 @@ $$
      ~~~~~~~\mbox{where}~~~w_i = \frac{1}{2^i} ~~~~ s = \sum_{i=0}^{n-1} w_i
 $$
 
-This kind of noise function is called a _fractal_ or _multioctave_ solid noise function. Each function $$M_i$$ is usually called an _octave_. It was first described in Ken Perlin's 1985 seminal paper [[3]](#3). The name _solid_ is used for 3D function (its argument is a 3D point instead of a 1d or 2d point). Our application demands 3D noise instead of 2D because the spherical planetoid surface cannot be uniformly covered with a 2D noise function. 
+This kind of noise function is called a _fractal_ or _multioctave_ solid noise function. Each term $$w_i M_i(2^i \cp)$$ is usually called an _octave_. It was first described in Ken Perlin's 1985 seminal paper [[3]](#3). The name _solid_ is used for 3D function (its argument is a 3D point instead of a 1d or 2d point). Our application demands 3D noise instead of 2D because the spherical planetoid surface cannot be uniformly covered with a 2D noise function. 
 
 The term _fractal_ is used here because each successive octave is a scaled version of the previous one, so in theory, if we use an infinite number of octaves, the function would be self-similar under scalings, and this is exactly the property fractal shapes hold in general. 
 
 The scaling for each successive octave means that $$M_{i+1}$$ has double the frequency and half the amplitude than $$M_i$$. By adding a finite number of these octaves, we get a noise signal with a range of frequencies that resembles natural formations.
 
-We use a slightly modified version of the above formula because we do not add the first two octaves, this is because these octaves 
+We use a slightly modified version of the above formula because we do not add the first octaves. This leads to a more natural planetoid shape, as those octaves give it an elongated shape, far away from the spherical shape one expects for a palnetoid.
 
-Evaluation of $$N$$ function can be done by using the `eval` method of `PerlinNoise3D` class. The method repeatedly calls the `octave` method, which evaluates $$M_i$$. The number of octaves $$n$$ (`num_levels`) is a parameter given to the class constructor. We use here an additional parameter $$m$$, which is the start level (variable `min_level`). This allows skipping octaves $$0$$ to $$m-1$$, which yields a more natural planetoid shape. The code is here:
+Evaluation of $$N$$ function can be done by using the `eval` method of `PerlinNoise3D` class. The method repeatedly calls the `octave` method, which evaluates $$M_i$$. The number of octaves $$n$$ (`num_levels`) is a parameter given to the class constructor. We use here an additional parameter $$m$$, which is the start level (variable `min_level`). The code is here:
 
 ```cpp 
 float PerlinNoise3D::eval( const float px, const float py, const float pz ) 
@@ -295,7 +295,7 @@ float PerlinNoise3D::eval( const float px, const float py, const float pz )
    {
          if (  min_level <= i )
          {
-            sum_v += w * getNoiseAtLevel( i, spx, spy, spz ); 
+            sum_v += w * octave( i, spx, spy, spz ); 
             sum_w += w ;
          }
          spx *= 2.0f ;
@@ -303,6 +303,8 @@ float PerlinNoise3D::eval( const float px, const float py, const float pz )
          spz *= 2.0f ;
          w   *= 0.5f ;
    }
+
+   return sum_v / sum_w ;
 }
 ``` 
 
