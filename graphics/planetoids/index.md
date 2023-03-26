@@ -326,6 +326,13 @@ In this set of images, we observe a sequence of 7 planetoids. Each one includes 
 <img src="imgs2/oct6.png" width="24%"/>
 </center>
 
+And here is a mesh with all the first 7 octaves added:
+
+<center>
+<img src="imgs2/oct-sum.png" width="50%"/>
+</center>
+
+
 ### 2.2. The basic noise functions $$M_i$$.
 
 Each function $$M_i$$ is a piecewise tri-linear function (with real values $$[0,1]$$) that interpolates between random values associated with each 3D point with integer coordinates (which are usually called _lattice points_). 
