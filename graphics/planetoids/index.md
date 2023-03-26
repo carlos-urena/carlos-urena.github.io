@@ -267,8 +267,8 @@ if ( p.add_vertex_colors )
 The Perlin Noise function $$N$$ accepts a  coordinates tuple $$\cp=(x,y,z)$$ (with $$0\leq x,y,z \leq 1$$) and yields a scalar value (in $$[0,1]$$). The function is defined as a weighted sum of $$n>0$$ different noise function $$M_i$$, where $$n$$ is called the _number of levels_, as follows:
 
 $$
-     N(\cp)  ~=~   \frac{1}{\sum_{i=0}^{n-1} w_i}\,\sum _{i=0}^{n-1} w_i\,M_i(2^i\cp)
-     ~~~~~~~\mbox{where}~~~w_i = \frac{1}{2^i}
+     N(\cp)  ~=~   \frac{1}{s}\,\sum _{i=0}^{n-1} w_i\,M_i(2^i\cp)
+     ~~~~~~~\mbox{where}~~~w_i = \frac{1}{2^i} ~~~~ s = \sum_{i=0}^{n-1} w_i
 $$
 
 This kind of noise function is called a _fractal_ or _multioctave_ solid noise function. Each function $$M_i$$ is usually called an _octave_. It was first described in Ken Perlin's 1985 seminal paper [[3]](#3). The name _solid_ is used for 3D function (its argument is a 3D point instead of a 1d or 2d point). Our application demands 3D noise instead of 2D because the spherical planetoid surface cannot be uniformly covered with a 2D noise function. 
@@ -278,7 +278,6 @@ The term _fractal_ is used here because each successive octave is a scaled versi
 The scaling for each successive octave means that $$M_{i+1}$$ has double the frequency and half the amplitude than $$M_i$$. By adding a finite number of these octaves, we get a noise signal with a range of frequencies that resembles natural formations.
 
 We use a slightly modified version of the above formula because we do not add the first two octaves, this is because these octaves 
-
 
 Evaluation of $$N$$ function can be done by using the `eval` method of `PerlinNoise3D` class. The method repeatedly calls the `octave` method, which evaluates $$M_i$$. The number of octaves $$n$$ (`num_levels`) is a parameter given to the class constructor. We use here an additional parameter $$m$$, which is the start level (variable `min_level`). This allows skipping octaves $$0$$ to $$m-1$$, which yields a more natural planetoid shape. The code is here:
 
@@ -309,12 +308,10 @@ float PerlinNoise3D::eval( const float px, const float py, const float pz )
 
 Each function $$M_i$$ is a piecewise tri-linear function (with real values $$[0,1]$$) that interpolates between random values associated with each 3D point with integer coordinates (which are usually called _lattice points_). 
 
-
-The function $$M_i$$ expects coordinates in the range $$[0,2^i]$$. We associate a different random value $$r_{i,j,k}$ to each lattice point with integer coordinates $$(i,j,k)$$. 
-
+The function $$M_i$$ expects coordinates in the range $$[0,2^i]$$. We associate a different random value $$r_{i,j,k}$$ to each lattice point with integer coordinates $$(i,j,k)$$. This is implemented by using a map from unsigned triples (as keys) to real values. 
 
 
-**work in progress**
+**work in progress, includes errors**
 
 ## References.
 
