@@ -382,7 +382,6 @@ Here the constant `maxrv` is the maximum integer value produced by the generator
 For any non-integer coordinates query points $$\cp=(x,y,z)$$, interpolation is carried out. This is done by considering the $$8$$ random values stored in the map for the vertexes of the cube which includes $$\cp$$. Once these values are known, 3D interpolation is achieved by repeated calls to a 1d interpolation function $$I(t,a,b)$$ which interpolates between $$a$$ and $$b$$. Assuming $$a\leq b$$ and $0\leq t\leq 1$$, function $$I$$ holds:
 
  * $$I$$ is non-decreasing.
- * $$I(t,a,b) ~\in~ [a,b]$$ 
  * $$I(0,a,b) ~=~a$$.
  * $$I(1,a,b) ~=~b$$.
 
@@ -446,7 +445,7 @@ $$
 It is easy to check that this particular version of $$I$$ obeys the desired properties. We can also use any other functions $$f$$, as long as it is non-decreasing and it obeys: $$f(0)=0$$, $$f(1)=1$$, and $$f'(0)=f'(1)=0$$. Concretely, we can use the sine function:
 
 $$
-     f(t) ~~=~~ \frac{1}{2}\sin \left( \left(t-\frac{1}{2}\right)\pi\right)
+     f(t) ~~=~~ \frac{1}{2}\,\sin \left( \left(t-\frac{1}{2}\right)\pi\right)
 $$
 
 The code for the `interpolate` function is this:
