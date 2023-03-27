@@ -388,9 +388,9 @@ float PerlinNoise3D::evalM( const unsigned level,
                             const float spx, const float spy, const float spz ) 
 {
    const float // get integer and fractional parts of coordinates (as floats)
-      ix_float = truncf( spx ),
-      iy_float = truncf( spy ),
-      iz_float = truncf( spz ),
+      ix_float = std::truncf( spx ),
+      iy_float = std::truncf( spy ),
+      iz_float = std::truncf( spz ),
       fx = spx - ix_float ,
       fy = spy - iy_float ,
       fz = spz - iz_float ;
