@@ -343,14 +343,22 @@ To implement evaluations of $$M_i$$, we can use an array of $$2^{3i}$$ precomput
 
 Thus, to save memory and time, we use a different _map_ or _dictionary_ for each $$i$$, which is populated on demand during the mesh construction process. Each dictionary stores lattice coordinates triples as keys and random reals as values. Each $$i$$-th map is initially empty. When a new random value at one lattice point is requested, the program checks if the integer coordinates are already present in the map as a key. If they are, the corresponding random value is retrieved and returned, if they are not, a new random value is inserted in the map and then returned. In the end, the map will include a number of random values that is proportional to the number of mesh vertexes (considering the worst case, in which each mesh vertex causes a disjoint set of lattice points to be queried). 
 
-In C++ these maps can be implemented as an array of `std::map` instances, as it is shown below. 
+In C++ these maps can be implemented as an array of `std::map` instances, whose declaration (as instance variable of `PerlinNoise3D` class) is shown here, along with the random integers generator
 
 ```cpp 
-typedef std::tuple< unsigned short, unsigned short, unsigned short > Triple ; // type for keys
-std::vector< std::map< Triple, float >> mlmap ; // maps array (one for each Mi function)
+// type for keys
+typedef std::tuple< unsigned short, unsigned short, unsigned short > Triple ; 
+
+// maps array (one for each Mi function)
+std::vector< std::map< Triple, float >> mlmap ; 
+
+// declarations needed to generate random values
+constexpr unsigned maxrv = int(0xFFFFFF) ;   // max random value 
+std::default_random_engine  generator{ (std::random_device())() };
+std::uniform_int_distribution<unsigned> uniform_dist{ 0, maxrv } ;
 ```
 
-To implement map queries, we can use any C++11 integer random values generator (`generator`), along with the maps (`mlmaps`) in the `queryMaps` method below:
+To implement map queries I use the `queryMaps` method shown here:
 
 ```cpp 
 float PerlinNoise3D::queryMaps( const unsigned level, const unsigned ix, const unsigned iy, const unsigned iz )
@@ -371,7 +379,7 @@ float PerlinNoise3D::queryMaps( const unsigned level, const unsigned ix, const u
 
 Here the constant `maxrv` is the maximum integer value produced by the generator, that is `int(0xFFFFFF)`.
 
-For any non-integer coordinates query points $$\cp=(x,y,z)$$, interpolation is carried out. In this implementation, I use simple linear interpolation, which causes visible discontinuities in the slope of the surface for the lower octaves, but which is not visible when all the octaves are added up. If, for any application, these discontinuities are not acceptable, more ellaborate interpolation schemes are described in the literature.
+For any non-integer coordinates query points $$\cp=(x,y,z)$$, interpolation is carried out. In this implementation, I use simple linear interpolation, which causes visible discontinuities in the slope of the surface for the lower octaves, but which is not visible when all the octaves are added up. If, for any application, these discontinuities are not acceptable, more elaborate interpolation schemes are described in the literature.
 
 The code is here:
 
