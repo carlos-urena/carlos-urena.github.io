@@ -379,17 +379,15 @@ float PerlinNoise3D::queryMaps( const unsigned level, const unsigned ix, const u
 
 Here the constant `maxrv` is the maximum integer value produced by the generator, that is `int(0xFFFFFF)`.
 
-For any non-integer coordinates query points $$\cp=(x,y,z)$$, interpolation is carried out. In this implementation, I use simple (tri) linear interpolation, which causes visible discontinuities in the slope of the surface for the lower octaves, but which is not visible when all the octaves (up to seven or eight at least) are added up. If, for any application, these discontinuities are not acceptable, more elaborate interpolation schemes are described in the literature.
+For any non-integer coordinates query points $$\cp=(x,y,z)$$, interpolation is carried out. In this implementation, I use simple tri-linear interpolation (as described in [[5]](#5)), which causes visible discontinuities in the surface slope for the lower octaves, but which is not visible when all the octaves (up to seven or eight at least) are added up. If, for any application, these discontinuities are not acceptable, more elaborate interpolation schemes are described in the literature.
 
 The code of `evalM` method is shown here:
 
 ```cpp 
-float PerlinNoise3D::getNoiseAtLevel( const unsigned level, 
-                                      const float spx, const float spy, const float spz ) 
+float PerlinNoise3D::evalM( const unsigned level, 
+                            const float spx, const float spy, const float spz ) 
 {
-   using namespace std ;
-
-   const float 
+   const float // get integer and fractional parts of coordinates (as floats)
       ix_float = truncf( spx ),
       iy_float = truncf( spy ),
       iz_float = truncf( spz ),
@@ -397,13 +395,10 @@ float PerlinNoise3D::getNoiseAtLevel( const unsigned level,
       fy = spy - iy_float ,
       fz = spz - iz_float ;
 
-   const unsigned  
+   const unsigned  // get integer part as unsigned values
       ix = unsigned( ix_float ),
       iy = unsigned( iy_float ),
       iz = unsigned( iz_float );
-
-   // trilinear interpolation:
-   // 
 
    // get 8 values from the map (c000 ... c111 ) , and then interpolate
    const float 
