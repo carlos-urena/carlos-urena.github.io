@@ -431,7 +431,7 @@ float PerlinNoise3D::evalM( const unsigned level,
 A simple linear 1D interpolation function could be used for $$I$$ (as described in [[5]](#5)) :
 
 $$
-      I(t,a,b) ~~=~~  (1-t)\cdot a \,+\,t\cdot b
+      I(t,a,b) ~~=~~  (1-t)\,a \:+\: t\,b
 $$
 
 However, this linear 1D interpolation causes discontinuities in the surface slope, as the resulting surface is $$C^0$$ continuous, but not $$C^1$$.  These slope discontinuities can be visible as creases, especially for the lower octaves. 
@@ -439,14 +439,14 @@ However, this linear 1D interpolation causes discontinuities in the surface slop
 Instead of linear 1D interpolation, several alternative functions have been proposed in the literature,  such as using _Cubic Hermite Splines_ [[6]](#6), which allow setting the derivative of $$I$$ at $$0$$ and $$1$$. In this application, however, good results can be achieved by using a cubic polynomial, but simply setting those derivatives to $$0$$. The resulting spline interpolation function is this:
 
 $$
-      I(t,a,b) ~~=~~  (1-f(t))\cdot a \,+\, f(t)\cdot b ~~~~~~~~
-      \mbox{where} ~~~~ f(t) ~=~ 2t^3\,-\,3t^2\,+\,1
+      I(t,a,b) ~~=~~  (1-f(t))\,a \:+\: f(t)\,b ~~~~~~~~~~~~~~~~~
+      \mbox{where} ~~~~~~ f(t) ~=~ 2t^3\:-\,3t^2\:+\,1
 $$
 
-It is easy to check that this particular version of $I$ obeys the desired properties. We can also use any other functions $$f$$, as long as it is non-decreasing and it obeys: $$f(0)=0$$, $$f(1)=1$$, and $$f'(0)=f'(1)=0$$. Concretely, we can use the sine function:
+It is easy to check that this particular version of $$I$$ obeys the desired properties. We can also use any other functions $$f$$, as long as it is non-decreasing and it obeys: $$f(0)=0$$, $$f(1)=1$$, and $$f'(0)=f'(1)=0$$. Concretely, we can use the sine function:
 
 $$
-     f(t) ~~=~~ \frac{\sin \left( (1-t/2)\pi\right)}{2}
+     f(t) ~~=~~ \frac{1}{2}\sin \left( \left(t-\frac{1}{2}\right)\pi\right)
 $$
 
 ```cpp
