@@ -13,7 +13,7 @@ Written March 22, 2023. **Unfinished, work in progress**.
 
 # Procedural generation of planetoids.
 
-On this page, I explain how to use a procedural generation algorithm to create an indexed mesh that resembles a planet or _planetoid_. I start from a (high resolution) unit radius sphere and then I radially displace the vertexes using Perlin Noise. An example mesh (for a particular set of parameter values) is seen here:
+On this page, I explain how to use a procedural generation algorithm to create an indexed mesh that resembles a planet or _planetoid_. I start from a (high resolution) unit radius sphere and then I radially displace the vertexes using 3D Perlin Noise. This work is based on several papers and documents by Ken Perlin [[3]](#3) and Paul Bourke [[4]](#4).  An example mesh (for a particular set of parameter values) is seen here:
 
 <center>
 <img src="imgs/img12.png" width="80%"/>
@@ -25,7 +25,7 @@ This generation algorithm has been tested in C++ but can be adapted to other pro
 
 The generation algorithm must use a high-resolution sphere, as we want to add high-resolution variations to enhance realism. Generating a high-resolution sphere can be easily done by using the usual parametrization of the sphere, based on longitude and latitude angles (that is, by rotating a semi-circumference going from the south to the north pole). However, this method produces triangles with a high variation in area and proportions, as it yields very small triangles near the poles and quite big ones near the equator. 
 
-To solve this, we use a regular polyhedron (more concretely a platonic solid [[1]](#1)), whose vertexes are in the unit radius sphere, and which includes just equilateral triangles, all of them congruent (same area and edges length). Of all the platonic solids meeting this requirement, I choose the _Regular Icosahedron_ [[2]](#2), because this is the platonic solid with the largest number of triangles (20), and the smaller the original polyhedron triangles, the smaller triangle area variation we get in the final high-resolution mesh.
+To solve this, we use a regular polyhedron (more concretely a platonic solid [[1]](#1), whose vertexes are in the unit radius sphere, and which includes just equilateral triangles, all of them congruent (same area and edges length). Of all the platonic solids meeting this requirement, I choose the _Regular Icosahedron_ [[2]](#2), because this is the platonic solid with the largest number of triangles (20), and the smaller the original polyhedron triangles, the smaller triangle area variation we get in the final high-resolution mesh.
 
 After the icosahedron is generated, its triangles are iteratively subdivided, until a target resolution is reached. I detail both the icosahedron generation and the subdivision process below.
 
@@ -242,7 +242,7 @@ for( unsigned iv = 0 ; iv < vertices.size() ; iv++  )
 }
 ``` 
 
-The first image in this text shows a coloured planetoid. This is achieved by computing a RGB color attribute for each vertex by using the normalized $$d_i$$ value of that vertex (that is, the color depends only on the height of the vertex). To do this, we use a _color ramp_ (a vector with $$n$$ colors), which defines a piecewise linear function from $$d_i$$ to RGB colors. 
+The first image in this text shows a colored planetoid. This is achieved by computing an RGB color attribute for each vertex by using the normalized $$d_i$$ value of that vertex (that is, the color depends only on the height of the vertex). To do this, we use a _color ramp_ (a vector with $$n$$ colors), which defines a piecewise linear function from $$d_i$$ to RGB colors. 
 
 The code below computes the color for vertex `iv` when `p.add_vertex_color` is true by using the `d` variable as defined in the code above, and the color ramp stored in `p.color_ramp`. We assume `colors` is a vector with RGB 3-float tuples, with the same size as the vertex table:
 
@@ -275,7 +275,7 @@ This kind of noise function is called a _fractal_ or _multioctave_ solid noise f
 
 The term _fractal_ is used here because each successive octave is a scaled version of the previous one, so in theory, if we use an infinite number of octaves, the function would be self-similar under scalings, and this is exactly the property fractal shapes hold in general. 
 
-The scaling for each successive octave means that $$M_{i+1}$$ has double the frequency and half the amplitude than $$M_i$$. By adding a finite number of these octaves, we get a noise signal with a range of frequencies that resembles natural formations.
+The scaling for each successive octave means that $$M_{i+1}$$ has double the frequency and half the amplitude than $$M_i$$. By adding a finite number of these octaves, we get a noise signal with a range of frequencies that resembles natural formations. Each $$M_i$$ function is a noise signal with random values (uniformly distributed in $$[0,1]$$) at points with integer coordinates, and whose values in non-integer coordinates are obtained by linear interpolation. Thus, its 
 
 We use a slightly modified version of the above formula because we do not add the firsts octaves, but we allow to start the summation from the $$m$$-th octave instead of $$0$$-th octave (with $$0<m<n-1$$). This leads to a more natural planetoid look, as those first octaves give it an elongated shape, far away from the spherical one we expect for a planetoid. I usually set $$m$$ to $$2$$. 
 
@@ -337,7 +337,7 @@ And here is a mesh with all the first 7 octaves added:
 
 Each function $$M_i$$ is a piecewise tri-linear function (with real values $$[0,1]$$) that interpolates between random values associated with each 3D point with integer coordinates (which are usually called _lattice points_). 
 
-The function $$M_i$$ expects coordinates in the range $$[0,2^i]$$. We associate a different random value $$r_{i,j,k}$$ to each lattice point with integer coordinates $$(i,j,k)$$. This is implemented by using a map from unsigned triples (as keys) to real values. 
+The function $$M_i$$ expects coordinates in the range $$[0,2^i]$$. We associate a different random value $$r_{i,j,k,l}$$ to each lattice point with integer coordinates $$(j,k,l)$$, with $$j$$,$$k$$ and $$l$$ in the range $$[0..2^i]$$. This is implemented by using a map from unsigned triples (as keys) to real values. 
 
 
 **work in progress, includes errors**
@@ -352,3 +352,8 @@ _Regular Icosahedron_ in _Wikipedia: The Free Encyclopedia_, available from [htt
 
 <a id="3">[3]</a>
 Ken Perlin: _An image synthesizer_ in SIGGRAPH 85: International Conference on Computer Graphics and Interactive Techniques (1985). PDF: [http://www.cs.cmu.edu/afs/cs.cmu.edu/academic/class/15869-f11/www/readings/perlin85_imagesynthesizer.pdf](http://www.cs.cmu.edu/afs/cs.cmu.edu/academic/class/15869-f11/www/readings/perlin85_imagesynthesizer.pdf)
+
+<a id="4">[4]</a>
+Paul Bourke: _Generating noise with different power spectra laws
+_ (1998), _Deterministic 1/f noise_ (1999), _Modelling fake planets_ (2000), _Fractal Landscapes_ (1991), _Frequency Synthesis of Landscapes (and clouds)_ (1997), _Perlin Noise and Turbulence_ (2000). Last visited: March 27, 2023. Web:
+<a href="http://paulbourke.net/fractals/noise/">http://paulbourke.net/fractals/noise/</a>
