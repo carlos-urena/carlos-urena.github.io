@@ -9,7 +9,7 @@ $$
    \newcommand{\cp}{\mathbf{p}}
 $$
 
-Written March 22-27, 2023. 
+Written March 22-27, 2023. **WORK IN PROGRESS**.
 
 # Procedural generation of planetoids.
 
@@ -421,7 +421,7 @@ float PerlinNoise3D::evalM( const unsigned level,
 }
 ```
 
-
+**WORK IN PROGRESS**
 
 ## References.
 
