@@ -9,7 +9,7 @@ $$
    \newcommand{\cp}{\mathbf{p}}
 $$
 
-Written March 22, 2023. **Unfinished, work in progress**.
+Written March 22-27, 2023. 
 
 # Procedural generation of planetoids.
 
@@ -189,21 +189,21 @@ $$
    f_i ~=~ \frac{h_i - m_0}{m_1 - m_0}
 $$
 
-this way we ensure $$g_i$$ values cover the whole interval $$[0,1]$$. After this we can obtain each value $$d_i$$ by using two real parameters $$a$$ and $$b>0$$
+this way we ensure $$g_i$$ values cover the whole interval $$[0,1]$$. After this we can obtain each value $$d_i$$ by using two real parameters $$c$$ (the _base height_) and $$a$$ (the _heigh amplitude_):
 
 $$
-    d_i ~=~ a\,+\,b\cdot f_i
+    d_i ~=~ c\,+\,a\cdot f_i
 $$
 
-This implies all the values $$d_i$$ lie in the interval $$[a,a+b]$$, including for sure at least two vertexes at the extreme values $$a$$ and $$a+b$$. These parameters can be fine-tuned to specific applications or looks.
+This implies all the values $$d_i$$ lie in the interval $$[c,c+a]$$, including for sure at least two vertexes at the extreme values $$c$$ and $$c+a$$. These parameters can be fine-tuned to specific applications or looks.
 
-This normalization code can be modified to optionally truncate the heigh values to a minimum value, for values below that minimum. I have used this to somehow resemble _seas_ in the planetoid (the blue zones in the first image above). If $$f_{min}$$ is the threshold value (with $$0<f_{min}<1$$), then $$d_i$$ is computed as:
+This normalization code can be modified to optionally truncate the heigh values to a minimum value, for values below that minimum. I have used this to somehow resemble _seas_ in the planetoid (the blue zones in the first image above), as described in Paul Bourke paper _Frequency Synthesis of Landscapes_ [[4]](#4). If $$f_{min}$$ is the threshold value (with $$0<f_{min}<1$$), then $$d_i$$ is computed as:
 
 $$
-    d_i ~=~ a\,+\,b\cdot \mbox{max}\left( \,0\,;\, \frac{f_i-f_{min}}{1-f_{min}} \right)
+    d_i ~=~ c\,+\,a\cdot \mbox{max}\left( \,0\,;\, \frac{f_i-f_{min}}{1-f_{min}} \right)
 $$
 
-Note that no matter which version we use for $$d_i$$, it always lies in $$[0,1]$$. By setting $$f_{min}$$ to $$0$$, this formula becomes equivalent to the previous one, so no truncation is done.
+Note that no matter which version we use for $$d_i$$, it always lies in $$[c,c+a]$$. By setting $$f_{min}$$ to $$0$$, this formula becomes equivalent to the previous one, so no truncation is done.
 
 The code below computes the array of $$h_i$$ values (`hv`), along with its minimal value $$m_0$$ (`hmin`) and the maximal one $$m_1$$ (`hmax`). It evaluates function $$N$$ by using `eval` method of the Perlin noise object `pn` (which is described below). Note that the vertex position coordinates are in the range $$[-1,+1]$$, while the noise function $$N$$ only receives coordinates in $$[0,1]$$, so the vertex coordinates are transformed to that range before evaluating $$N$$.
 
@@ -275,9 +275,9 @@ This kind of noise function is called a _fractal_ or _multioctave_ solid noise f
 
 The term _fractal_ is used here because each successive octave is a scaled version of the previous one, so in theory, if we use an infinite number of octaves, the function would be self-similar under scalings, and this is exactly the property fractal shapes hold in general. 
 
-The scaling for each successive octave means that $$M_{i+1}$$ has double the frequency and half the amplitude than $$M_i$$. By adding a finite number of these octaves, we get a noise signal with a range of frequencies that resembles natural formations. Each $$M_i$$ function is a noise signal with random values (uniformly distributed in $$[0,1]$$) at points with integer coordinates, and whose values in non-integer coordinates are obtained by linear interpolation. Thus, its 
+Each $$M_i$$ function is a noise signal with random values (uniformly distributed in $$[0,1]$$) at points with integer coordinates, and whose values in non-integer coordinates are obtained by interpolation. Thus, it has no frequencies above the unit frequency (unit wavelength). Evaluation of the $$M_i$$ functions is discussed below in the next sub-section. The scaling for each successive $$i+1$$-th octave means that each one has double the frequency and half the amplitude than the previous $$i$$-th octave. By adding a finite number of these octaves, we get a noise signal with a range of frequencies that resembles natural formations (see [[3]](#3) and [[4]](#4)).
 
-We use a slightly modified version of the above formula because we do not add the firsts octaves, but we allow to start the summation from the $$m$$-th octave instead of $$0$$-th octave (with $$0<m<n-1$$). This leads to a more natural planetoid look, as those first octaves give it an elongated shape, far away from the spherical one we expect for a planetoid. I usually set $$m$$ to $$2$$. 
+We use a slightly modified version of the above formula for $$M$$ because we do not add the firsts octaves, but we allow to start the summation from the $$m$$-th octave instead of $$0$$-th octave (with $$0<m<n-1$$). This leads to a more natural planetoid look, as those first octaves give it an elongated shape, far away from the spherical one we expect for a planetoid. I usually set $$m$$ to $$2$$. 
 
 We also scale successive weights by using a positive real value $$b$$ (we call it _octaves amplitude scale factor_) not necessarily equal to $$2$$, as this gives more control over the final planetoid roughness. I usually set $$b$$ to $$1.8$$. So the actual formulation for $$N$$ we use is:
 
@@ -337,10 +337,49 @@ And here is a mesh with all the first 7 octaves added:
 
 Each function $$M_i$$ is a piecewise tri-linear function (with real values $$[0,1]$$) that interpolates between random values associated with each 3D point with integer coordinates (which are usually called _lattice points_). 
 
-The function $$M_i$$ expects coordinates in the range $$[0,2^i]$$. We associate a different random value $$r_{i,j,k,l}$$ to each lattice point with integer coordinates $$(j,k,l)$$, with $$j$$,$$k$$ and $$l$$ in the range $$[0..2^i]$$. This is implemented by using a map from unsigned triples (as keys) to real values. 
+The function $$M_i$$ expects coordinates in the range $$[0,2^i]$$. For any given lattice point $$\cp=(i_x,i_y,i_z)$$ with integer coordinates (with $$0\leq i_x,i_y,i_z\leq 2^i$$), the function $$M_i$$ yields a random value $$r_{i_x,i_y,i_z}$$. For any non-integer coordinates tuple $$(x,y,z)$$, function $$M_i$$  does interpolation by using the $$8$$ random values associated with the $$8$$ lattice points in the vertexes of the cube including $$(x,y,z)$$. 
+
+To implement evaluations of $$M_i$$, we can use an array of $$2^{3i}$$ precomputed random values for each $$i$$ from $$0$$ to $$n-1$$. However, this requires a lot of memory even for not-so-large values of $$n$$, but in fact, only a small fraction of those values are going to be used. 
+
+Thus, to save memory and time, we use a different _map_ or _dictionary_ for each $$i$$, which is populated on demand during the mesh construction process. Each dictionary stores lattice coordinates triples as keys and random reals as values. Each $$i$$-th map is initially empty. When a new random value at one lattice point is requested, the program checks if the integer coordinates are already present in the map as a key. If they are, the corresponding random value is retrieved and returned, if they are not, a new random value is inserted in the map and then returned. In the end, the map will include a number of random values that is proportional to the number of mesh vertexes (considering the worst case, in which each mesh vertex causes a disjoint set of lattice points to be queried). 
+
+In C++ these maps can be implemented as an array of `std::map` instances, as it is shown below. 
+
+```cpp 
+typedef std::tuple< unsigned short, unsigned short, unsigned short > Triple ; // type for keys
+std::vector< std::map< Triple, float >> mlmap ; // maps array (one for each Mi function)
+```
+
+To implement map queries, we can use any C++11 integer random values generator (`generator`), along with the maps (`mlmaps`) in the `queryMaps` method below:
+
+```cpp 
+float PerlinNoise3D::queryMaps( const unsigned level, const unsigned ix, const unsigned iy, const unsigned iz )
+{
+   const Triple  tr    = { ix, iy, iz } ; 
+   const auto    found = mlmap[level].find( tr ) ;
+
+   if ( found == mlmap[level].end() )
+   {
+      const float rval = float( uniform_dist( generator )) / float(maxrv) ;
+      mlmap[level][tr] = rval ;
+      return rval ;
+   }
+   else 
+      return mlmap[level][tr] ;
+}
+```
+
+Here the constant `maxrv` is the maximum integer value produced by the generator, that is `int(0xFFFFFF)`.
+
+For any non-integer coordinates query points $$\cp=(x,y,z)$$, interpolation is carried out. In this implementation, I use simple linear interpolation, which causes visible discontinuities in the slope of the surface for the lower octaves, but which is not visible when all the octaves are added up. If, for any application, these discontinuities are not acceptable, more ellaborate interpolation schemes are described in the literature.
+
+The code is here:
+
+```cpp 
+todo ...
+```
 
 
-**work in progress, includes errors**
 
 ## References.
 
