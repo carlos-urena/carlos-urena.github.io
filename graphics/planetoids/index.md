@@ -451,14 +451,13 @@ $$
 The code for the `interpolate` function is this:
 
 ```cpp
- inline float interpolate( const float t, const float a, const float b )
+inline float interpolate( const float t, const float a, const float b )
 {
    const float ft = 0.5f * (1.0f + std::sinf( (t-0.5f)*M_PI ));         
    return (1.0f-ft)*a + ft*b ;
 }
 ```
 
-The `interpolate` function above is used to interpolate between its second and third arguments. A simple 
 
 **WORK IN PROGRESS**
 
