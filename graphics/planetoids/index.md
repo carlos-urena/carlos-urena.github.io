@@ -302,7 +302,7 @@ float PerlinNoise3D::eval( const float px, const float py, const float pz )
    {
          if (  min_level <= i )
          {  
-            sum_v += w * octave( i, spx, spy, spz ); 
+            sum_v += w * evalM( i, spx, spy, spz ); 
             sum_w += w ;
          }
          spx *= 2.0f ;
@@ -379,12 +379,51 @@ float PerlinNoise3D::queryMaps( const unsigned level, const unsigned ix, const u
 
 Here the constant `maxrv` is the maximum integer value produced by the generator, that is `int(0xFFFFFF)`.
 
-For any non-integer coordinates query points $$\cp=(x,y,z)$$, interpolation is carried out. In this implementation, I use simple linear interpolation, which causes visible discontinuities in the slope of the surface for the lower octaves, but which is not visible when all the octaves are added up. If, for any application, these discontinuities are not acceptable, more elaborate interpolation schemes are described in the literature.
+For any non-integer coordinates query points $$\cp=(x,y,z)$$, interpolation is carried out. In this implementation, I use simple (tri) linear interpolation, which causes visible discontinuities in the slope of the surface for the lower octaves, but which is not visible when all the octaves (up to seven or eight at least) are added up. If, for any application, these discontinuities are not acceptable, more elaborate interpolation schemes are described in the literature.
 
-The code is here:
+The code of `evalM` method is shown here:
 
 ```cpp 
-todo ...
+float PerlinNoise3D::getNoiseAtLevel( const unsigned level, 
+                                      const float spx, const float spy, const float spz ) 
+{
+   using namespace std ;
+
+   const float 
+      ix_float = truncf( spx ),
+      iy_float = truncf( spy ),
+      iz_float = truncf( spz ),
+      fx = spx - ix_float ,
+      fy = spy - iy_float ,
+      fz = spz - iz_float ;
+
+   const unsigned  
+      ix = unsigned( ix_float ),
+      iy = unsigned( iy_float ),
+      iz = unsigned( iz_float );
+
+   // trilinear interpolation:
+   // 
+
+   // get 8 values from the map (c000 ... c111 ) , and then interpolate
+   const float 
+      c000 = queryMaps( level, ix+0, iy+0, iz+0 ),
+      c001 = queryMaps( level, ix+0, iy+0, iz+1 ),
+      c010 = queryMaps( level, ix+0, iy+1, iz+0 ),
+      c011 = queryMaps( level, ix+0, iy+1, iz+1 ),
+      c100 = queryMaps( level, ix+1, iy+0, iz+0 ),
+      c101 = queryMaps( level, ix+1, iy+0, iz+1 ),
+      c110 = queryMaps( level, ix+1, iy+1, iz+0 ),
+      c111 = queryMaps( level, ix+1, iy+1, iz+1 ),
+      c00  = c000*(1.0f-fx) + c100*fx ,
+      c01  = c001*(1.0f-fx) + c101*fx ,
+      c10  = c010*(1.0f-fx) + c110*fx ,
+      c11  = c011*(1.0f-fx) + c111*fx ,
+      c0   = c00*(1.0f-fy) + c10*fy ,
+      c1   = c01*(1.0f-fy) + c11*fy ;
+
+   return c0*(1.0f-fz) + c1*fz ;
+}
 ```
 
 
@@ -402,4 +441,7 @@ Ken Perlin: _An image synthesizer_ in SIGGRAPH 85: International Conference on C
 
 <a id="4">[4]</a>
 Paul Bourke: _Fractal Landscapes_ (1991), _Frequency Synthesis of Landscapes_ (1997), _Generating noise with different power spectra laws_ (1998), _Deterministic 1/f noise_ (1999), _Modelling fake planets_ (2000),  _Perlin Noise and Turbulence_ (2000).  Web:
-<a href="http://paulbourke.net/fractals/noise/">http://paulbourke.net/fractals/noise/</a> (last visited  March 27, 2023).
+<a href="http://paulbourke.net/fractals/noise/">http://paulbourke.net/fractals/noise/</a> retrieved  March 27, 2023.
+
+<a id="5">[5]</a>
+_Trilinear Interpolation_ in _Wikipedia: The Free Encyclopedia_, available from [https://en.wikipedia.org/wiki/Trilinear_interpolation](https://en.wikipedia.org/wiki/Trilinear_interpolation), retrieved March 27, 2023.
