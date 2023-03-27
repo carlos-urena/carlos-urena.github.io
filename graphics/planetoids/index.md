@@ -401,6 +401,5 @@ _Regular Icosahedron_ in _Wikipedia: The Free Encyclopedia_, available from [htt
 Ken Perlin: _An image synthesizer_ in SIGGRAPH 85: International Conference on Computer Graphics and Interactive Techniques (1985). PDF: [http://www.cs.cmu.edu/afs/cs.cmu.edu/academic/class/15869-f11/www/readings/perlin85_imagesynthesizer.pdf](http://www.cs.cmu.edu/afs/cs.cmu.edu/academic/class/15869-f11/www/readings/perlin85_imagesynthesizer.pdf)
 
 <a id="4">[4]</a>
-Paul Bourke: _Generating noise with different power spectra laws
-_ (1998), _Deterministic 1/f noise_ (1999), _Modelling fake planets_ (2000), _Fractal Landscapes_ (1991), _Frequency Synthesis of Landscapes (and clouds)_ (1997), _Perlin Noise and Turbulence_ (2000). Last visited: March 27, 2023. Web:
-<a href="http://paulbourke.net/fractals/noise/">http://paulbourke.net/fractals/noise/</a>
+Paul Bourke: _Fractal Landscapes_ (1991), _Frequency Synthesis of Landscapes (and clouds)_ (1997),_Generating noise with different power spectra laws_ (1998), _Deterministic 1/f noise_ (1999), _Modelling fake planets_ (2000),   _Perlin Noise and Turbulence_ (2000).  Web:
+<a href="http://paulbourke.net/fractals/noise/">http://paulbourke.net/fractals/noise/</a> (last visited  March 27, 2023).
