@@ -449,14 +449,13 @@ $$
      f(t) ~~=~~ \frac{1}{2}\sin \left( \left(t-\frac{1}{2}\right)\pi\right)
 $$
 
-```cpp
- inline float interpolate( const float f, const float v0, const float v1 )
-{
-   // f in [0,1]
+The code for the `interpolate` function is this:
 
-   //return (1.0f-f)*v0 + f*v1 ;
-   const float s = 0.5f * (1.0f + std::sinf( (f-0.5f)*M_PI ));         
-   return (1.0f-s)*v0 + s*v1 ;
+```cpp
+ inline float interpolate( const float t, const float a, const float b )
+{
+   const float ft = 0.5f * (1.0f + std::sinf( (t-0.5f)*M_PI ));         
+   return (1.0f-ft)*a + ft*b ;
 }
 ```
 
