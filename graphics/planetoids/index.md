@@ -379,7 +379,7 @@ float PerlinNoise3D::queryMaps( const unsigned level, const unsigned ix, const u
 
 Here the constant `maxrv` is the maximum integer value produced by the generator, that is `int(0xFFFFFF)`.
 
-For any non-integer coordinates query points $$\cp=(x,y,z)$$, interpolation is carried out. This is done by considering the $$8$$ random values stored in the map for the vertexes of the cube which includes $$\cp$$. Once these values are known, 3D interpolation is achieved by repeated calls to a 1d interpolation function $$I(t,a,b)$$ which interpolates between $$a$$ and $$b$$. Assuming $$a\leq b$$ and $0\leq t\leq 1$$, function $$I$$ holds:
+For any non-integer coordinates query points $$\cp=(x,y,z)$$, interpolation is carried out. This is done by considering the $$8$$ random values stored in the map for the vertexes of the cube which includes $$\cp$$. Once these values are known, 3D interpolation is achieved by repeated calls to a 1d interpolation function $$I(t,a,b)$$ which interpolates between $$a$$ and $$b$$. Assuming $$a\leq b$$ and $$0\leq t\leq 1$$, function $$I$$ holds:
 
  * $$I$$ is non-decreasing.
  * $$I(0,a,b) ~=~a$$.
