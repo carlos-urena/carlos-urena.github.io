@@ -335,7 +335,7 @@ And here is a mesh with all the first 7 octaves added:
 
 ### 2.2. The basic noise functions $$M_i$$.
 
-Each function $$M_i$$ is a piecewise tri-linear function (with real values $$[0,1]$$) that interpolates between random values associated with each 3D point with integer coordinates (which are usually called _lattice points_). 
+Each function $$M_i$$ is a function (with real values $$[0,1]$$) that interpolates between random values associated with each 3D point with integer coordinates (which are usually called _lattice points_). 
 
 The function $$M_i$$ expects coordinates in the range $$[0,2^i]$$. For any given lattice point $$\cp=(i_x,i_y,i_z)$$ with integer coordinates (with $$0\leq i_x,i_y,i_z\leq 2^i$$), the function $$M_i$$ yields a random value $$r_{i_x,i_y,i_z}$$. For any non-integer coordinates tuple $$(x,y,z)$$, function $$M_i$$  does interpolation by using the $$8$$ random values associated with the $$8$$ lattice points in the vertexes of the cube including $$(x,y,z)$$. 
 
@@ -379,9 +379,14 @@ float PerlinNoise3D::queryMaps( const unsigned level, const unsigned ix, const u
 
 Here the constant `maxrv` is the maximum integer value produced by the generator, that is `int(0xFFFFFF)`.
 
-For any non-integer coordinates query points $$\cp=(x,y,z)$$, interpolation is carried out. In this implementation, I use simple tri-linear interpolation (as described in [[5]](#5)), which causes visible discontinuities in the surface slope for the lower octaves, but which is not visible when all the octaves (up to seven or eight at least) are added up. If, for any application, these discontinuities are not acceptable, more elaborate interpolation schemes are described in the literature.
+For any non-integer coordinates query points $$\cp=(x,y,z)$$, interpolation is carried out. This is done by considering the $$8$$ random values stored in the map for the vertexes of the cube which includes $$\cp$$. Once these values are known, 3D interpolation is achieved by repeated calls to a 1d interpolation function $$I(t,a,b)$$ which interpolates between $$a$$ and $$b$$. Assuming $$a\leq b$$ and $0\leq t\leq 1$$, function $$I$$ holds:
 
-The code of `evalM` method is shown here:
+ * $$I$$ is non-decreasing.
+ * $$I(t,a,b) ~\in~ [a,b]$$ 
+ * $$I(0,a,b) ~=~a$$.
+ * $$I(1,a,b) ~=~b$$.
+
+The code of `evalM` method is shown below. It uses the 1D interpolation function `interpolate` (described next).
 
 ```cpp 
 float PerlinNoise3D::evalM( const unsigned level, 
@@ -390,7 +395,8 @@ float PerlinNoise3D::evalM( const unsigned level,
    const float // get integer and fractional parts of coordinates (as floats)
       ix_float = std::truncf( spx ),
       iy_float = std::truncf( spy ),
-      iz_float = std::truncf( spz ),
+      iz_float = std::truncf( spz );
+   const float 
       fx = spx - ix_float ,
       fy = spy - iy_float ,
       fz = spz - iz_float ;
@@ -409,17 +415,51 @@ float PerlinNoise3D::evalM( const unsigned level,
       c100 = queryMaps( level, ix+1, iy+0, iz+0 ),
       c101 = queryMaps( level, ix+1, iy+0, iz+1 ),
       c110 = queryMaps( level, ix+1, iy+1, iz+0 ),
-      c111 = queryMaps( level, ix+1, iy+1, iz+1 ),
-      c00  = c000*(1.0f-fx) + c100*fx ,
-      c01  = c001*(1.0f-fx) + c101*fx ,
-      c10  = c010*(1.0f-fx) + c110*fx ,
-      c11  = c011*(1.0f-fx) + c111*fx ,
-      c0   = c00*(1.0f-fy) + c10*fy ,
-      c1   = c01*(1.0f-fy) + c11*fy ;
+      c111 = queryMaps( level, ix+1, iy+1, iz+1 );
+   const float 
+      c00  = interpolate( fx, c000, c100 ),
+      c01  = interpolate( fx, c001, c101 ),
+      c10  = interpolate( fx, c010, c110 ),
+      c11  = interpolate( fx, c011, c111 ),
+      c0   = interpolate( fy, c00,  c10  ),
+      c1   = interpolate( fy, c01,  c11  );
 
-   return c0*(1.0f-fz) + c1*fz ;
+   return interpolate( fz, c0, c1 );
 }
 ```
+
+A simple linear 1D interpolation function could be used for $$I$$ (as described in [[5]](#5)) :
+
+$$
+      I(t,a,b) ~~=~~  (1-t)a \,+\,tb
+$$
+
+However, this linear 1D interpolation causes discontinuities in the surface slope, as the resulting surface is $$C^0$$ continuous, but not $$C^1$$.  These slope discontinuities can be visible as creases, especially for the lower octaves. 
+
+Instead of linear 1D interpolation, several alternative functions have been proposed in the literature,  such as using _Cubic Hermite Splines_ [[6]](#6), which allow setting the derivative of $$I$$ at $$0$$ and $$1$$. In this application, however, good results can be achieved by using a cubic polynomial, but simply setting those derivatives to $$0$$. The resulting spline interpolation function is this:
+
+$$
+      I(t,a,b) ~~=~~  (1-f(t))a \,+\, f(t)b ~~~~~~\mbox{where} f(t) ~=~ (2t^3\,-\,3t^2\,+\,1)
+$$
+
+It is easy to check that this particular version of $I$ obeys the desired properties. We can also use any other functions $$f$$, as long as it is non-decreasing and it obeys: $$f(0)=0$$, $$f(1)=1$$, and $$f'(0)=f'(1)=0$$. Concretely, we can use the sine function:
+
+$$
+     f(t) ~~=~~ frac{\sin \left( (1-t/2)\pi\right)}{2}
+$$
+
+```cpp
+ inline float interpolate( const float f, const float v0, const float v1 )
+{
+   // f in [0,1]
+
+   //return (1.0f-f)*v0 + f*v1 ;
+   const float s = 0.5f * (1.0f + std::sinf( (f-0.5f)*M_PI ));         
+   return (1.0f-s)*v0 + s*v1 ;
+}
+```
+
+The `interpolate` function above is used to interpolate between its second and third arguments. A simple 
 
 **WORK IN PROGRESS**
 
@@ -440,3 +480,6 @@ Paul Bourke: _Fractal Landscapes_ (1991), _Frequency Synthesis of Landscapes_ (1
 
 <a id="5">[5]</a>
 _Trilinear Interpolation_ in _Wikipedia: The Free Encyclopedia_, available from [https://en.wikipedia.org/wiki/Trilinear_interpolation](https://en.wikipedia.org/wiki/Trilinear_interpolation), retrieved March 27, 2023.
+
+<a id="5">[6]</a>
+_Cubic Hermite Spline_ in _Wikipedia: The Free Encyclopedia_, available from [https://en.wikipedia.org/wiki/Cubic_Hermite_spline](https://en.wikipedia.org/wiki/Cubic_Hermite_spline), retrieved March 27, 2023.
