@@ -439,7 +439,7 @@ Instead of linear 1D interpolation, several alternative functions have been prop
 
 $$
       I(t,a,b) ~~=~~  (1-f(t))\,a \:+\: f(t)\,b ~~~~~~~~~~~~~~~~~
-      \mbox{where} ~~~~~~ f(t) ~=~ 2t^3\:-\,3t^2\:+\,1
+      \mbox{where} ~~~~~~ f(t) ~=~ -2t^3\:+\,3t^2
 $$
 
 It is easy to check that this particular version of $$I$$ obeys the desired properties. We can also use any other functions $$f$$, as long as it is non-decreasing and it obeys: $$f(0)=0$$, $$f(1)=1$$, and $$f'(0)=f'(1)=0$$. Concretely, we can use the sine function:
