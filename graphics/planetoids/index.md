@@ -24,9 +24,15 @@ ___
 
 ___
 
+
+**Index**
+
+  * [1. High Resolution Sphere][S1]
+  * dos: 
+
 This generation algorithm has been tested in C++ but can be adapted to other programming languages, running from scratch or on any game engine.
 
-## 1. High-resolution sphere.
+## [S1] 1. High-resolution sphere.
 
 The generation algorithm must use a high-resolution sphere, as we want to add high-resolution variations to enhance realism. Generating a high-resolution sphere can be easily done by using the usual parametrization of the sphere, based on longitude and latitude angles (that is, by rotating a semi-circumference going from the south to the north pole). However, this method produces triangles with a high variation in area and proportions, as it yields very small triangles near the poles and quite big ones near the equator. 
 
