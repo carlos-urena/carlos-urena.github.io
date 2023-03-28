@@ -13,7 +13,7 @@ Written March 22-27, 2023. **WORK IN PROGRESS**.
 
 # Procedural generation of planetoids.
 
-On this page, I explain how to use a procedural generation algorithm to create an indexed mesh that resembles a planet or _planetoid_. I start from a (high resolution) unit radius sphere and then I radially displace the vertexes using 3D Perlin Noise. This work is based on several papers and documents by Ken Perlin [[3]](#3) and Paul Bourke [[4]](#4).  An example mesh (for a particular set of parameter values) is seen here:
+On this page, I explain how to use a procedural generation algorithm to create an indexed mesh that resembles a planet or _planetoid_. I start from a (high resolution) unit radius sphere and then I radially displace the vertexes using 3D Perlin Noise. This work is based on several papers and documents by Ken Perlin [[3]](#3) and Paul Bourke [[4]](#4).  An example mesh (for a particular set of parameter values) is seen in [[figure 1]](#f1) below.
 
 ---
 <center>
