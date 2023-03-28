@@ -215,9 +215,9 @@ float          hmin = 1.0,
 
 for( unsigned iv = 0 ; iv < vertices.size() ; iv++  )
 {
-   const float h = pn.eval( (1.0f+vertices[iv](0))/2.0f, 
-                            (1.0f+vertices[iv](1))/2.0f, 
-                            (1.0f+vertices[iv](2))/2.0f );
+   const float h = pn.evalN( (1.0f+vertices[iv](0))/2.0f, 
+                             (1.0f+vertices[iv](1))/2.0f, 
+                             (1.0f+vertices[iv](2))/2.0f );
    hv[iv] = h ;
    hmin = min( h, hmin );
    hmax = max( h, hmax );   
@@ -275,7 +275,7 @@ This kind of noise function is called a _fractal_ or _multioctave_ solid noise f
 
 The term _fractal_ is used here because each successive octave is a scaled version of the previous one, so in theory, if we use an infinite number of octaves, the function would be self-similar under scalings, and this is exactly the property fractal shapes hold in general. 
 
-Each $$M_i$$ function is a noise signal with random values (uniformly distributed in $$[0,1]$$) at points with integer coordinates, and whose values in non-integer coordinates are obtained by interpolation. Thus, it has no frequencies above the unit frequency (unit wavelength). Evaluation of the $$M_i$$ functions is discussed below in the next sub-section. The scaling for each successive $$i+1$$-th octave means that each one has double the frequency and half the amplitude than the previous $$i$$-th octave. By adding a finite number of these octaves, we get a noise signal with a range of frequencies that resembles natural formations (see [[3]](#3) and [[4]](#4)).
+Each $$M_i$$ function is a noise signal with random values (uniformly distributed in $$[0,1]$$) at points with integer coordinates (which are usually called _lattice points_), and whose values in non-integer coordinates are obtained by interpolation. Thus, it has no frequencies above the unit frequency (unit wavelength). Evaluation of the $$M_i$$ functions is discussed below in the next sub-section. The scaling for each successive $$i+1$$-th octave means that each one has double the frequency and half the amplitude than the previous $$i$$-th octave. By adding a finite number of these octaves, we get a noise signal with a range of frequencies that resembles natural formations (see [[3]](#3) and [[4]](#4)).
 
 We use a slightly modified version of the above formula for $$M$$ because we do not add the firsts octaves, but we allow to start the summation from the $$m$$-th octave instead of $$0$$-th octave (with $$0<m<n-1$$). This leads to a more natural planetoid look, as those first octaves give it an elongated shape, far away from the spherical one we expect for a planetoid. I usually set $$m$$ to $$2$$. 
 
@@ -286,10 +286,10 @@ $$
      ~~~~~~~\mbox{where}~~~w_i = \frac{1}{b^i} ~~~~ s = \sum_{i=m}^{n-1} w_i
 $$
 
-Evaluation of $$N$$ function can be done by using the `eval` method of `PerlinNoise3D` class. The method repeatedly calls the `octave` method, which evaluates $$M_i$$. The number of octaves $$n$$ (`num_levels`) is a parameter given to the class constructor, as it is the octaves amplitude factor (`octaves_asf`) and the min level $$m$$ (`min_level`). The code is here:
+Evaluation of $$N$$ function can be done by using the `evalN` method of `PerlinNoise3D` class. The method repeatedly calls the `octave` method, which evaluates $$M_i$$. The number of octaves $$n$$ (`num_levels`) is a parameter given to the class constructor, as it is the octaves amplitude factor (`octaves_asf`) and the min level $$m$$ (`min_level`). The code is here:
 
 ```cpp 
-float PerlinNoise3D::eval( const float px, const float py, const float pz ) 
+float PerlinNoise3D::evalN( const float px, const float py, const float pz ) 
 {
    float sum_v = 0.0f, 
          sum_w = 0.0f, 
@@ -379,13 +379,16 @@ float PerlinNoise3D::queryMaps( const unsigned level, const unsigned ix, const u
 
 Here the constant `maxrv` is the maximum integer value produced by the generator, that is `int(0xFFFFFF)`.
 
-For any non-integer coordinates query points $$\cp=(x,y,z)$$, interpolation is carried out. This is done by considering the $$8$$ random values stored in the map for the vertexes of the cube which includes $$\cp$$. Once these values are known, 3D interpolation is achieved by repeated calls to a 1d interpolation function $$I(t,a,b)$$ which interpolates between $$a$$ and $$b$$. Assuming $$a\leq b$$ and $$0\leq t\leq 1$$, function $$I$$ holds:
+For any non-integer coordinates query points $$\cp=(x,y,z)$$, interpolation is carried out. This is done by considering the $$8$$ random values stored in the map for the vertexes of the cube which includes $$\cp$$. Once these values are known, 3D interpolation is achieved by repeated calls to a 1d interpolation function $$I(t,a,b)$$ which interpolates between $$a$$ (for $$t=0$$) and $$b$$ (for $$t=1$$). The function $$I$$ can be defined as follows:
 
- * $$I$$ is non-decreasing.
- * $$I(0,a,b) ~=~a$$.
- * $$I(1,a,b) ~=~b$$.
+$$
+   I(t,a,b) ~~=~~  (1-f(t))\,a \:+\: f(t)\,b
+$$ 
 
-The code of `evalM` method is shown below. It uses the 1D interpolation function `interpolate` (described next).
+Where $$f(t)$$ is any at least $$C^0$$ continous function which interpolates between $$0$$ and $$1$$, thus it is defined for any $$t\in[0]..1]$$ and holds $$f(0)=0$$ and $$f(1)=1$$. Several options can be used, this is discussed below.
+
+
+The code of `evalM` method is shown below. It uses the 1D interpolation function `interpolate` which implements $$I$$:
 
 ```cpp 
 float PerlinNoise3D::evalM( const unsigned level, 
@@ -427,33 +430,35 @@ float PerlinNoise3D::evalM( const unsigned level,
 }
 ```
 
-A simple linear 1D interpolation function could be used for $$I$$ (as described in [[5]](#5)) :
+### 2.3. The 1D interpolation function $$f$$.
+
+Regarding the interpolation function $$f$$, a simple linear 1D interpolation function could be used, which leads to tri-linear interpolation in 3D (as described in [[5]](#5)). This implies $$f$$ is the identity function
 
 $$
-      I(t,a,b) ~~=~~  (1-t)\,a \:+\: t\,b
+   f(t) ~~=~~ t
 $$
 
 However, this linear 1D interpolation causes discontinuities in the surface slope, as the resulting surface is $$C^0$$ continuous, but not $$C^1$$.  These slope discontinuities can be visible as creases, especially for the lower octaves. 
 
-Instead of linear 1D interpolation, several alternative functions have been proposed in the literature,  such as using _Cubic Hermite Splines_ [[6]](#6), which allow setting the derivative of $$I$$ at $$0$$ and $$1$$. In this application, however, good results can be achieved by using a cubic polynomial, but simply setting those derivatives to $$0$$. The resulting spline interpolation function is this:
+Instead of linear 1D interpolation, several alternative functions have been proposed in the literature,  such as using _Cubic Hermite Splines_ [[6]](#6), it is a cubic polynomial which allows setting the derivative of $$I$$ at $$0$$ and $$1$$. In this application, however, good results can be achieved by still using that cubic polynomial, but simply setting those derivatives to $$0$$. The resulting spline interpolation function $$f$$ is this:
 
 $$
-      I(t,a,b) ~~=~~  (1-f(t))\,a \:+\: f(t)\,b ~~~~~~~~~~~~~~~~~
-      \mbox{where} ~~~~~~ f(t) ~=~ -2t^3\:+\,3t^2
+   f(t) ~=~ -2t^3\:+\,3t^2
 $$
 
-It is easy to check that this particular version of $$I$$ obeys the desired properties. We can also use any other functions $$f$$, as long as it is non-decreasing and it obeys: $$f(0)=0$$, $$f(1)=1$$, and $$f'(0)=f'(1)=0$$. Concretely, we can use the sine function:
+It is easy to check that this particular version of $$f$$ obeys the desired properties. We can also use any other functions $$f$$, as long as it obeys the required properties. Concretely, we can use the sine function:
 
 $$
-     f(t) ~~=~~ \frac{1}{2}\,\sin \left( \left(t-\frac{1}{2}\right)\pi\right)
+     f(t) ~=~ \frac{1}{2}\,\sin \left( \left(t-\frac{1}{2}\right)\pi\right)
 $$
 
-The code for the `interpolate` function is this:
+The code for the `interpolate` using the spline $$f$$ is this:
 
 ```cpp
 inline float interpolate( const float t, const float a, const float b )
 {
-   const float ft = 0.5f * (1.0f + std::sinf( (t-0.5f)*M_PI ));         
+   const float tsq = t*t ; 
+   const float ft  = -2.0f*t*tsq + 3.0f*tsq  ;
    return (1.0f-ft)*a + ft*b ;
 }
 ```
