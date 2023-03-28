@@ -15,9 +15,13 @@ Written March 22-27, 2023. **WORK IN PROGRESS**.
 
 On this page, I explain how to use a procedural generation algorithm to create an indexed mesh that resembles a planet or _planetoid_. I start from a (high resolution) unit radius sphere and then I radially displace the vertexes using 3D Perlin Noise. This work is based on several papers and documents by Ken Perlin [[3]](#3) and Paul Bourke [[4]](#4).  An example mesh (for a particular set of parameter values) is seen here:
 
+---
 <center>
+<a href="#f1">Figure 1.</a>. __A view of a planetoid__
+
 <img src="imgs/img12.png" width="80%"/>
 </center>
+---
 
 This generation algorithm has been tested in C++ but can be adapted to other programming languages, running from scratch or on any game engine.
 
