@@ -13,7 +13,7 @@ Written March 22-27, 2023. **WORK IN PROGRESS**.
 
 # Procedural generation of planetoids.
 
-On this page, I explain how to use a procedural generation algorithm to create an indexed mesh that resembles a planet or _planetoid_. I start from a (high resolution) unit radius sphere and then I radially displace the vertexes using 3D Perlin Noise. This work is based on several papers and documents by Ken Perlin [[3]](#3) and Paul Bourke [[4]](#4).  An example mesh (for a particular set of parameter values) is seen in [[figure 1]](#f1) below.
+On this page, I explain how to use a procedural generation algorithm to create an indexed mesh that resembles a planet or _planetoid_. I start from a (high resolution) unit radius sphere and then I radially displace the vertexes using 3D Perlin Noise. This work is based on several papers and documents by Ken Perlin [[3]](#3) and Paul Bourke [[4]](#4).  An example mesh (for a particular set of parameter values) is seen in [figure 1](#f1) below.
 
 ___
 <center>
@@ -32,7 +32,7 @@ This generation algorithm has been tested in C++ but can be adapted to other pro
   * dos: 
 
 
-## [S1] 1. High-resolution sphere.
+## <a name="#S1"> 1. High-resolution sphere.</a>
 
 The generation algorithm must use a high-resolution sphere, as we want to add high-resolution variations to enhance realism. Generating a high-resolution sphere can be easily done by using the usual parametrization of the sphere, based on longitude and latitude angles (that is, by rotating a semi-circumference going from the south to the north pole). However, this method produces triangles with a high variation in area and proportions, as it yields very small triangles near the poles and quite big ones near the equator. 
 
