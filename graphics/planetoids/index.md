@@ -440,7 +440,7 @@ $$
 
 However, this linear 1D interpolation causes discontinuities in the surface slope, as the resulting surface is $$C^0$$ continuous, but not $$C^1$$.  These slope discontinuities can be visible as creases, especially for the lower octaves. 
 
-Instead of linear 1D interpolation, several alternative functions have been proposed in the literature,  such as using _Cubic Hermite Splines_ [[6]](#6), it is a cubic polynomial which allows setting the derivative of $$I$$ at $$0$$ and $$1$$. In this application, however, good results can be achieved by still using that cubic polynomial, but simply setting those derivatives to $$0$$. The resulting spline interpolation function $$f$$ is this:
+Instead of linear 1D interpolation, several alternative functions have been proposed in the literature,  such as using _Cubic Hermite Splines_ [[6]](#6), it is a cubic polynomial which allows setting the derivative of $$f$$ at $$0$$ and $$1$$. In this application, however, good results can be achieved by still using that cubic polynomial, but simply setting those derivatives to $$0$$. The resulting spline interpolation function $$f$$ is this:
 
 $$
    f(t) ~=~ -2t^3\:+\,3t^2
