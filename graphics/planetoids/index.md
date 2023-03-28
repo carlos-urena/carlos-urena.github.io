@@ -24,13 +24,13 @@ ___
 
 ___
 
+This generation algorithm has been tested in C++ but can be adapted to other programming languages, running from scratch or on any game engine.
 
-**Index**
+## Index
 
-  * [1. High Resolution Sphere][S1]
+  * [1. High Resolution Sphere](#S1)
   * dos: 
 
-This generation algorithm has been tested in C++ but can be adapted to other programming languages, running from scratch or on any game engine.
 
 ## [S1] 1. High-resolution sphere.
 
