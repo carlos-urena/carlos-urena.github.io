@@ -32,7 +32,7 @@ This generation algorithm has been tested in C++ but can be adapted to other pro
   2. [Vertex displacement](#S2).
 
 
-## <a name="#S1">1.</a> High-resolution sphere.
+## <a name="S1">1.</a> High-resolution sphere.
 
 The generation algorithm must use a high-resolution sphere, as we want to add high-resolution variations to enhance realism. Generating a high-resolution sphere can be easily done by using the usual parametrization of the sphere, based on longitude and latitude angles (that is, by rotating a semi-circumference going from the south to the north pole). However, this method produces triangles with a high variation in area and proportions, as it yields very small triangles near the poles and quite big ones near the equator. 
 
@@ -176,7 +176,7 @@ Again, we see here a sequence of sub-divided icosahedrons, now with all the vert
 <img src="imgs/img10.png" width="70%"/>
 </center>
 
-## <a name="#S2">2.</a> Vertex displacement.
+## <a name="S2">2.</a> Vertex displacement.
 
 After computing the sphere, we need to modify the vertexes' positions to give it a characteristical _bumpy_ look. The natural option for this is to apply a radial displacement to each vertex, that is, to use a scalar factor to modify the distance from the origin to the $$i$$-th vertex. This yields a mesh resembling a planet whose height is different at each point, where _height_ here means the _distance__ to the_ planet's center_. 
 
