@@ -385,7 +385,7 @@ $$
    I(t,a,b) ~~=~~  (1-f(t))\,a \:+\: f(t)\,b
 $$ 
 
-Where $$f(t)$$ is any at least $$C^0$$ continous function which interpolates between $$0$$ and $$1$$, thus it is defined for any $$t\in[0]..1]$$ and holds $$f(0)=0$$ and $$f(1)=1$$. Several options can be used, this is discussed below.
+Where $$f(t)$$ is any at least $$C^0$$ continous function which interpolates between $$0$$ and $$1$$, thus it is defined for any $$t\in[0..1]$$ and holds $$f(0)=0$$ and $$f(1)=1$$. Several options can be used, this is discussed below.
 
 
 The code of `evalM` method is shown below. It uses the 1D interpolation function `interpolate` which implements $$I$$:
