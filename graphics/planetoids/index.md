@@ -111,7 +111,7 @@ Here is a view of the icosahedron:
 </center>
 
 
-### <a name="#SS12">1.2.</a> Triangles subdivisions.
+### <a name="SS12">1.2.</a> Triangles subdivisions.
 
 Once the Icosahedron has been generated, I split each original triangle into 4 triangles, which replace the original one. Thus I obtain an 80 triangles mesh. This process can be repeated $$n$$ times, each time subdividing every triangle in the mesh, so in the end we get an indexed mesh with exactly $$20\cdot 4^n$$ triangles. 
 
