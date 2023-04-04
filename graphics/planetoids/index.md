@@ -111,7 +111,7 @@ Here is a view of the icosahedron:
 </center>
 
 
-### 1.2. Triangles subdivisions.
+### <a name="#SS12">1.2.</a> Triangles subdivisions.
 
 Once the Icosahedron has been generated, I split each original triangle into 4 triangles, which replace the original one. Thus I obtain an 80 triangles mesh. This process can be repeated $$n$$ times, each time subdividing every triangle in the mesh, so in the end we get an indexed mesh with exactly $$20\cdot 4^n$$ triangles. 
 
@@ -333,7 +333,7 @@ float PerlinNoise3D::evalN( const float px, const float py, const float pz )
 }
 ``` 
 
-In this set of images, we observe a sequence of 7 planetoids. Each one includes a single octave $$w_i M_i(2^i\cp)$$, for $$i$$ from $$0$$ to $$6$$:
+In this set of images, we observe a sequence of 9 planetoids. Each one includes a single octave $$w_i M_i(2^i\cp)$$, for $$i$$ from $$0$$ to $$8$$:
 
 <center>
 <img src="imgs2/oct0.png" width="24%"/>
@@ -343,9 +343,11 @@ In this set of images, we observe a sequence of 7 planetoids. Each one includes 
 <img src="imgs2/oct4.png" width="24%"/>
 <img src="imgs2/oct5.png" width="24%"/>
 <img src="imgs2/oct6.png" width="24%"/>
+<img src="imgs2/oct7.png" width="24%"/>
+<img src="imgs2/oct8.png" width="24%"/>
 </center>
 
-And here is a mesh with all the first 7 octaves added:
+And here is a mesh with all 9 octaves added:
 
 <center>
 <img src="imgs2/oct-sum.png" width="50%"/>
