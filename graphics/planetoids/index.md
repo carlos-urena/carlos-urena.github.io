@@ -29,10 +29,12 @@ This generation algorithm has been tested in C++ but can be adapted to other pro
 ## Index.
 
    1. [High Resolution Sphere](#S1).
+       
        1.1. [Icosahedron generation](#SS11).
        1.2. [Triangles subdivisions](#SS12).
 
    2. [Vertex displacement](#S2).
+       
        2.1. [Normalization of heights](#SS21).
        2.2. [Fractal 3D Perlin noise function](#SS22).
        2.3. [The basic noise functions $$M_i$$](#SS23).
