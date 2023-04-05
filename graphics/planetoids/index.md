@@ -333,7 +333,7 @@ float PerlinNoise3D::evalN( const float px, const float py, const float pz )
 }
 ``` 
 
-In this set of images, we observe a sequence of 9 planetoids. Each one includes a single octave $$w_i M_i(2^i\cp)$$, for $$i$$ from $$0$$ to $$8$$:
+In the set of images below, we observe a sequence of 9 planetoids. Each one includes a single octave $$w_i M_i(2^i\cp)$$, for $$i$$ from $$0$$ to $$8$$ (each one has been independently generated, that is, with its own set of random values). The underlying high-resolution sphere has been obtained after 9 subdivision steps:
 
 <center>
 <img src="imgs2/oct0.png" width="24%"/>
@@ -347,7 +347,7 @@ In this set of images, we observe a sequence of 9 planetoids. Each one includes 
 <img src="imgs2/oct8.png" width="24%"/>
 </center>
 
-And here is a mesh with all 9 octaves added:
+And a mesh with all 9 octaves added is shown below. The amplitude parameter ($$a$$) is $$0.8$$, while the amplitude scale factor $$b$$ is $$1.6$$:
 
 <center>
 <img src="imgs2/oct-sum.png" width="50%"/>
@@ -358,11 +358,11 @@ And here is a mesh with all 9 octaves added:
 
 Each function $$M_i$$ is a function (with real values $$[0,1]$$) that interpolates between random values associated with each 3D point with integer coordinates (which are usually called _lattice points_). 
 
-The function $$M_i$$ expects coordinates in the range $$[0,2^i]$$. For any given lattice point $$\cp=(i_x,i_y,i_z)$$ with integer coordinates (with $$0\leq i_x,i_y,i_z\leq 2^i$$), the function $$M_i$$ yields a random value $$r_{i_x,i_y,i_z}$$. For any non-integer coordinates tuple $$(x,y,z)$$, function $$M_i$$  does interpolation by using the $$8$$ random values associated with the $$8$$ lattice points in the vertexes of the cube including $$(x,y,z)$$. 
+The function $$M_i$$ expects coordinates in the range $$[0,2^i]$$. For any given lattice point $$\cp=(j,k,l)$$ with integer coordinates (with $$0\leq j,k,l\leq 2^i$$), the function $$M_i$$ yields a random value $$r_{i,j,k,l}$$. For any non-integer coordinates tuple $$(x,y,z)$$, function $$M_i$$  does interpolation by using the $$8$$ random values associated with the $$8$$ lattice points in the vertexes of the cube including $$(x,y,z)$$. 
 
 To implement evaluations of $$M_i$$, we can use an array of $$2^{3i}$$ precomputed random values for each $$i$$ from $$0$$ to $$n-1$$. However, this requires a lot of memory even for not-so-large values of $$n$$, but in fact, only a small fraction of those values are going to be used. 
 
-Thus, to save memory and time, we use a different _map_ or _dictionary_ for each $$i$$, which is populated on demand during the mesh construction process. Each dictionary stores lattice coordinates triples as keys and random reals as values. Each $$i$$-th map is initially empty. When a new random value at one lattice point is requested, the program checks if the integer coordinates are already present in the map as a key. If they are, the corresponding random value is retrieved and returned, if they are not, a new random value is inserted in the map and then returned. In the end, the map will include a number of random values that is proportional to the number of mesh vertexes (considering the worst case, in which each mesh vertex causes a disjoint set of lattice points to be queried). 
+Thus, to save memory and time, we use a different _map_ or _dictionary_ for each $$i$$, which is populated on demand during the mesh construction process. Each dictionary stores lattice coordinates triples as keys and random reals as values. Each $$i$$-th map is initially empty. When a new random value at one lattice point $$(j,k,l)$$ is requested, the program checks if the integer coordinates triple $$(j,k,l)$$ is already present in the map as a key. If it is, the corresponding random value is retrieved and returned, if it is not, a new random value is inserted in the map and then returned. In the end, the map will include a number of random values that is proportional to the number of mesh vertexes (considering the worst case, in which each mesh vertex causes a disjoint set of lattice points to be queried). 
 
 In C++ these maps can be implemented as an array of `std::map` instances, whose declaration (as instance variable of `PerlinNoise3D` class) is shown here, along with the random integers generator
 
