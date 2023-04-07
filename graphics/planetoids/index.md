@@ -356,7 +356,7 @@ And a mesh with all 9 octaves added is shown below. The amplitude parameter ($$a
 In the image below, we can see the difference between adding all the octaves (right) and just adding from the $$2$$-nd octave (left). The left planetoid is elongated, as the first two octaves introduce low-frequency variations which make the planetoid depart from a more spherical shape.
 
 <center>
-<img src="imgs2/from-0-from-2.png" width="80%"/>
+<img src="imgs2/from-2-from-0.png" width="80%"/>
 </center>
 
 ### <a name="SS23">2.3.</a> The basic noise functions $$M_i$$.
