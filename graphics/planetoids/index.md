@@ -363,7 +363,7 @@ In the image below, we can see the difference between adding all the octaves fro
 This image has been produced by adding octaves 2 to 9, but now truncating the minimin value to $$0.4$$
 
 <center>
-<img src="imgs2/oct-2-9-min-0_4.png" width="50%"/>
+<img src="imgs2/oct-2-9-min-0_4-hr.png" width="50%"/>
 </center>
 
 
