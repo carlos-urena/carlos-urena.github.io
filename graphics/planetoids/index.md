@@ -248,11 +248,11 @@ The following code computes $$f_i$$ and $$d_i$$ values, and displaces the vertex
 ```cpp 
 for( unsigned iv = 0 ; iv < vertices.size() ; iv++  )
 {
-   const float f = (hv[iv]-hmin)/(hmax-hmin) ;
-   const float d = p.truncate_to_min_f 
-                     ? ((f < p.min_f) ? 0.0f : (f-p.min_f)/(1.0-p.min_f) )
-                     : f ;
-   vertices[iv] = (p.d_base + p.d_scale*d) * vertices[iv] ;
+   const float 
+      f = (hv[iv]-hmin)/(hmax-hmin) ;
+      d = p.d_base + p.d_scale * std::max( 0.0f, (f-p.min_f)/(1.0f-p.min_f) ); 
+   
+   vertices[iv] = d * vertices[iv] ;
 
    if ( p.add_vertex_colors )
    {  // optionally: set vertex color (see below)
@@ -359,6 +359,13 @@ In the image below, we can see the difference between adding all the octaves fro
 <img src="imgs2/oct-0-9.png" width="40%"/>
 <img src="imgs2/oct-2-9.png" width="40%"/>
 </center>
+
+This image has been produced by adding octaves 2 to 9, but now truncating the minimin value to $$0.4$$
+
+<center>
+<img src="imgs2/oct-2-9-min-0_4.png" width="50%"/>
+</center>
+
 
 ### <a name="SS23">2.3.</a> The basic noise functions $$M_i$$.
 
