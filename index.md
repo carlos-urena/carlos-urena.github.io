@@ -5,7 +5,7 @@
 * [Optimal sampling for spherical light sources](https://github.com/carlos-urena/psc-sampler)
 * [An implementation of essential GLUT over Apple Cocoa framework](https://github.com/carlos-urena/cocoglut)
 * [Vector graphics (SVG) generator](https://github.com/carlos-urena/svg-gen)
-* [Procedural planetoids generation](https://carlos-urena.github.com/graphics/planetoids)
+* [Procedural planetoids generation](https://carlos-urena.github.io/graphics/planetoids)
   
 ### Maths
 
