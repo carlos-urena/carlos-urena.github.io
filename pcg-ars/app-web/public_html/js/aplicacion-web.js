@@ -366,11 +366,11 @@ export class AplicacionWeb {
         this.camaras.push(new CamaraOrbital3D());
         this.objetos.push(new CuadradoXYTextura(await Textura.crear("bazinga.jpg")));
         this.camaras.push(new CamaraOrbital3D());
-        this.objetos.push(await MallaPLY.crear("/plys/beethoven.ply"));
+        this.objetos.push(await MallaPLY.crear("beethoven.ply"));
         this.camaras.push(new CamaraOrbital3D());
-        this.objetos.push(await MallaPLY.crear("/plys/big_dodge.ply"));
+        this.objetos.push(await MallaPLY.crear("big_dodge.ply"));
         this.camaras.push(new CamaraOrbital3D());
-        this.objetos.push(await MallaPLY.crear("/plys/ant.ply"));
+        this.objetos.push(await MallaPLY.crear("ant.ply"));
         this.camaras.push(new CamaraOrbital3D());
         // centrar y normalizar todos los objetos que sean un nodo terminal de tipo MallaPLY
         // (antes de que se visualizen por primera vez)

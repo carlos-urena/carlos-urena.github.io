@@ -1,20 +1,21 @@
-import { Log, Assert, LeerArchivoTexto } from "./utilidades.js";
+import { Log, Assert, LeerArchivoPLY } from "./utilidades.js";
 import { MallaInd } from "./malla-ind.js";
 import { Vec3, UVec3 } from "./vec-mat.js";
 export class MallaPLY extends MallaInd {
-    url = "";
+    nombre_arch = "";
     /**
      *  Crea una instancia de MallaPLY, pero no está inicializada todavía
      *  (lo estará después de llamar a 'leer')
+     *  El 'nombre_arch' debe ser un archivo en el servidor, en la carpeta 'plys', hermana de 'index.html'
      */
-    constructor(url) {
-        const nombref = 'MallaPLY.constructor:';
+    constructor(p_nombre_arch) {
+        const nombref = `MallaPLY.constructor(${p_nombre_arch}):`;
         super();
-        Assert(url != "", `${nombref} la url está vacía`);
-        this.url = url;
+        Assert(p_nombre_arch != "", `${nombref} la url está vacía`);
+        this.nombre_arch = p_nombre_arch;
         // obtener el nombre del archivo a partir del nombre completo con carpetas
-        const nombre_archivo = (((url.split('\\').pop()).split('/')).pop());
-        this.nombre = `${nombre_archivo}`;
+        const nombre_archivo = (((p_nombre_arch.split('\\').pop()).split('/')).pop());
+        this.nombre = nombre_archivo;
     }
     // -------------------------------------------------------------------------------
     /**
@@ -24,10 +25,10 @@ export class MallaPLY extends MallaInd {
      */
     async leer() {
         const nombref = 'MallaPLY.leer:';
-        const info = `${nombref} leyendo ply '${this.url}' : `;
+        const info = `${nombref} leyendo ply '${this.nombre_arch}' : `;
         Assert(this.posiciones.length == 0, `${info} la tabla de posiciones de vértices no estaba vacía`);
         Assert(this.triangulos.length == 0, `${info} la tabla de triángulos no estaba vacía`);
-        const texto_ply_bruto = await LeerArchivoTexto(this.url);
+        const texto_ply_bruto = await LeerArchivoPLY(this.nombre_arch);
         const lineas = texto_ply_bruto.split(/\r?\n/);
         let nl = 0; // número de línea que se va a procesar  
         let nv = 0; // número de vértices según la cabecera 
