@@ -248,9 +248,16 @@ export function NumbDesdeHex2( h2 : string ) : number
 }
 // -----------------------------------------------------------------------------
 // prefijo usado cuando la app esta ya 'deployed' (en github.io)
-let prefix : string = "/pcg-ars/web-app/public_html"
+//let prefix : string = "/pcg-ars/web-app/public_html"
 
-
+function removeLeadingSlash(s: string): string {
+   if (s.startsWith('/')) {
+     return s.substring(1); // Remove the leading "/"
+   }
+   return s; // Return the string as is if it doesn't start with "/"
+ }
+ 
+ 
 /**
  * Leer un archivo en un servidor, esperar a que se cargue entero y devolver el 
  * contenido como una promesa con una cadena de texto dentro
@@ -262,12 +269,14 @@ export async function LeerArchivoTexto( url_arch : string ) : Promise<string>
 { 
    const nombref : string = 'LeerArchivoTexto:' 
 
+   url_arch = removeLeadingSlash(url_arch) // para deployment .....
+
    // obtener una promesa ('Response') que se resuelve cuando se lee un archivo de la red o el disco.
-   let response : Response = await fetch( prefix+url_arch )
+   let response : Response = await fetch( url_arch )
 
    // comprobar respuesta (la promesa devuelta por fetch no se rechaza por errores de http como 404)
    if ( ! response.ok ) 
-      throw new Error(`${nombref} imposible leer archivo '${prefix+url_arch}'`)
+      throw new Error(`${nombref} imposible leer archivo '${url_arch}'`)
       
    // .text devuelve una promesa que se resuelve con una representación UTF-8 del objeto recuperado con el 'fetch'
    let texto : string = await response.text() 
@@ -288,13 +297,16 @@ export async function LeerArchivoTexto( url_arch : string ) : Promise<string>
 export async function LeerArchivoImagen( url_string : string ) : Promise<HTMLImageElement>
 {
    const nombref : string = 'LeerArchivoImagen:' 
+
+   url_string = removeLeadingSlash(url_string) // para deployment .....
+
    
    // obtener una promesa ('Response') que se resuelve cuando se lee un archivo de la red o el disco.
-   let response : Response = await fetch( prefix+url_string )
+   let response : Response = await fetch( url_string )
 
    // comprobar respuesta (la promesa devuelta por fetch no se rechaza por errores de http como 404)
    if ( ! response.ok ) 
-      throw new Error(`${nombref} imposible leer archivo de imagen '${prefix+url_string}'`)
+      throw new Error(`${nombref} imposible leer archivo de imagen '${url_string}'`)
 
    // obtener un objeto con bytes (un "Blob") que contiene la imagen
    let blob : Blob = await response.blob() 
