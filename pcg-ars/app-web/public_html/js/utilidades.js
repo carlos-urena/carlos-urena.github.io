@@ -180,7 +180,7 @@ export function NumbDesdeHex2(h2) {
 }
 // -----------------------------------------------------------------------------
 // prefijo usado cuando la app esta ya 'deployed' (en github.io)
-let prefix = "https://carlos-urena.github.io/pcg-ars/web-app/public_html";
+let prefix = "/pcg-ars/web-app/public_html";
 /**
  * Leer un archivo en un servidor, esperar a que se cargue entero y devolver el
  * contenido como una promesa con una cadena de texto dentro
