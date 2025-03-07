@@ -248,7 +248,7 @@ export function NumbDesdeHex2( h2 : string ) : number
 }
 // -----------------------------------------------------------------------------
 // prefijo usado cuando la app esta ya 'deployed' (en github.io)
-let prefix : string = "https://carlos-urena.github.io/pcg-ars/web-app/public_html"
+let prefix : string = "/pcg-ars/web-app/public_html"
 
 
 /**
