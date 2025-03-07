@@ -247,6 +247,9 @@ export function NumbDesdeHex2( h2 : string ) : number
    return n/255.0
 }
 // -----------------------------------------------------------------------------
+// prefijo usado cuando la app esta ya 'deployed' (en github.io)
+let prefix : string = "https://carlos-urena.github.io/pcg-ars/web-app/public_html"
+
 
 /**
  * Leer un archivo en un servidor, esperar a que se cargue entero y devolver el 
@@ -260,11 +263,11 @@ export async function LeerArchivoTexto( url_arch : string ) : Promise<string>
    const nombref : string = 'LeerArchivoTexto:' 
 
    // obtener una promesa ('Response') que se resuelve cuando se lee un archivo de la red o el disco.
-   let response : Response = await fetch( url_arch )
+   let response : Response = await fetch( prefix+url_arch )
 
    // comprobar respuesta (la promesa devuelta por fetch no se rechaza por errores de http como 404)
    if ( ! response.ok ) 
-      throw new Error(`${nombref} imposible leer archivo '${url_arch}'`)
+      throw new Error(`${nombref} imposible leer archivo '${prefix+url_arch}'`)
       
    // .text devuelve una promesa que se resuelve con una representación UTF-8 del objeto recuperado con el 'fetch'
    let texto : string = await response.text() 
@@ -287,11 +290,11 @@ export async function LeerArchivoImagen( url_string : string ) : Promise<HTMLIma
    const nombref : string = 'LeerArchivoImagen:' 
    
    // obtener una promesa ('Response') que se resuelve cuando se lee un archivo de la red o el disco.
-   let response : Response = await fetch( url_string )
+   let response : Response = await fetch( prefix+url_string )
 
    // comprobar respuesta (la promesa devuelta por fetch no se rechaza por errores de http como 404)
    if ( ! response.ok ) 
-      throw new Error(`${nombref} imposible leer archivo de imagen '${url_string}'`)
+      throw new Error(`${nombref} imposible leer archivo de imagen '${prefix+url_string}'`)
 
    // obtener un objeto con bytes (un "Blob") que contiene la imagen
    let blob : Blob = await response.blob() 

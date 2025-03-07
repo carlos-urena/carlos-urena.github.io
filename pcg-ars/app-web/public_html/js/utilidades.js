@@ -179,6 +179,8 @@ export function NumbDesdeHex2(h2) {
     return n / 255.0;
 }
 // -----------------------------------------------------------------------------
+// prefijo usado cuando la app esta ya 'deployed' (en github.io)
+let prefix = "https://carlos-urena.github.io/pcg-ars/web-app/public_html";
 /**
  * Leer un archivo en un servidor, esperar a que se cargue entero y devolver el
  * contenido como una promesa con una cadena de texto dentro
@@ -189,10 +191,10 @@ export function NumbDesdeHex2(h2) {
 export async function LeerArchivoTexto(url_arch) {
     const nombref = 'LeerArchivoTexto:';
     // obtener una promesa ('Response') que se resuelve cuando se lee un archivo de la red o el disco.
-    let response = await fetch(url_arch);
+    let response = await fetch(prefix + url_arch);
     // comprobar respuesta (la promesa devuelta por fetch no se rechaza por errores de http como 404)
     if (!response.ok)
-        throw new Error(`${nombref} imposible leer archivo '${url_arch}'`);
+        throw new Error(`${nombref} imposible leer archivo '${prefix + url_arch}'`);
     // .text devuelve una promesa que se resuelve con una representación UTF-8 del objeto recuperado con el 'fetch'
     let texto = await response.text();
     return texto;
@@ -209,10 +211,10 @@ export async function LeerArchivoTexto(url_arch) {
 export async function LeerArchivoImagen(url_string) {
     const nombref = 'LeerArchivoImagen:';
     // obtener una promesa ('Response') que se resuelve cuando se lee un archivo de la red o el disco.
-    let response = await fetch(url_string);
+    let response = await fetch(prefix + url_string);
     // comprobar respuesta (la promesa devuelta por fetch no se rechaza por errores de http como 404)
     if (!response.ok)
-        throw new Error(`${nombref} imposible leer archivo de imagen '${url_string}'`);
+        throw new Error(`${nombref} imposible leer archivo de imagen '${prefix + url_string}'`);
     // obtener un objeto con bytes (un "Blob") que contiene la imagen
     let blob = await response.blob();
     // crear un elemento imagen vacío

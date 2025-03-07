@@ -236,6 +236,8 @@ export class Cauce extends CauceBase
         ComprErrorGL( gl, `${nombref} error OpenGL al inicio`)
         Assert( this.objeto_programa == null, `${nombref}  el objeto programa no es nulo` )
 
+       
+
         // Leer los fuentes GLSL
         let fs : ShaderObject = await ShaderObject.crearDesdeURL( gl, gl.FRAGMENT_SHADER, "/glsl/cauce_3_00_fragment_shader.glsl" )
         let vs : ShaderObject   = await ShaderObject.crearDesdeURL( gl, gl.VERTEX_SHADER, "/glsl/cauce_3_00_vertex_shader.glsl" )

@@ -128,7 +128,7 @@ export class MallaInd extends ObjetoVisualizable {
         let segmentos = new Array(2 * this.normales_v.length);
         for (let i = 0; i < this.posiciones.length; i++) {
             segmentos[2 * i + 0] = this.posiciones[i];
-            segmentos[2 * i + 1] = this.posiciones[i].mas(this.normales_v[i].mult(0.35));
+            segmentos[2 * i + 1] = this.posiciones[i].mas(this.normales_v[i].mult(0.15));
         }
         this.dvao_normales = new DescrVAO({ posiciones: segmentos });
     }

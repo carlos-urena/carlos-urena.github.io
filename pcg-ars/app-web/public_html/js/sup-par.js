@@ -81,8 +81,8 @@ export class FPColumna extends FuncionParam {
     evaluarPosicion(st) {
         Assert(0.0 <= st.s && st.s <= 1.0, `valor 's' fuera de rango`);
         Assert(0.0 <= st.t && st.t <= 1.0, `valor 't' fuera de rango`);
-        const a = Math.PI * (2.0 * st.s), ca = Math.cos(a), sa = Math.sin(a), r = 1.0 + 0.1 * Math.sin(5.0 * (a + 2.0 * Math.PI * st.t));
-        return new Vec3([r * ca, 10.0 * (st.t - 0.5), r * sa]);
+        const a = Math.PI * (2.0 * st.t), ca = Math.cos(a), sa = Math.sin(a), r = 1.0 + 0.1 * Math.sin(5.0 * (a + 2.0 * Math.PI * st.s));
+        return new Vec3([r * ca, 10.0 * (st.s - 0.5), r * sa]);
     }
 }
 /** Función de parametrización de un toroide */
@@ -113,7 +113,8 @@ export class FPCampoAlturas extends FuncionParam {
         for (const p of this.ptos) {
             const d = 20.0 * st.menos(p).longitud;
             h += 0.5 / (1.0 + d * d * d);
+            //h += 0.05*Math.cos( d*2.0 )
         }
-        return new Vec3([st[0], h, st[1]]);
+        return new Vec3([st[1], h, st[0]]);
     }
 }
