@@ -5,7 +5,7 @@ import { Log, Assert, LeerArchivoImagen, CrearTexturaWebGL } from "./utilidades.
  * correspondiente objeto textura de WebGL
  */
 export class Textura {
-    url = "";
+    nombre_arch = "";
     elemento_img = null;
     texture = null;
     /**
@@ -27,10 +27,14 @@ export class Textura {
     // pila de texturas, inicialmente vacía
     //private static pila : Array<Textura|null> = []
     // -----------------------------------------------------------------
-    constructor(url) {
-        const nombref = 'Textura.constructor:';
-        Assert(url != "", `${nombref} la url está vacía`);
-        this.url = url;
+    /**
+     * Construye una textura a partir del nombre del archivo en el sevidor (no la lee, se debe llamar a 'leer)
+     * @param p_nombre_arch (string) nombre del archivo de textura en el servidor (en la carpeta 'imgs', hermana de 'index.html')
+     */
+    constructor(p_nombre_arch) {
+        const nombref = `Textura.constructor("${p_nombre_arch}")`;
+        Assert(p_nombre_arch != "", `${nombref} la url está vacía`);
+        this.nombre_arch = p_nombre_arch;
     }
     /**
      * Lee la textura desde su URL (la descarga del servidor)
@@ -39,8 +43,8 @@ export class Textura {
     async leer() {
         const nombref = 'Textura.leer:';
         Assert(this.elemento_img == null, `${nombref} no se puede leer una textura ya leída (this.url)`);
-        this.elemento_img = await LeerArchivoImagen(this.url);
-        Log(`${nombref} textura '${this.url}' cargada, dimensiones == ${this.elemento_img.width} x ${this.elemento_img.height}`);
+        this.elemento_img = await LeerArchivoImagen(this.nombre_arch);
+        Log(`${nombref} textura '${this.nombre_arch}' cargada, dimensiones == ${this.elemento_img.width} x ${this.elemento_img.height}`);
     }
     /**
      * Crea un objeto textura y espera a leerlo desde el servidor

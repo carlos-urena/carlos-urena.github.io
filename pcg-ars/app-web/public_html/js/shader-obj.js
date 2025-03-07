@@ -1,4 +1,4 @@
-import { Assert, ComprErrorGL, LeerArchivoTexto, Log } from "./utilidades.js";
+import { Assert, ComprErrorGL, Log, LeerArchivoGLSL } from "./utilidades.js";
 /**
  * Clase que encapsula un "shader-object"
  */
@@ -57,16 +57,16 @@ export class ShaderObject {
     }
     // --------------------------------------------------------------------------------------------
     /**
-     * Crea un shader a partir de una URL
+     * Crea un shader a partir de un nombre d eun archivo GLSL en el sevidor
      * @param gl  contexto WebGL
      * @param tipo_shader  gl.VERTEX_SHADER o gl.FRAGMENT_SHADER
-     * @param url_fuente  URL del archivo que contiene el fuente del shader
+     * @param nombre string con el nombre del archivo que contiene el fuente del shader (en la sub-carpeta 'glsl', hermana de 'index.html')
      * @returns
      */
-    static async crearDesdeURL(gl, tipo_shader, url_fuente) {
+    static async crearDesdeArchivoGLSL(gl, tipo_shader, nombre) {
         const nombref = "ShaderObject.crearDesdeURL:";
-        let shader = new ShaderObject(gl, tipo_shader, url_fuente, null);
-        await shader.leerFuenteDesdeURL();
+        let shader = new ShaderObject(gl, tipo_shader, nombre, null);
+        await shader.leerFuenteDesdeArchivoGLSL();
         return shader;
     }
     // --------------------------------------------------------------------------------------------
@@ -85,13 +85,14 @@ export class ShaderObject {
     }
     // --------------------------------------------------------------------------------------------
     /**
-     * Lee el texto fuente de un shader a partir de una URL y lo guarda en la variable de instancia
+     * Lee el texto fuente de un shader a partir de un nombre un archivo GLSL (en la carpeta 'glsl',
+     * hermana de 'index.html') y lo guarda en la variable de instancia
      */
-    async leerFuenteDesdeURL() {
+    async leerFuenteDesdeArchivoGLSL() {
         const nombref = "ShaderObject.leerFuenteDesdeURL:";
         Assert(this.url_fuente != "", `${nombref} 'url_fuente' no puede ser vacío`);
         Assert(this.texto_fuente == "", `${nombref} 'texto_fuente' debe ser vacío`);
-        this.texto_fuente = await LeerArchivoTexto(this.url_fuente);
+        this.texto_fuente = await LeerArchivoGLSL(this.url_fuente);
     }
     // --------------------------------------------------------------------------------------------
     /**

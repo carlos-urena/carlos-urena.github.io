@@ -179,14 +179,6 @@ export function NumbDesdeHex2(h2) {
     return n / 255.0;
 }
 // -----------------------------------------------------------------------------
-// prefijo usado cuando la app esta ya 'deployed' (en github.io)
-//let prefix : string = "/pcg-ars/web-app/public_html"
-function removeLeadingSlash(s) {
-    if (s.startsWith('/')) {
-        return s.substring(1); // Remove the leading "/"
-    }
-    return s; // Return the string as is if it doesn't start with "/"
-}
 /**
  * Leer un archivo en un servidor, esperar a que se cargue entero y devolver el
  * contenido como una promesa con una cadena de texto dentro
@@ -195,8 +187,7 @@ function removeLeadingSlash(s) {
  * @returns (string) cadena codificada en UTF8
  */
 export async function LeerArchivoTexto(url_arch) {
-    const nombref = 'LeerArchivoTexto:';
-    url_arch = removeLeadingSlash(url_arch); // para deployment .....
+    const nombref = `LeerArchivoTexto("${url_arch}")`;
     // obtener una promesa ('Response') que se resuelve cuando se lee un archivo de la red o el disco.
     let response = await fetch(url_arch);
     // comprobar respuesta (la promesa devuelta por fetch no se rechaza por errores de http como 404)
@@ -206,18 +197,31 @@ export async function LeerArchivoTexto(url_arch) {
     let texto = await response.text();
     return texto;
 }
+// -----------------------------------------------------------------------------
+/**
+ * Leer un archivo en un servidor, esperar a que se cargue entero y devolver el
+ * contenido como una promesa con una cadena de texto dentro
+ *
+ * @param nombre cadena con el nombre del archivo glsl
+ * @returns (string) cadena codificada en UTF8
+ */
+export async function LeerArchivoGLSL(nombre) {
+    const nombref = `LeerArchivoGLSL("${nombre}"):`;
+    let url_arch = `glsl/${nombre}`;
+    return LeerArchivoTexto(url_arch);
+}
 // -------------------------------------------------------------------------------------
 /**
  * Leer una imagen desde una URL y devolver un elemento imagen, ver:
  * https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
  * (sección: Supplying your own Request Object)
  *
- * @param url_string (string) URL del archivo de imagen
+ * @param nombre_arch (string) nombre del archivo de imagen (en la carpeta 'imgs', hermana de 'index.html')
  * @returns (HTMLImageElement) elemento imagen
  */
-export async function LeerArchivoImagen(url_string) {
+export async function LeerArchivoImagen(nombre_arch) {
     const nombref = 'LeerArchivoImagen:';
-    url_string = removeLeadingSlash(url_string); // para deployment .....
+    let url_string = `imgs/${nombre_arch}`;
     // obtener una promesa ('Response') que se resuelve cuando se lee un archivo de la red o el disco.
     let response = await fetch(url_string);
     // comprobar respuesta (la promesa devuelta por fetch no se rechaza por errores de http como 404)
