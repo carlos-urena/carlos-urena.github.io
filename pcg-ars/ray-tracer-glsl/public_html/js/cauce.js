@@ -140,9 +140,9 @@ export class Cauce {
         ComprErrorGL(gl, `${nombref} error OpenGL al inicio`);
         Assert(this.programa == null, `${nombref} 'id_prog' no es nulo`);
         // Leer los fuentes GLSL
-        const nombre_archivo_vs = "/glsl/wrt-vertex-shader.glsl";
+        const nombre_archivo_vs = "glsl/wrt-vertex-shader.glsl";
         //const nombre_archivo_fs = "/glsl/wrt-fs-test.glsl"   // fragment shader de test
-        const nombre_archivo_fs = "/glsl/wrt-fragment-shader.glsl"; // fragment shader del Ray-tracer
+        const nombre_archivo_fs = "glsl/wrt-fragment-shader.glsl"; // fragment shader del Ray-tracer
         //const nombre_archivo_fs = "/glsl/ejer-wrt-fragment-shader.glsl"  // fragment shader del Ray-tracer, versión con modificiones varias de los ejercicios
         const texto_vertex_shader = await LeerArchivoTexto(nombre_archivo_vs);
         const texto_fragment_shader = await LeerArchivoTexto(nombre_archivo_fs);
