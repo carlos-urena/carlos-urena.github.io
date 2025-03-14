@@ -2,12 +2,12 @@
 ### Graphics Teaching 
 
  * WebGL showcase app
-       - [Try it online](https://carlos-urena.github.io/pcg-ars/app-web/public_html)
-       - [Source code in _github_ (typescript + GLSL)](https://github.com/carlos-urena/pcg-ars/tree/main/fuentes/web)
+       * [Try it online _github.io_](https://carlos-urena.github.io/pcg-ars/app-web/public_html)
+       * [Source code in _github_ (typescript + GLSL)](https://github.com/carlos-urena/pcg-ars/tree/main/fuentes/web)
      
  * Classic Ray-tracer in GLSL ES 3.0
-       - [Try it online](https://carlos-urena.github.io/pcg-ars/ray-tracer-glsl/public_html) 
-       - [Source code in _github_ (typescript +GLSL)](https://github.com/carlos-urena/pcg-ars/tree/main/fuentes/ray-tracer-glsl)
+       * [Try it online in _github.io_](https://carlos-urena.github.io/pcg-ars/ray-tracer-glsl/public_html) 
+       * [Source code in _github_ (typescript +GLSL)](https://github.com/carlos-urena/pcg-ars/tree/main/fuentes/ray-tracer-glsl)
   
 ### Graphics
 
