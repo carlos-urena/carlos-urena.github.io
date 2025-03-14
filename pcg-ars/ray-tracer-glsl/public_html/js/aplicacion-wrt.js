@@ -174,7 +174,8 @@ export class AplicacionWRT {
         // crear los elementos de controles de la aplicación (elementos HTML)
         this.crearElementosControles();
         // cargar una textura del cielo
-        this.textura_fondo = await Textura.crear("imgs/nubes.png");
+        //this.textura_fondo = await Textura.crear("imgs/nubes.png")
+        this.textura_fondo = await Textura.crear("imgs/panorama1-cielo.jpg");
         // redimensionar el canvas y visualizar la 1a vez
         this.redimensionarVisualizar();
         this.estado = "Inicialización completa.";
@@ -271,7 +272,7 @@ export class AplicacionWRT {
      * @param nuevo_naa nuevo valor
      */
     fijarNAA(nuevo_naa) {
-        const nombref = 'AplicacionWRT.fijarParamS:';
+        const nombref = 'AplicacionWRT.fijarNAA:';
         let nuevo_naa_int = parseInt(nuevo_naa);
         if (nuevo_naa_int != this.naa) {
             this.naa = nuevo_naa_int;
@@ -289,6 +290,10 @@ export class AplicacionWRT {
         this.input_naa = CrearInputSliderEntero(this.controles, 1, 1, 9, 0.01, "id_slider_naa", "Núm. mpp. (raíz)");
         this.input_naa.oninput = (e) => this.fijarNAA(this.input_naa.value);
     }
+    // -------------------------------------------------------------------------
+    /**
+     * Crea un elemento del GUI con un 'span' de texto con la información de la GPU
+     */
     crearTextosInfo() {
         this.texto_gpu_modelo = CrearElementoSpanTexto(this.controles, this.gpu_modelo, "texto_gpu", "GPU en uso:");
     }
@@ -432,7 +437,7 @@ export class AplicacionWRT {
     }
     // -------------------------------------------------------------------
     /**
-     * Visualizar un frame, por ahora es un simple test
+     * Visualizar un frame
      */
     visualizarFrame() {
         const nombref = 'AplicacionWRT.visualizarFrame:';
